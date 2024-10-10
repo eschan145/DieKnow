@@ -8,6 +8,26 @@ import pywintypes
 
 running = False
 
+
+class Command:
+    commands = [
+        "start",
+        "stop",
+        "help",
+        "exit"
+    ]
+
+    def __getattribute__(self, name):
+        if name in super().__getattribute__("commands"):
+            return name
+
+        if name == "commands":
+            return super().__getattribute__("commands")
+
+        return None
+
+commands = Command()
+
 def get_executables_in_folder(folder_path):
     exec_names = []
     for root, dirs, files in os.walk(folder_path):
@@ -68,16 +88,19 @@ def main():
         user_input = input(">>> ")
 
         match user_input.lower():
-            case "start":
+            case commands.start:
                 start_monitoring(folder_path)
-            case "stop":
+            case commands.stop:
                 stop_monitoring()
                 # break
-            case "exit":
+            case commands.help:
+                print(f"{commands.commands}")
+
+            case commands.exit:
                 stop_monitoring()
                 break
             case _:
-                print("Invalid input. Avaliable inputs:START\nSTOP")
+                print(f"Invalid input. Avaliable inputs:{commands.commands}")
 
 if __name__ == "__main__":
     main()
