@@ -1,9 +1,10 @@
 import os
+import time
+import threading
+
 import win32api
 import win32con
 import psutil
-import threading
-import time
 import pywintypes
 
 running = False
