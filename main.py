@@ -8,12 +8,14 @@ import psutil
 import pywintypes
 
 running = False
-
+killed = 0
 
 class Command:
     commands = [
         "start",
         "stop",
+        "directory",
+        "count",
         "help",
         "exit"
     ]
@@ -41,6 +43,8 @@ def get_executables_in_folder(folder_path):
 
 
 def close_application_by_exe(exe_name):
+    global killed
+
     for proc in psutil.process_iter():
         try:
             if proc.name().lower() == exe_name.lower():
@@ -49,13 +53,14 @@ def close_application_by_exe(exe_name):
                 )
                 win32api.TerminateProcess(handle, 0)
                 win32api.CloseHandle(handle)
+                killed += 1
                 # print(f"{exe_name} terminated.")
                 return True
 
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
             pass
 
-        except pywintypes.error:
+        except pywintypes.error as e:
             pass
 
     return False
@@ -63,13 +68,12 @@ def close_application_by_exe(exe_name):
 
 def monitor_executables(folder_path):
     global running
-    executables = get_executables_in_folder(folder_path)
 
     while running:
+        executables = get_executables_in_folder(folder_path)
         # print("Monitoring and terminating executables...")
         for exe in executables:
             close_application_by_exe(exe)
-        time.sleep(0.01)
 
 
 def start_monitoring(folder_path):
@@ -92,6 +96,7 @@ def stop_monitoring():
 
 def main():
     folder_path = r"C:/Program Files/DyKnow/Cloud/7.10.22.9"
+    print("DieKnow Shell\n=============")
 
     while True:
         user_input = input(">>> ")
@@ -101,7 +106,10 @@ def main():
                 start_monitoring(folder_path)
             case commands.stop:
                 stop_monitoring()
-                # break
+            case commands.directory:
+                print(f"Files in {folder_path}: {get_executables_in_folder(folder_path)}")
+            case commands.count:
+                print(f"Executables killed: {killed}")
             case commands.help:
                 print(f"{commands.commands}")
 
