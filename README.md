@@ -6,21 +6,13 @@ You'll have to type "exit" to exit the application or some lingering multitaskin
 
 ## Installation
 
+NOTE: this application only works on Windows, as it uses the Windows API.
+
 ### For Python
 
 1. Install Python 3
-2. Install the following packages using `pip` in the Command Prompt
-   ```
-   py -m pip install psutil
-   py -m pip install win32api
-   ```
-3. Run the program
-4. Enjoy :)
-
-### For C++
-
-1. Build it via `g++`.
-2. Run the generated executable
+2. Run the program
+3. Enjoy :)
 
 ## How to use
 
