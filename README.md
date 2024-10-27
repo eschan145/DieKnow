@@ -14,10 +14,47 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 2. Run the program
 3. Enjoy :)
 
-## How to use
+## Commands
 
-1. Type "start" to start
+### `start`
+
+Start the DieKnow process. DyKnow executables will be terminated forcefully every five seconds, which is sufficient to keep DyKnow consistently closed down. If the delay was too low (or none at all), CPU usage would be very high, possibly as high or higher than DyKnow.
+
+### `stop`
+
+Kill the DieKnow threads but keep the app running. Threads associated with DieKnow will be terminated.
+
+### `count`
+
+Retrieve the number of executables killed by DieKnow.
+
+### `directory`
+
+Retrieve the files in the DyKnow installation directory.
+
+It should return something similar to this.
+
+```
+Files in C:/Program Files/DyKnow/Cloud/7.10.22.9:
+amjbk.exe
+Demo32_64.exe
+Demo64_32.exe
+dkInteractive.exe
+DyKnowLogSender.exe
+DyKnowTest.exe
+kyplu.exe
+MonitorStateReader.exe
+winProcess.exe
+```
+
+Here, `kyplu.exe` and `amjbk.exe` are the main DyKnow monitoring executable, but as the name is changed randomly each time it’s restarted, it will vary.
+
+### `exit`
+
+Exit the DieKnow application and destroy all threads associated with it.
 
 ## About
 
-DyKnow creates executables dynamically. Once you kill its process using Task Manager or the `taskkill` command, it restarts right back up, but with a modified executable name. My approach leverages the Windows win32 API to repeatedly close DyKnow.
+DyKnow creates executables dynamically. Once you kill its process using Task Manager or the `taskkill` command, it restarts right back up, but with a modified executable name. How it does this is unknown, but it likely uses Task Scheduler. My approach leverages the Windows win32 API, specifically the [`TerminateProcess`](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-terminateprocess) function, to repeatedly close DyKnow.
+
+A `ctypes` precompiled C++ binary is located in [`api.dll`](https://www.notion.so/ethanchan-freshman/api.dll), which is accessed by [`main.py`](https://www.notion.so/ethanchan-freshman/main.py) to call the C++ functions. C++ is used as it lowers the CPU usage of DieKnow compared to Python. The DLL file is over 3 MBs because it is statically built (with use of the `-static` g++ option), allowing easy distribution of it.
