@@ -16,7 +16,7 @@ jobs:
         path: |
           C:\msys64\var\cache\pacman\pkg
           C:\msys64\var\lib\pacman\sync
-        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('src/util.cpp') }}
+        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('api.dll') }}
 
     - name: Set up MSYS2
       uses: msys2/setup-msys2@v2
