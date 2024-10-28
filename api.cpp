@@ -7,6 +7,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <string>
 #include <thread>
 #include <filesystem>
+#include <fstream>
 #include <windows.h>
 #include <tlhelp32.h>
 
@@ -64,7 +65,22 @@ void monitor_executables(const string& folder_path)
                 close_application_by_exe(entry.path().filename().string());
             }
         }
-        this_thread::sleep_for(chrono::seconds(5)); // Polling interval
+
+        int interval;
+        std::ifstream interval_file("interval.txt");
+
+        if (interval_file.is_open())
+        {
+            interval_file >> interval;
+
+            if (interval_file.fail())
+            {
+                interval = 0
+            }
+
+            this_thread::sleep_for(chrono::seconds(inrerval));
+            interval_file.close();
+        }
     }
 }
 
