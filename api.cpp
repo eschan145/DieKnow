@@ -75,10 +75,10 @@ void monitor_executables(const string& folder_path)
 
             if (interval_file.fail())
             {
-                interval = 0
+                interval = 0;
             }
 
-            this_thread::sleep_for(chrono::seconds(inrerval));
+            this_thread::sleep_for(chrono::seconds(interval));
             interval_file.close();
         }
     }
