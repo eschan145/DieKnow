@@ -47,6 +47,6 @@ jobs:
         path: |
           C:\msys64\var\cache\pacman\pkg
           C:\msys64\var\lib\pacman\sync
-        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('src/util.cpp') }}
+        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('api.cpp') }}
         restore-keys: |
           msys2-pkgs-${{ runner.os }}-
