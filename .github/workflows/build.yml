@@ -34,7 +34,7 @@ jobs:
       run: |
         git config --global user.name "Ethan Chan"
         git config --global user.email "esamuelchan@gmail.com"
-        git add api.dll -f
+        git add . -f
         git commit -m "Auto-build api.dll using g++" || echo "No changes to commit"
         git push https://$GH_PAT@github.com/eschan145/DieKnow.git
       env:
