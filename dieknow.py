@@ -1,3 +1,6 @@
+"""DieKnow API.
+"""
+
 import ctypes
 
 lib = ctypes.CDLL("./api.dll")

@@ -1,6 +1,11 @@
+"""DieKnow main interface.
+"""
+
 import dieknow
 
 def main():
+    """Main starting point."""
+
     folder_path = b"C:/Program Files/DyKnow/Cloud/7.10.22.9"
     print("DieKnow Shell\n=============")
 
