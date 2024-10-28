@@ -11,8 +11,11 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 ### For Python
 
 1. Install Python 3
-2. Run the program
-3. Enjoy :)
+2. Click on Code
+3. Click on Download Zip
+4. Extract the zip
+6. Run the program
+7. Enjoy :)
 
 ## Commands
 
