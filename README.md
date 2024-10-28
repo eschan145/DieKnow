@@ -10,10 +10,12 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 
 ### For Python
 
+
 1. Install Python 3
 2. Click on Code
-3. Click on Download Zip
-4. Extract the zip
+   ![image](https://github.com/user-attachments/assets/31ca7d0e-eaad-4a46-a11b-b38216639b05)
+4. Click on Download Zip
+5. Extract the zip
 6. Run the program
 7. Enjoy :)
 
