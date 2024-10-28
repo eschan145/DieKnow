@@ -15,9 +15,10 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 2. Click on Code
    ![image](https://github.com/user-attachments/assets/31ca7d0e-eaad-4a46-a11b-b38216639b05)
 4. Click on Download Zip
-5. Extract the zip
-6. Run the program
-7. Enjoy :)
+   ![image](https://github.com/user-attachments/assets/1b77af9c-c6ce-4197-94d8-29ae63c499c5)
+6. Extract the compressed zip
+7. Double-click on the [`main.py`](main.py) file in the extracted folder.
+8. Enjoy :)
 
 ## Commands
 
