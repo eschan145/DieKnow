@@ -26,11 +26,28 @@ def main():
         user_input = input(">>> ").strip().lower()
 
         if user_input == "start":
-            dieknow.start_monitoring(folder_path)
-            print("Monitoring started...")
+            if not dieknow.is_running():
+                dieknow.start_monitoring(folder_path)
+                print("Monitoring started...")
+            else:
+                dieknow.dialog(
+                    "The DieKnow process has already been started!",
+                    "Information",
+                    dieknow.MB_ICONINFORMATION
+                )
+
         elif user_input == "stop":
-            dieknow.stop_monitoring()
-            print("Monitoring stopped...")
+            if not dieknow.is_running():
+                dieknow.dialog(
+                    "The DieKnow process has already been stopped and is not "
+                    "running!",
+                    "Information",
+                    dieknow.MB_ICONINFORMATION
+                )
+            else:
+                dieknow.stop_monitoring()
+                print("Monitoring stopped...")
+
         elif user_input == "count":
             killed = dieknow.get_killed_count()
             print(f"Executables killed: {killed}")
