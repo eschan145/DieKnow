@@ -59,6 +59,10 @@ Here, `kyplu.exe` and `amjbk.exe` are the main DyKnow monitoring executable, but
 
 Exit the DieKnow application and destroy all threads associated with it.
 
+## DieKnow API
+
+DieKnow provides an API that is accessible at [`dieknow.py`](dieknow.py), which just calls the C++ functions.
+
 ## About
 
 DyKnow creates executables dynamically. Once you kill its process using Task Manager or the `taskkill` command, it restarts right back up, but with a modified executable name. How it does this is unknown, but it likely uses Task Scheduler. My approach leverages the Windows win32 API, specifically the [`TerminateProcess`](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-terminateprocess) function, to repeatedly close DyKnow.
