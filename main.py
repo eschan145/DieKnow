@@ -2,6 +2,7 @@
 """
 
 import os
+import sys
 
 import dieknow
 
@@ -13,11 +14,11 @@ def main():
     if not os.path.exists(folder_path):
         dieknow.dialog(
             "A DyKnow installation was not able to be found on your device. "
-            "Ensure %s exists and you have the permissions to access it!"
-            % folder_path, "FATAL ERROR",
+            f"Ensure {folder_path}s exists and you have the permissions to "
+            "access it!", "FATAL ERROR",
             dieknow.MB_ICONERROR
         )
-        exit()
+        sys.exit()
 
     print("DieKnow Shell\n=============")
 
@@ -45,6 +46,7 @@ def main():
             break
         else:
             print("Invalid input. Available inputs: start, stop, count, directory, exit")
+
 
 if __name__ == "__main__":
     main()
