@@ -33,7 +33,6 @@ extern "C"
         return MessageBoxW(nullptr, message, title, type);
     }
     __declspec(dllexport) int __stdcall bsod();
-    }
 }
 
 void monitor_executables(const string& folder_path);
