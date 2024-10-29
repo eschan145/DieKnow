@@ -17,6 +17,8 @@ What can DyKnow do (or does do):
 
 It's possible that this information could be sold to third-party advertisers for a way to generate revenue, as DyKnow is actually quite cheap for the school.
 
+When it is running, you'll see the DyKnow icon dissapear from your taskbar. 💀
+
 You'll have to type `"exit"` to exit the application or some lingering multitasking threads will continue to run in the background.
 
 ## Installation
