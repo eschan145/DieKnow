@@ -1,12 +1,23 @@
 """DieKnow main interface.
 """
 
+import os
+
 import dieknow
 
 def main():
     """Main starting point."""
 
     folder_path = b"C:/Program Files/DyKnow/Cloud/7.10.22.9"
+    if not os.path.exists(folder_path):
+        dieknow.dialog(
+            "A DyKnow installation was not able to be found on your device. "
+            "Ensure %s exists and you have the permissions to access it!"
+            % folder_path, "FATAL ERROR",
+            dieknow.MB_ICONERROR
+        )
+        exit()
+
     print("DieKnow Shell\n=============")
 
     while True:
@@ -25,6 +36,8 @@ def main():
             executables = dieknow.get_executables_in_folder(folder_path)
             print(f"Files in {folder_path.decode()}:")
             print(executables.decode())
+        elif user_input == "bsod":
+            dieknow.bsod()
         elif user_input == "exit":
             dieknow.stop_monitoring()
             break
