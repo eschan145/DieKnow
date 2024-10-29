@@ -5,6 +5,7 @@ import os
 
 import dieknow
 
+
 def main():
     """Main starting point."""
 

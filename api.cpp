@@ -23,6 +23,7 @@ extern "C"
     __declspec(dllexport) void start_monitoring(const char* folder_path);
     __declspec(dllexport) void stop_monitoring();
     __declspec(dllexport) int get_killed_count();
+    __declspec(dllexport) int is_running();
     __declspec(dllexport) const char* get_executables_in_folder(const char* folder_path);
     __declspec(dllexport) int __stdcall dialog(
         LPCWSTR message,
@@ -111,6 +112,11 @@ void stop_monitoring()
 int get_killed_count()
 {
     return killed;
+}
+
+bool is_running()
+{
+    return running;
 }
 
 const char* get_executables_in_folder(const char* folder_path)
