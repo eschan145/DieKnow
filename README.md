@@ -4,6 +4,13 @@ A bypass of DyKnow.
 
 DieKnow will significantly improve the performance of your laptop by a large amount, especially on the CPU. However, it will use around 3% of the CPU when running. But this is minimal compared to DyKnow, which uses up to 15% of the CPU consistently, and on an Intel Core i3, there isn't much to spare. It's not lightweight for something to take screenshots of your entire device screen at 4K resolution and at sixty frames per second.
 
+
+About this:
+* This **DOES NOT** need administrator privelleges, just a Python installation, which is often found in the Software Center.
+* It's very compact (just around 200 lines).
+* **DOES NOT** need a C++ compiler.
+* **DOES NOT** need to run an exectuable or a batch file, which is usually blocked by the school via Windows AppLocker.
+
 What can DyKnow do (or does do):
 
 * Monitor your device screen (including when you press "Show password" when typing a password)
