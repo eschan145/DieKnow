@@ -36,8 +36,6 @@ extern "C"
     __declspec(dllexport) int __stdcall bsod();
 }
 
-void monitor_executables(const string& folder_path);
-
 void close_application_by_exe(const string& exe_name)
 {
     HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
