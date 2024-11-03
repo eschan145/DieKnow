@@ -246,7 +246,6 @@ void create_window() {
         NULL);
 
     widgets.push_back(running_button);
-    widgets.push_back(stop_button);
 
     for (HWND widget : widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
