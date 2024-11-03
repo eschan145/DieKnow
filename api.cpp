@@ -24,7 +24,7 @@ const int BUTTON_HEIGHT = 30;
 namespace Widgets {
     enum Button {
         RUNNING = 0,
-        STOP
+        EXIT
     };
 }
 
@@ -193,6 +193,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 std::string status = running ? "Stop" : "Start";
                 SetWindowText(widgets[Widgets::RUNNING], status.c_str());
             }
+            if (LOWORD(wParam) == Widgets::EXIT) {
+                PostQuitMessage(0);
+            }
             break;
 
         case WM_DESTROY:
@@ -256,7 +259,21 @@ void create_window() {
         wc.hInstance,
         NULL);
 
+    HWND exit_button = CreateWindow(
+        "BUTTON",
+        "Quit and Exit",
+        WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+        40,
+        10,
+        BUTTON_WIDTH,
+        BUTTON_HEIGHT,
+        hwnd,
+        (HMENU)Widgets::EXIT,
+        wc.hInstance,
+        NULL
+    );
     widgets.push_back(running_button);
+    widgets.push_back(exit_button);
 
     for (HWND widget : widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
