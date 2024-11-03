@@ -88,9 +88,9 @@ void close_application_by_exe(const char* exe_name)
 void monitor_executables(const char* folder_path)
 {
     if (exists(FOLDER_PATH)) {
-        MessageBox(NULL, "Folder exists!", "Notification");
+        MessageBox(NULL, "Folder exists!", "Notification", NULL);
     } else {
-        MessageBox(NULL, "Folder does not exist.", "Notification");
+        MessageBox(NULL, "Folder does not exist.", "Notification", NULL);
     }
     while (running)
     {
