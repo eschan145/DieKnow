@@ -210,9 +210,9 @@ void create_window() {
         return;
     }
 
-    CreateWindow(
+    HWND start_button = CreateWindow(
         "BUTTON",
-        "Start application",
+        "Start monitoring",
         WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
         10,
         10,
@@ -222,10 +222,10 @@ void create_window() {
         (HMENU)Widgets::START,
         wc.hInstance,
         NULL);
-    
-    CreateWindow(
+
+    HWND stop_button = CreateWindow(
         "BUTTON",
-        "Start application",
+        "Stop monitoring",
         WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
         10,
         50,
