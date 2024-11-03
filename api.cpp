@@ -15,14 +15,16 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 using namespace std;
 namespace fs = std::filesystem;
 
+std::vector<HWND> widgets;
+
 const char* FOLDER_PATH = "C:/Program Files/DyKnow/Cloud/7.10.22.9";
 const int BUTTON_WIDTH = 150;
 const int BUTTON_HEIGHT = 30;
 
 namespace Widgets {
     enum Button {
-        START = 1,
-        STOP = 2
+        RUNNING = 0,
+        STOP
     };
 }
 
@@ -173,11 +175,16 @@ __declspec(dllexport) int __stdcall bsod()
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
         case WM_COMMAND:
-            if (LOWORD(wParam) == Widgets::START) {
-                start_monitoring(FOLDER_PATH);
-            }
-            else if (LOWORD(wParam) == Widgets::STOP) {
-                stop_monitoring();
+            if (LOWORD(wParam) == Widgets::RUNNING) {
+                running = !running;
+                std::string status = running ? "Running" : "Stopped";
+                SetWindowText(widgets[Widgets::RUNNING], status.c_str());
+
+                if (running) {
+                    start_monitoring(FOLDER_PATH);
+                } else {
+                    stop_monitoring();
+                }
             }
             break;
         case WM_DESTROY:
@@ -188,7 +195,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 }
 
 void create_window() {
-    std::vector<HWND> widgets;
     const char CLASS_NAME[] = "DieKnow";
 
     WNDCLASS wc = {};
@@ -226,33 +232,20 @@ void create_window() {
         return;
     }
 
-    HWND start_button = CreateWindow(
+    HWND running_button = CreateWindow(
         "BUTTON",
-        "Start monitoring",
+        "Running",
         WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
         10,
         10,
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
         hwnd,
-        (HMENU)Widgets::START,
+        (HMENU)Widgets::RUNNING,
         wc.hInstance,
         NULL);
 
-    HWND stop_button = CreateWindow(
-        "BUTTON",
-        "Stop monitoring",
-        WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-        10,
-        50,
-        BUTTON_WIDTH,
-        BUTTON_HEIGHT,
-        hwnd,
-        (HMENU)Widgets::STOP,
-        wc.hInstance,
-        NULL);
-
-    widgets.push_back(start_button);
+    widgets.push_back(running_button);
     widgets.push_back(stop_button);
 
     for (HWND widget : widgets) {
