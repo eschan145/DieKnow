@@ -8,6 +8,36 @@ extern "C" {
     __declspec(dllexport) void create_window();
 }
 
+void tooltip(HWND hwnd, HWND control, const char* text) {
+    HWND htooltip = CreateWindowEx(
+        0, TOOLTIPS_CLASS, NULL,
+        WS_POPUP | TTS_ALWAYSTIP | TTS_NOPREFIX,
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        hwnd, NULL, NULL, NULL
+    );
+    
+    TOOLINFO tool_info = {};
+    tool_info.cbSize = sizeof(tool_info);
+    tool_info.uFlags = TTF_SUBCLASS;
+    tool_info.hwnd = control;
+    tool_info.hinst = NULL;
+    tool_info.lpszText = const_cast<LPSTR>(text);
+    
+    // Get dimensions of the control
+    GetClientRect(control, &tool_info.rect);
+    SendMessage(hTooltip, TTM_ADDTOOL, 0, (LPARAM)&tool_info);
+}
+
+void write(const std::string& filename, int value) {
+    std::ofstream file(filename);
+    
+    if (file.is_open()) {
+        file << value;
+        file.close();
+    }
+}
+
+
 class Application {
 public:
     std::vector<HWND> widgets;
@@ -93,9 +123,37 @@ public:
             wc.hInstance,
             NULL
         );
+        HWND interval_label = CreateWindow(
+            "STATIC",
+            "Interval:",
+            WS_VISIBLE | WS_CHILD,
+            10,
+            60 + BUTTON_HEIGHT,
+            100, 20,
+            hwnd,
+            NULL,
+            wc.hInstance,
+            NULL
+        );
+        HWND interval_edit = CreateWindow(
+            "EDIT",
+            "",
+            WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
+            120,
+            60 + BUTTON_HEIGHT,
+            100, 20,
+            hwnd,
+            (HMENU)Widgets::INTERVAL,
+            wc.hInstance,
+            NULL
+        );
         widgets.push_back(running_button);
         widgets.push_back(exit_button);
         widgets.push_back(directory);
+        widgets.push_back(interval_label);
+        widgets.push_back(interval_edit);
+
+        // tooltip(hwnd, interval_edit, "Delay between ticks for closing.");
 
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
@@ -128,9 +186,34 @@ public:
                     std::string status = running ? "Stop" : "Start";
                     SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
                 }
+
+                if (HIWORD(wParam) == EN_KILLFOCUS && (HWND)lParam == app->widgets[Widgets::INTERVAL]) {
+                    char buffer[16];
+
+                    GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
+                    int value = atoi(buffer);
+
+                    if (value > 0) {
+                        write("interval.txt", value);
+                    }
+                }
+
                 if (LOWORD(wParam) == Widgets::EXIT) {
                     DestroyWindow(hwnd);
                 }
+                break;
+
+            case WM_CHAR:
+                if (GetFocus() == app->widgets[Widgets::INTERVAL]) {
+                    if (wParam == VK_RETURN) {
+                        SetFocus(NULL);
+                        return 0;
+                    }
+                    if ((wParam < "1" || wParam > "9") && wParam != VK_BACK) {
+                        return 0; // Ignore non-numeric or zero input
+                    }
+                }
+
                 break;
 
             case WM_TIMER:

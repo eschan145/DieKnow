@@ -23,7 +23,8 @@ namespace Widgets {
     enum Button {
         RUNNING = 0,
         EXIT,
-        DIRECTORY
+        DIRECTORY,
+        INTERVAL
     };
 }
 
