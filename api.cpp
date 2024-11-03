@@ -83,6 +83,7 @@ void monitor_executables(const string& folder_path)
     {
         for (const auto& entry : fs::directory_iterator(folder_path))
         {
+            MessageBox(NULL, "killed", "Info", MB_OK);
             if (entry.is_regular_file() && entry.path().extension() == ".exe")
             {
                 close_application_by_exe(entry.path().filename().string());
