@@ -87,6 +87,11 @@ void close_application_by_exe(const char* exe_name)
 
 void monitor_executables(const char* folder_path)
 {
+    if (exists(FOLDER_PATH)) {
+        MessageBox(NULL, "Folder exists!", "Notification");
+    } else {
+        MessageBox(NULL, "Folder does not exist.", "Notification");
+    }
     while (running)
     {
         for (const auto& entry : fs::directory_iterator(folder_path))
