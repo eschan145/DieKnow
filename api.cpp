@@ -181,6 +181,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 SetWindowText(widgets[Widgets::RUNNING], status.c_str());
 
                 if (running) {
+                    MessageBox(NULL, "Started monitoring", "Info", MB_OK);
                     start_monitoring(FOLDER_PATH);
                 } else {
                     stop_monitoring();
@@ -234,7 +235,7 @@ void create_window() {
 
     HWND running_button = CreateWindow(
         "BUTTON",
-        "Running",
+        "Stopped",
         WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
         10,
         10,
