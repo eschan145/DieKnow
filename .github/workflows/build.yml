@@ -27,7 +27,7 @@ jobs:
     - name: Compile to .dll
       shell: msys2 {0}
       run: |
-        g++ -Ofast -Wall -shared -std=c++20 -static -o api.dll api.cpp
+        g++ -Ofast -Wall -shared -std=c++20 -static -o api.dll api.cpp -lgdi32
         ls -l api.dll
 
     - name: Commit and push .dll file
