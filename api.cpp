@@ -194,7 +194,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 SetWindowText(widgets[Widgets::RUNNING], status.c_str());
             }
             if (LOWORD(wParam) == Widgets::EXIT) {
-                PostQuitMessage(0);
+                DestroyWindow(hwnd);
             }
             break;
 
@@ -263,8 +263,8 @@ void create_window() {
         "BUTTON",
         "Quit and Exit",
         WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-        40,
         10,
+        50,
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
         hwnd,
