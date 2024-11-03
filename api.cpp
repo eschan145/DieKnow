@@ -189,7 +189,7 @@ public:
         const char CLASS_NAME[] = "DieKnow";
 
         WNDCLASS wc = {};
-        wc.lpfnWndProc = WindowProc;
+        wc.lpfnWndProc = Application::WindowProc;
         wc.hInstance = GetModuleHandle(NULL);
         wc.lpszClassName = CLASS_NAME;
 
@@ -284,7 +284,7 @@ public:
         }
     }
 
-    LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         switch (uMsg) {
             case WM_COMMAND:
                 if (LOWORD(wParam) == Widgets::RUNNING) {
@@ -338,8 +338,9 @@ public:
             SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
         }
     }
-}
+};
 
 void create_window() {
-    Application* application = Application();
+    Application* application = new Application();
+    delete application;
 }
