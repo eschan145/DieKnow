@@ -181,6 +181,17 @@ __declspec(dllexport) int __stdcall bsod()
     return 0;
 }
 
+void update() {
+    SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
+
+    for (const auto& entry : fs::directory_iterator(FOLDER_PATH)) {
+        if (entry.is_regular_file() && entry.path().extension() == ".exe") {
+            std::string file_name = entry.path().filename().string();
+            SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
+        }
+    }
+}
+
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
         case WM_COMMAND:
@@ -212,17 +223,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     }
 
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
-}
-
-void update() {
-    SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
-
-    for (const auto& entry : fs::directory_iterator(FOLDER_PATH)) {
-        if (entry.is_regular_file() && entry.path.extension() = ".exe") {
-            std::string file_name = entry.path().filename().string();
-            SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
-        }
-    }
 }
 
 void create_window() {
@@ -294,13 +294,13 @@ void create_window() {
     HWND directory = CreateWindow(
         "LISTBOX",
         nullptr,
-        WS_VISIBLE | WS_CHILD | LBE_STANDARD,
+        WS_VISIBLE | WS_CHILD | LBS_STANDARD,
         BUTTON_WIDTH + 20,
         10,
         BUTTON_WIDTH * 1.5,
         200,
         hwnd,
-        (HMENU)IDC_LISTBOX,
+        (HMENU)Widgets::DIRECTORY,
         wc.hInstance,
         NULL
     );
