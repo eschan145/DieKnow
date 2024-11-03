@@ -9,8 +9,6 @@ extern "C" {
     __declspec(dllexport) void create_window();
 }
 
-InitCommonControls();
-
 void tooltip(HWND hwnd, HWND control, const char* text) {
     HWND htooltip = CreateWindowEx(
         0, TOOLTIPS_CLASS, NULL,
@@ -47,6 +45,8 @@ public:
     std::vector<std::string> previous_executables;
 
     Application() {
+        InitCommonControls();
+
         const char CLASS_NAME[] = "DieKnow";
 
         WNDCLASS wc = {};
