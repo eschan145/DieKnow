@@ -1,12 +1,15 @@
 #include <vector>
 #include <string>
 #include <windows.h>
+#include <commctrl.h>
 
 #include "api.cpp"
 
 extern "C" {
     __declspec(dllexport) void create_window();
 }
+
+InitCommonControls();
 
 void tooltip(HWND hwnd, HWND control, const char* text) {
     HWND htooltip = CreateWindowEx(
@@ -209,7 +212,7 @@ public:
                         SetFocus(NULL);
                         return 0;
                     }
-                    if ((wParam < "1" || wParam > "9") && wParam != VK_BACK) {
+                    if ((wParam < '1' || wParam > '9') && wParam != VK_BACK) {
                         return 0; // Ignore non-numeric or zero input
                     }
                 }
