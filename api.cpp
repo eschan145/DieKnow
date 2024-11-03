@@ -29,7 +29,7 @@ extern "C"
     bool running = false;
     int killed = 0;
 
-    __declspec(dllexport) void start_monitoring();
+    __declspec(dllexport) void start_monitoring(const char* folder_path);
     __declspec(dllexport) void stop_monitoring();
     __declspec(dllexport) int get_killed_count();
     __declspec(dllexport) bool is_running();
@@ -103,7 +103,7 @@ void monitor_executables(const string& folder_path)
     }
 }
 
-void start_monitoring()
+void start_monitoring(const char* folder_path = FOLDER_PATH)
 {
     if (!running)
     {

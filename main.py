@@ -27,7 +27,7 @@ def main():
 
         if user_input == "start":
             if not dieknow.is_running():
-                dieknow.start_monitoring()
+                dieknow.start_monitoring(folder_path)
                 print("Monitoring started...")
             else:
                 dieknow.dialog(

@@ -27,6 +27,7 @@ MB_DEFBUTTON4 = 0x00000300
 
 lib = ctypes.CDLL("./api.dll")
 
+lib.start_monitoring.argtypes = [ctypes.c_char_p]
 lib.stop_monitoring.restype = None
 lib.get_killed_count.restype = ctypes.c_int
 lib.get_executables_in_folder.argtypes = [ctypes.c_char_p]
