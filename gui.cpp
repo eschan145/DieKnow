@@ -28,7 +28,7 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
     
     // Get dimensions of the control
     GetClientRect(control, &tool_info.rect);
-    SendMessage(hTooltip, TTM_ADDTOOL, 0, (LPARAM)&tool_info);
+    SendMessage(htooltip, TTM_ADDTOOL, 0, (LPARAM)&tool_info);
 }
 
 void write(const std::string& filename, int value) {
