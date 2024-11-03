@@ -199,7 +199,7 @@ void create_window() {
     RegisterClass(&wc);
 
     HFONT main_font = CreateFont(
-        24,
+        18,
         0,
         0,
         0,
