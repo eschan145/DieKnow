@@ -16,6 +16,7 @@ using namespace std;
 namespace fs = std::filesystem;
 
 std::vector<HWND> widgets;
+std::vector<std::string> previous_executables;
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.22.9";
 const int BUTTON_WIDTH = 150;
@@ -182,13 +183,24 @@ __declspec(dllexport) int __stdcall bsod()
 }
 
 void update() {
+    std::vector<std::string> current_executables;
+
+    for (const auto& entry : fs::directory_iterator(folder_path)) {
+        if (entry.is_regular_file() && entry.path().extension() == ".exe") {
+            current_executables.push_back(entry.path().filename().string());
+        }
+    }
+
+    if (current_executables == previous_executables) {
+        return;
+    }
+
+    previous_executables = current_executables;
+
     SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
 
-    for (const auto& entry : fs::directory_iterator(FOLDER_PATH)) {
-        if (entry.is_regular_file() && entry.path().extension() == ".exe") {
-            std::string file_name = entry.path().filename().string();
-            SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
-        }
+    for (const std::string& file_name : current_executables) {
+        SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
     }
 }
 
