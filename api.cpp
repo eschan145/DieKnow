@@ -241,6 +241,8 @@ void create_window() {
         return;
     }
 
+    MoveWindow(hwnd, 0, 0, 250, 600, TRUE);
+
     HWND running_button = CreateWindow(
         "BUTTON",
         "Start",
