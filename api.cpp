@@ -208,10 +208,10 @@ void create_window() {
         FALSE,
         FALSE,
         DEFAULT_CHARSET,
-        OUT_OUTLINE_PRECIS,
+        OUT_DEFAULT_PRECIS,
         CLIP_DEFAULT_PRECIS,
         DEFAULT_QUALITY,
-        DEFAULT_FD_CALL,
+        DEFAULT_PITCH | FF_SWISS,
         "Segoe UI");
 
     HWND hwnd = CreateWindowEx(
@@ -256,7 +256,7 @@ void create_window() {
     widgets.push_back(stop_button);
 
     for (HWND widget : widgets) {
-        SendMessage(button, WM_SETFONT, (WPARAM)main_font, TRUE);
+        SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
     }
 
     ShowWindow(hwnd, SW_SHOW);
