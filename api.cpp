@@ -17,7 +17,7 @@ namespace fs = std::filesystem;
 
 std::vector<HWND> widgets;
 
-const char* FOLDER_PATH = "C:/Program Files/DyKnow/Cloud/7.10.22.9";
+const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.22.9";
 const int BUTTON_WIDTH = 150;
 const int BUTTON_HEIGHT = 30;
 
