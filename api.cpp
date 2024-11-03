@@ -15,12 +15,21 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 using namespace std;
 namespace fs = std::filesystem;
 
+const char* FOLDER_PATH = "C:/Program Files/DyKnow/Cloud/7.10.22.9";
+
+namespace Widgets {
+    enum Button {
+        START = 1,
+        STOP = 2
+    };
+}
+
 extern "C"
 {
     bool running = false;
     int killed = 0;
 
-    __declspec(dllexport) void start_monitoring(const char* folder_path);
+    __declspec(dllexport) void start_monitoring();
     __declspec(dllexport) void stop_monitoring();
     __declspec(dllexport) int get_killed_count();
     __declspec(dllexport) bool is_running();
@@ -94,7 +103,7 @@ void monitor_executables(const string& folder_path)
     }
 }
 
-void start_monitoring(const char* folder_path)
+void start_monitoring()
 {
     if (!running)
     {
@@ -162,8 +171,11 @@ __declspec(dllexport) int __stdcall bsod()
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
         case WM_COMMAND:
-            if (LOWORD(wParam) == 1) {
-                MessageBox(hwnd, "Button Clicked!", "Info", MB_OK);
+            if (LOWORD(wParam) == Widgets::START) {
+                start_monitoring(FOLDER_PATH);
+            }
+            else if (LOWORD(wParam) == Widgets::STOP) {
+                stop_monitoring();
             }
             break;
         case WM_DESTROY:
@@ -198,7 +210,7 @@ void create_window() {
 
     CreateWindow(
         "BUTTON",
-        "Click Me",
+        "Start application",
         WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
         10,
         10,
