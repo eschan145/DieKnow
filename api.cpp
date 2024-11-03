@@ -192,12 +192,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 } else {
                     start_monitoring(FOLDER_PATH);
                 }
-            }void start_monitoring(const char* folder_path = FOLDER_PATH)
-{
-    if (!running)
-    {
-        running = true;
-        thread(monitor_executables, folder_path).detach();
+            }
+            break;
     }
 }
 
