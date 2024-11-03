@@ -185,7 +185,7 @@ __declspec(dllexport) int __stdcall bsod()
 void update() {
     std::vector<std::string> current_executables;
 
-    for (const auto& entry : fs::directory_iterator(folder_path)) {
+    for (const auto& entry : fs::directory_iterator(FOLDER_PATH)) {
         if (entry.is_regular_file() && entry.path().extension() == ".exe") {
             current_executables.push_back(entry.path().filename().string());
         }
