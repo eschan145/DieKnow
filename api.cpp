@@ -223,6 +223,7 @@ public:
             return;
         }
 
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
         MoveWindow(hwnd, 0, 0, 400, 600, TRUE);
 
         HWND running_button = CreateWindow(
@@ -285,6 +286,8 @@ public:
     }
 
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+        Application* app = reinterpret_cast<Application*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+
         switch (uMsg) {
             case WM_COMMAND:
                 if (LOWORD(wParam) == Widgets::RUNNING) {
@@ -295,7 +298,7 @@ public:
                     }
 
                     std::string status = running ? "Stop" : "Start";
-                    SetWindowText(widgets[Widgets::RUNNING], status.c_str());
+                    SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
                 }
                 if (LOWORD(wParam) == Widgets::EXIT) {
                     DestroyWindow(hwnd);
@@ -304,7 +307,7 @@ public:
 
             case WM_TIMER:
                 if (wParam == 1) {
-                    update();
+                    app->update();
                 }
                 return 0;
 
