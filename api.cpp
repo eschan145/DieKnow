@@ -190,7 +190,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                     start_monitoring(FOLDER_PATH);
                 }
 
-                std::string status = running ? "Running" : "Stopped";
+                std::string status = running ? "Stop" : "Start";
                 SetWindowText(widgets[Widgets::RUNNING], status.c_str());
             }
             break;
@@ -243,7 +243,7 @@ void create_window() {
 
     HWND running_button = CreateWindow(
         "BUTTON",
-        "Stopped",
+        "Start",
         WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
         10,
         10,
