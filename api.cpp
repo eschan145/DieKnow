@@ -24,7 +24,8 @@ const int BUTTON_HEIGHT = 30;
 namespace Widgets {
     enum Button {
         RUNNING = 0,
-        EXIT
+        EXIT,
+        DIRECTORY
     };
 }
 
@@ -198,12 +199,30 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             }
             break;
 
+        case WM_TIMER:
+            if (wParam == 1) {
+                update();
+            }
+            return 0;
+
         case WM_DESTROY:
+            KillTimer(hwnd, 1);
             PostQuitMessage(0);
             return 0;
     }
 
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
+void update() {
+    SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
+
+    for (const auto& entry : fs::directory_iterator(FOLDER_PATH)) {
+        if (entry.is_regular_file() && entry.path.extension() = ".exe") {
+            std::string file_name = entry.path().filename().string();
+            SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
+        }
+    }
 }
 
 void create_window() {
@@ -244,7 +263,7 @@ void create_window() {
         return;
     }
 
-    MoveWindow(hwnd, 0, 0, 250, 600, TRUE);
+    MoveWindow(hwnd, 0, 0, 400, 600, TRUE);
 
     HWND running_button = CreateWindow(
         "BUTTON",
@@ -272,12 +291,28 @@ void create_window() {
         wc.hInstance,
         NULL
     );
+    HWND directory = CreateWindow(
+        "LISTBOX",
+        nullptr,
+        WS_VISIBLE | WS_CHILD | LBE_STANDARD,
+        BUTTON_WIDTH + 20,
+        10,
+        BUTTON_WIDTH * 1.5,
+        200,
+        hwnd,
+        (HMENU)IDC_LISTBOX,
+        wc.hInstance,
+        NULL
+    );
     widgets.push_back(running_button);
     widgets.push_back(exit_button);
+    widgets.push_back(directory);
 
     for (HWND widget : widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
     }
+
+    SetTimer(hwnd, 1, 50, nullptr);
 
     ShowWindow(hwnd, SW_SHOW);
     UpdateWindow(hwnd);
