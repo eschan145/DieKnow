@@ -70,7 +70,7 @@ void close_application_by_exe(const char* exe_name)
     {
         do
         {
-            if (_stricmp(pe32.szExeFile, exe_name.c_str()) == 0)
+            if (_stricmp(pe32.szExeFile, exe_name) == 0)
             {
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
                 if (hProcess)
@@ -93,7 +93,7 @@ void monitor_executables(const char* folder_path)
         {
             if (entry.is_regular_file() && entry.path().extension() == ".exe")
             {
-                close_application_by_exe(entry.path().filename().string());
+                close_application_by_exe(entry.path().filename().c_str());
             }
         }
 
