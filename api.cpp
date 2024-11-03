@@ -184,14 +184,14 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     switch (uMsg) {
         case WM_COMMAND:
             if (LOWORD(wParam) == Widgets::RUNNING) {
-                std::string status = running ? "Running" : "Stopped";
-                SetWindowText(widgets[Widgets::RUNNING], status.c_str());
-
                 if (running) {
                     stop_monitoring();
                 } else {
                     start_monitoring(FOLDER_PATH);
                 }
+
+                std::string status = running ? "Running" : "Stopped";
+                SetWindowText(widgets[Widgets::RUNNING], status.c_str());
             }
             break;
 
