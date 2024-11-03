@@ -188,6 +188,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 }
 
 void create_window() {
+    std::vector<HWND> widgets;
     const char CLASS_NAME[] = "DieKnow";
 
     WNDCLASS wc = {};
@@ -197,14 +198,29 @@ void create_window() {
 
     RegisterClass(&wc);
 
+    HFONT main_font = CreateFont(
+        24,
+        0,
+        0,
+        0,
+        FW_NORMAL,
+        FALSE,
+        FALSE,
+        FALSE,
+        DEFAULT_CHARSET,
+        OUT_OUTLINE_PRECIS,
+        CLIP_DEFAULT_PRECIS,
+        DEFAULT_QUALITY,
+        DEFAULT_FD_CALL,
+        "Segoe UI");
+
     HWND hwnd = CreateWindowEx(
         0,
         CLASS_NAME,
         "DieKnow",
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-        NULL, NULL, wc.hInstance, NULL
-    );
+        NULL, NULL, wc.hInstance, NULL);
 
     if (hwnd == NULL) {
         return;
@@ -235,6 +251,13 @@ void create_window() {
         (HMENU)Widgets::STOP,
         wc.hInstance,
         NULL);
+
+    widgets.push_back(start_button);
+    widgets.push_back(stop_button);
+
+    for (HWND widget : widgets) {
+        SendMessage(button, WM_SETFONT, (WPARAM)main_font, TRUE);
+    }
 
     ShowWindow(hwnd, SW_SHOW);
     UpdateWindow(hwnd);
