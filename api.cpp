@@ -93,7 +93,7 @@ void monitor_executables(const char* folder_path)
         {
             if (entry.is_regular_file() && entry.path().extension() == ".exe")
             {
-                close_application_by_exe(entry.path().filename().c_str());
+                close_application_by_exe(entry.path().filename().string().c_str());
             }
         }
 
