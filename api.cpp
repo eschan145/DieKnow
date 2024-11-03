@@ -192,7 +192,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 } else {
                     start_monitoring(FOLDER_PATH);
                 }
-                break;
             }
             break;
 
@@ -201,19 +200,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             return 0;
     }
 
-    return DefWindowProc(hwnd, uMsg, wParam, lParam);
-}
-
-
-void stop_monitoring()
-{
-    running = false;
-}
-            break;
-        case WM_DESTROY:
-            PostQuitMessage(0);
-            return 0;
-        }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
