@@ -87,11 +87,6 @@ void close_application_by_exe(const char* exe_name)
 
 void monitor_executables(const char* folder_path)
 {
-    if (exists(FOLDER_PATH)) {
-        MessageBox(NULL, "Folder exists!", "Notification", NULL);
-    } else {
-        MessageBox(NULL, "Folder does not exist.", "Notification", NULL);
-    }
     while (running)
     {
         for (const auto& entry : fs::directory_iterator(folder_path))
@@ -189,17 +184,27 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     switch (uMsg) {
         case WM_COMMAND:
             if (LOWORD(wParam) == Widgets::RUNNING) {
-                running = !running;
                 std::string status = running ? "Running" : "Stopped";
                 SetWindowText(widgets[Widgets::RUNNING], status.c_str());
 
                 if (running) {
-                    MessageBox(NULL, "Started monitoring", "Info", MB_OK);
-                    start_monitoring(FOLDER_PATH);
-                } else {
                     stop_monitoring();
+                } else {
+                    start_monitoring(FOLDER_PATH);
                 }
-            }
+            }void start_monitoring(const char* folder_path = FOLDER_PATH)
+{
+    if (!running)
+    {
+        running = true;
+        thread(monitor_executables, folder_path).detach();
+    }
+}
+
+void stop_monitoring()
+{
+    running = false;
+}
             break;
         case WM_DESTROY:
             PostQuitMessage(0);
