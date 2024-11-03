@@ -58,7 +58,7 @@ bool exists(const char* path) {
     return (ftyp & FILE_ATTRIBUTE_DIRECTORY);
 }
 
-void close_application_by_exe(const string& exe_name)
+void close_application_by_exe(const char* exe_name)
 {
     HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     PROCESSENTRY32 pe32;
@@ -85,7 +85,7 @@ void close_application_by_exe(const string& exe_name)
     CloseHandle(hProcessSnap);
 }
 
-void monitor_executables(const string& folder_path)
+void monitor_executables(const char* folder_path)
 {
     while (running)
     {
