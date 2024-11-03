@@ -44,3 +44,4 @@ get_executables_in_folder = lib.get_executables_in_folder
 is_running = lib.is_running
 bsod = lib.bsod
 dialog = lib.dialog
+create_window = lib.create_window

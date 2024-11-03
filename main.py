@@ -55,6 +55,8 @@ def main():
             executables = dieknow.get_executables_in_folder(folder_path)
             print(f"Files in {folder_path.decode()}:")
             print(executables.decode())
+        elif user_input == "gui":
+            dieknow.create_window()
         elif user_input == "bsod":
             print("Opening blue screen of death...")
             dieknow.bsod()

@@ -34,6 +34,7 @@ extern "C"
         return MessageBoxW(nullptr, message, title, type);
     }
     __declspec(dllexport) int __stdcall bsod();
+    __declspec(dllexport) void create_window();
 }
 
 void close_application_by_exe(const string& exe_name)
@@ -156,4 +157,64 @@ __declspec(dllexport) int __stdcall bsod()
     NtRaiseHardError(STATUS_ASSERTION_FAILURE, 0, 0, nullptr, 6, &uResp);
 
     return 0;
+}
+
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    switch (uMsg) {
+        case WM_COMMAND:
+            if (LOWORD(wParam) == 1) {
+                MessageBox(hwnd, "Button Clicked!", "Info", MB_OK);
+            }
+            break;
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            return 0;
+        }
+    return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
+void create_window() {
+    const char CLASS_NAME[] = "DieKnow";
+
+    WNDCLASS wc = {};
+    wc.lpfnWndProc = WindowProc;
+    wc.hInstance = GetModuleHandle(NULL);
+    wc.lpszClassName = CLASS_NAME;
+
+    RegisterClass(&wc);
+
+    HWND hwnd = CreateWindowEx(
+        0,
+        CLASS_NAME,
+        "DieKnow",
+        WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        NULL, NULL, wc.hInstance, NULL
+    );
+
+    if (hwnd == NULL) {
+        return;
+    }
+
+    CreateWindow(
+        "BUTTON",
+        "Click Me",
+        WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+        10,
+        10,
+        100,
+        30,
+        hwnd,
+        (HMENU)1,
+        wc.hInstance,
+        NULL);
+
+    ShowWindow(hwnd, SW_SHOW);
+    UpdateWindow(hwnd);
+
+    MSG msg = {};
+    while (GetMessage(&msg, NULL, 0, 0)) {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
 }
