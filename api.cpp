@@ -87,10 +87,6 @@ void close_application_by_exe(const string& exe_name)
 
 void monitor_executables(const string& folder_path)
 {
-    if (exists(folder_path) == false) {
-        MessageBox(NULL, "Failed to find path")
-    }
-
     while (running)
     {
         for (const auto& entry : fs::directory_iterator(folder_path))
@@ -124,7 +120,7 @@ void start_monitoring(const char* folder_path = FOLDER_PATH)
     if (!running)
     {
         running = true;
-        thread(monitor_executables, string(folder_path)).detach();
+        thread(monitor_executables, folder_path).detach();
     }
 }
 
