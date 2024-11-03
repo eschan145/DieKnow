@@ -197,7 +197,7 @@ public:
 
                     GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
                     int value = atoi(buffer);
-
+                    MessageBox(nullptr, "writing", NULL, NULL);
                     if (value > 0) {
                         write("interval.txt", value);
                     }
