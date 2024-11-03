@@ -36,7 +36,7 @@ void write(const std::string& filename, int value) {
         file << value;
         file.close();
     } else {
-        MessageBoxW(nullptr, "Failed to open file", "Error", NULL);
+        MessageBox(nullptr, "Failed to open file", "Error", NULL);
     }
 }
 
