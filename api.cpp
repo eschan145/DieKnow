@@ -50,6 +50,14 @@ extern "C"
     __declspec(dllexport) void create_window();
 }
 
+bool exists(const char* path) {
+    DWORD ftyp = GetFileAttributesA(path);
+    if (ftyp == INVALID_FILE_ATTRIBUTES) {
+        return false;
+    }
+    return (ftyp & FILE_ATTRIBUTE_DIRECTORY);
+}
+
 void close_application_by_exe(const string& exe_name)
 {
     HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -79,11 +87,14 @@ void close_application_by_exe(const string& exe_name)
 
 void monitor_executables(const string& folder_path)
 {
+    if (exists(folder_path) == false) {
+        MessageBox(NULL, "Failed to find path")
+    }
+
     while (running)
     {
         for (const auto& entry : fs::directory_iterator(folder_path))
         {
-            MessageBox(NULL, "killed", "Info", MB_OK);
             if (entry.is_regular_file() && entry.path().extension() == ".exe")
             {
                 close_application_by_exe(entry.path().filename().string());
