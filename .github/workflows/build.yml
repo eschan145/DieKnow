@@ -27,15 +27,17 @@ jobs:
     - name: Compile to .dll
       shell: msys2 {0}
       run: |
-        g++ -Ofast -Wall -shared -std=c++20 -static -o api.dll api.cpp
+        g++ -Ofast -Wall -shared -std=c++20 -static -o api.dll api.cpp -lgdi32
+        g++ -Ofast -Wall -shared -std=c++20 -static -o gui.dll gui.cpp -lgdi32 -lcomctl32
         ls -l api.dll
+        ls -l gui.dll
 
     - name: Commit and push .dll file
       run: |
         git config --global user.name "Ethan Chan"
         git config --global user.email "esamuelchan@gmail.com"
         git add . -f
-        git commit -m "Auto-build api.dll using g++" || echo "No changes to commit"
+        git commit -m "Auto-build DLL files using g++" || echo "No changes to commit"
         git push https://$GH_PAT@github.com/eschan145/DieKnow.git
       env:
         # A GitHub PAT must be set up as an Actions secret in the repository

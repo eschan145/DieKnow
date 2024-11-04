@@ -15,6 +15,20 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 using namespace std;
 namespace fs = std::filesystem;
 
+const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.22.9";
+const int BUTTON_WIDTH = 150;
+const int BUTTON_HEIGHT = 30;
+
+namespace Widgets {
+    enum Button {
+        RUNNING = 0,
+        EXIT,
+        DIRECTORY,
+        INTERVAL,
+        INTERVAL_SET
+    };
+}
+
 extern "C"
 {
     bool running = false;
@@ -36,7 +50,15 @@ extern "C"
     __declspec(dllexport) int __stdcall bsod();
 }
 
-void close_application_by_exe(const string& exe_name)
+bool exists(const char* path) {
+    DWORD ftyp = GetFileAttributesA(path);
+    if (ftyp == INVALID_FILE_ATTRIBUTES) {
+        return false;
+    }
+    return (ftyp & FILE_ATTRIBUTE_DIRECTORY);
+}
+
+void close_application_by_exe(const char* exe_name)
 {
     HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     PROCESSENTRY32 pe32;
@@ -48,7 +70,7 @@ void close_application_by_exe(const string& exe_name)
     {
         do
         {
-            if (_stricmp(pe32.szExeFile, exe_name.c_str()) == 0)
+            if (_stricmp(pe32.szExeFile, exe_name) == 0)
             {
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
                 if (hProcess)
@@ -63,7 +85,7 @@ void close_application_by_exe(const string& exe_name)
     CloseHandle(hProcessSnap);
 }
 
-void monitor_executables(const string& folder_path)
+void monitor_executables(const char* folder_path)
 {
     while (running)
     {
@@ -71,7 +93,7 @@ void monitor_executables(const string& folder_path)
         {
             if (entry.is_regular_file() && entry.path().extension() == ".exe")
             {
-                close_application_by_exe(entry.path().filename().string());
+                close_application_by_exe(entry.path().filename().string().c_str());
             }
         }
 
@@ -93,12 +115,12 @@ void monitor_executables(const string& folder_path)
     }
 }
 
-void start_monitoring(const char* folder_path)
+void start_monitoring(const char* folder_path = FOLDER_PATH)
 {
     if (!running)
     {
         running = true;
-        thread(monitor_executables, string(folder_path)).detach();
+        thread(monitor_executables, folder_path).detach();
     }
 }
 
