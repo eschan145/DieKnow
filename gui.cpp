@@ -193,6 +193,7 @@ public:
                 }
 
                 if (HIWORD(wParam) == EN_KILLFOCUS && (HWND)lParam == app->widgets[Widgets::INTERVAL]) {
+                    MessageBox(nullptr, "Failed", "Error", NULL);
                     char buffer[16];
 
                     GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
