@@ -122,7 +122,7 @@ public:
             WS_VISIBLE | WS_CHILD | LBS_STANDARD,
             BUTTON_WIDTH + 20,
             10,
-            BUTTON_WIDTH + 30,
+            BUTTON_WIDTH + 60,
             170,
             hwnd,
             (HMENU)Widgets::DIRECTORY,
