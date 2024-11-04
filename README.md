@@ -1,15 +1,17 @@
 # DieKnow
 
-A bypass of DyKnow.
+A bypass of DyKnow, powered primarily by the Windows win32 API.
 
 DieKnow will significantly improve the performance of your laptop by a large amount, especially on the CPU. However, it will use around 3% of the CPU when running. But this is minimal compared to DyKnow, which uses up to 15% of the CPU consistently, and on an Intel Core i3, there isn't much to spare. It's not lightweight for something to take screenshots of your entire device screen at 4K resolution and at sixty frames per second.
 
+For ease of use, a beta GUI application is located in [`gui.py`](gui.py), powered by the Windows win32 API.
 
 About this:
 * This **DOES NOT** need administrator privelleges, just a Python installation, which is often found in the Software Center.
-* It's very compact (just around 200 lines).
+* It's very compact (just around 600 lines).
 * **DOES NOT** need a C++ compiler.
 * **DOES NOT** need to run an exectuable or a batch file, which is usually blocked by the school via Windows AppLocker.
+* **DOES NOT** have any external dependencies.
 
 What can DyKnow do (or does do):
 
@@ -34,7 +36,6 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 
 ### For Python
 
-
 1. Install Python 3
 2. Click on Code
    ![image](https://github.com/user-attachments/assets/31ca7d0e-eaad-4a46-a11b-b38216639b05)
@@ -45,6 +46,10 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 6. Enjoy :)
 
 ## Commands
+
+### Quickstart
+
+Double-click the [`main.py`](main.py) and type `start` to start the monitoring and closing of DyKnow. If a shell is too complicated for you, you can use the GUI application in [`gui.py`](gui.py) by double-clicking it. Ensure Python is installed.
 
 ### `start`
 
