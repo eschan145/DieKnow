@@ -133,8 +133,8 @@ public:
             "Interval:",
             WS_VISIBLE | WS_CHILD,
             10,
-            60 + BUTTON_HEIGHT,
-            100, 20,
+            120 + BUTTON_HEIGHT,
+            50, 20,
             hwnd,
             NULL,
             wc.hInstance,
@@ -144,9 +144,9 @@ public:
             "EDIT",
             "",
             WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-            120,
-            60 + BUTTON_HEIGHT,
-            100, 20,
+            70,
+            120 + BUTTON_HEIGHT,
+            150, BUTTON_HEIGHT,
             hwnd,
             (HMENU)Widgets::INTERVAL,
             wc.hInstance,
@@ -190,9 +190,6 @@ public:
 
                     std::string status = running ? "Stop" : "Start";
                     SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
-                }
-                if ((HWND)wParam != app->widgets[Widgets::INTERVAL]) {
-                    MessageBox(nullptr, "Handles do not match", "Debug", MB_OK);
                 }
 
                 if (HIWORD(wParam) == EN_KILLFOCUS && (HWND)wParam == app->widgets[Widgets::INTERVAL]) {
