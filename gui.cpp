@@ -153,11 +153,24 @@ public:
             wc.hInstance,
             NULL
         );
+        HWND interval_set = CreateWindow(
+            "BUTTON",
+            WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+            260,
+            150 + BUTTON_HEIGHT,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            hwnd,
+            (HMENU)Widgets::INTERVAL_SET,
+            wc.hInstance,
+            NULL
+        );
         widgets.push_back(running_button);
         widgets.push_back(exit_button);
         widgets.push_back(directory);
         widgets.push_back(interval_label);
         widgets.push_back(interval_edit);
+        widgets.push_back(interval_set);
 
         // tooltip(hwnd, interval_edit, "Delay between ticks for closing.");
 
