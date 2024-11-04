@@ -54,6 +54,7 @@ public:
         WNDCLASS wc = {};
         wc.lpfnWndProc = Application::WindowProc;
         wc.hInstance = GetModuleHandle(NULL);
+        wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
         wc.lpszClassName = CLASS_NAME;
 
         RegisterClass(&wc);
