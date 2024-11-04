@@ -146,7 +146,7 @@ public:
             "",
             WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
             100,
-            141 + BUTTON_HEIGHT,
+            146 + BUTTON_HEIGHT,
             50, 22,
             hwnd,
             (HMENU)Widgets::INTERVAL,
