@@ -51,6 +51,16 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 
 Double-click the [`main.py`](main.py) and type `start` to start the monitoring and closing of DyKnow. If a shell is too complicated for you, you can use the GUI application in [`gui.py`](gui.py) by double-clicking it. Ensure Python is installed.
 
+If you want to allow DyKnow to start up once the computer is logged on, you can perform the following steps:
+
+1. Create a shortcut to the [`main.py`](main.py) or [`gui.py`](gui.py) file, depending if you want to start up with a GUI or a console.
+2. Cut the shortcut by pressing `Ctrl-X`.
+3. Press `Windows-R` to open up the Run window.
+4. Type `shell:startup` in the input box that appears.
+5. In the Windows Explorer dialog that appears, paste the shortcut you copied in step 2.
+
+That's it! It may take around two minutes for it to start up.
+
 ### `start`
 
 Start the DieKnow process. DyKnow executables will be terminated forcefully every five seconds, or whatever is set in [`interval.txt`](interval.txt), which is sufficient to keep DyKnow consistently closed down. If the delay was too low (or none at all), CPU usage would be very high, possibly as high or higher than DyKnow.
