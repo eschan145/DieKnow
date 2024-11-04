@@ -191,12 +191,11 @@ public:
                     std::string status = running ? "Stop" : "Start";
                     SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
                 }
-                if ((HWND)lParam != app->widgets[Widgets::INTERVAL]) {
+                if ((HWND)wParam != app->widgets[Widgets::INTERVAL]) {
                     MessageBox(nullptr, "Handles do not match", "Debug", MB_OK);
                 }
 
-                if (HIWORD(wParam) == EN_KILLFOCUS && (HWND)lParam == app->widgets[Widgets::INTERVAL]) {
-                    MessageBox(nullptr, "Failed", "Error", NULL);
+                if (HIWORD(wParam) == EN_KILLFOCUS && (HWND)wParam == app->widgets[Widgets::INTERVAL]) {
                     char buffer[16];
 
                     GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
