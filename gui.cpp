@@ -173,7 +173,7 @@ public:
         widgets.push_back(interval_edit);
         widgets.push_back(interval_set);
 
-        // tooltip(hwnd, interval_edit, "Delay between ticks for closing.");
+        tooltip(hwnd, interval_edit, "Delay between ticks for closing.");
 
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
