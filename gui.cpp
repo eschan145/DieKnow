@@ -134,7 +134,7 @@ public:
             "Interval:",
             WS_VISIBLE | WS_CHILD,
             10,
-            159 + BUTTON_HEIGHT,
+            150 + BUTTON_HEIGHT,
             50, 18,
             hwnd,
             NULL,
