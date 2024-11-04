@@ -155,6 +155,7 @@ public:
         );
         HWND interval_set = CreateWindow(
             "BUTTON",
+            "Set interval",
             WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
             260,
             150 + BUTTON_HEIGHT,
