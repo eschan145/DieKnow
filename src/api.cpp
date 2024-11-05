@@ -39,6 +39,10 @@ extern "C"
 }
 
 bool exists(const char* path) {
+    /*
+    Check if a filepath exists.
+    */
+
     DWORD ftyp = GetFileAttributesA(path);
     if (ftyp == INVALID_FILE_ATTRIBUTES) {
         return false;
@@ -46,23 +50,22 @@ bool exists(const char* path) {
     return (ftyp & FILE_ATTRIBUTE_DIRECTORY);
 }
 
-void close_application_by_exe(const char* exe_name)
-{
+void close_application_by_exe(const char* exe_name) {
+    /*
+    Close a Windows PE executable file given the executable name.
+    */
+
     HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     PROCESSENTRY32 pe32;
     pe32.dwSize = sizeof(PROCESSENTRY32);
 
     if (hProcessSnap == INVALID_HANDLE_VALUE) return;
 
-    if (Process32First(hProcessSnap, &pe32))
-    {
-        do
-        {
-            if (_stricmp(pe32.szExeFile, exe_name) == 0)
-            {
+    if (Process32First(hProcessSnap, &pe32)) {
+        do {
+            if (_stricmp(pe32.szExeFile, exe_name) == 0) {
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
-                if (hProcess)
-                {
+                if (hProcess) {
                     TerminateProcess(hProcess, 0);
                     CloseHandle(hProcess);
                     killed++;
@@ -73,14 +76,14 @@ void close_application_by_exe(const char* exe_name)
     CloseHandle(hProcessSnap);
 }
 
-void monitor_executables(const char* folder_path)
-{
-    while (running)
-    {
-        for (const auto& entry : fs::directory_iterator(folder_path))
-        {
-            if (entry.is_regular_file() && entry.path().extension() == ".exe")
-            {
+void monitor_executables(const char* folder_path) {
+    /*
+    Begin monitoring and closing of the executables in the given folder path.
+    */
+
+    while (running) {
+        for (const auto& entry : fs::directory_iterator(folder_path)) {
+            if (entry.is_regular_file() && entry.path().extension() == ".exe") {
                 close_application_by_exe(entry.path().filename().string().c_str());
             }
         }
@@ -88,12 +91,10 @@ void monitor_executables(const char* folder_path)
         int interval;
         std::ifstream interval_file("../interval.txt");
 
-        if (interval_file.is_open())
-        {
+        if (interval_file.is_open()) {
             interval_file >> interval;
 
-            if (interval_file.fail())
-            {
+            if (interval_file.fail()) {
                 interval = 0;
             }
 
@@ -103,47 +104,62 @@ void monitor_executables(const char* folder_path)
     }
 }
 
-void start_monitoring(const char* folder_path = FOLDER_PATH)
-{
-    if (!running)
-    {
+void start_monitoring(const char* folder_path = FOLDER_PATH) {
+    /*
+    Begin monitoring executables.
+    */
+
+    if (!running) {
         running = true;
         thread(monitor_executables, folder_path).detach();
     }
 }
 
-void stop_monitoring()
-{
+void stop_monitoring() {
+    /*
+    Stop monitoring executables.
+    */
+
     running = false;
 }
 
-int get_killed_count()
-{
+int get_killed_count() {
+    /*
+    Retrieve the amount of DyKnow executables killed.
+    */
+
     return killed;
 }
 
-bool is_running()
-{
+bool is_running() {
+    /*
+    Check if DieKnow is running or not.
+    */
+
     return running;
 }
 
-const char* get_executables_in_folder(const char* folder_path)
-{
+const char* get_executables_in_folder(const char* folder_path) {
+    /*
+    Retrieve a printable list of executables in a folder.
+    */
+
     static string result;
     result.clear();
 
-    for (const auto& entry : fs::directory_iterator(folder_path))
-    {
-        if (entry.is_regular_file() && entry.path().extension() == ".exe")
-        {
+    for (const auto& entry : fs::directory_iterator(folder_path)) {
+        if (entry.is_regular_file() && entry.path().extension() == ".exe") {
             result += entry.path().filename().string() + "\n";
         }
     }
     return result.c_str();
 }
 
-__declspec(dllexport) int __stdcall bsod()
-{
+__declspec(dllexport) int __stdcall bsod() {
+    /*
+    Open the Windows Blue Screen of Death via win32api's `NtRaiseHardError`.
+    */
+
     BOOLEAN bEnabled;
     ULONG uResp;
 
@@ -154,8 +170,7 @@ __declspec(dllexport) int __stdcall bsod()
     auto NtRaiseHardError = (NTSTATUS(WINAPI*)(NTSTATUS, ULONG, ULONG, PULONG_PTR, ULONG, PULONG))
         GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "NtRaiseHardError");
 
-    if (!RtlAdjustPrivilege || !NtRaiseHardError)
-    {
+    if (!RtlAdjustPrivilege || !NtRaiseHardError) {
         return -1;
     }
 

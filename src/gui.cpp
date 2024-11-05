@@ -26,6 +26,10 @@ extern "C" {
 }
 
 void tooltip(HWND hwnd, HWND control, const char* text) {
+    /*
+    Display a tooltip to aid user interactions.
+    */
+
     HWND htooltip = CreateWindowEx(
         0, TOOLTIPS_CLASS, NULL,
         WS_POPUP | TTS_ALWAYSTIP | TTS_NOPREFIX,
@@ -46,6 +50,10 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
 }
 
 void write(const std::string& filename, int value) {
+    /*
+    Write an integer to a file.
+    */
+
     std::ofstream file(filename);
 
     if (file.is_open()) {
@@ -57,6 +65,10 @@ void write(const std::string& filename, int value) {
 }
 
 int read(const std::string& filename) {
+    /*
+    Read an integer from a file.
+    */
+
     std::ifstream file(filename);
     int value = 0;
 
