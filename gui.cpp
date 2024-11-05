@@ -211,12 +211,12 @@ public:
                     SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
                 }
 
-                if (HIWORD(wParam) == EN_KILLFOCUS && (HWND)wParam == app->widgets[Widgets::INTERVAL]) {
+                if (LOWORD(wParam) == Widgets::INTERVAL_SET) {
                     char buffer[16];
 
                     GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
                     int value = atoi(buffer);
-                    MessageBox(nullptr, "writing", NULL, NULL);
+
                     if (value > 0) {
                         write("interval.txt", value);
                     }
@@ -232,9 +232,6 @@ public:
                     if (wParam == VK_RETURN) {
                         SetFocus(NULL);
                         return 0;
-                    }
-                    if ((wParam < '1' || wParam > '9') && wParam != VK_BACK) {
-                        return 0; // Ignore non-numeric or zero input
                     }
                 }
 
