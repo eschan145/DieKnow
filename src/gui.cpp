@@ -102,7 +102,7 @@ public:
         }
 
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
-        MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + 30, 600, TRUE);
+        MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + 50, 600, TRUE);
 
         HWND running_button = CreateWindow(
             "BUTTON",
