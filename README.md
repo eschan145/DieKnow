@@ -111,3 +111,19 @@ A `ctypes` precompiled C++ binary is located in [`api.dll`](api.dll), which is a
 Using a command such as [`taskkill`](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/taskkill) will result in an error: `Access is Denied`.
 
 I was able to program this bypass not because I'm smart, but because the people who programmed DyKnow weren't or thought the students were stupid or both.
+
+**Directory structure**:
+
+* [`src`](src/) - Python and C++ source files
+   * [`dlls`](src/dlls/) - precompiled C++ source files as shared objects
+* [`tests`](tests/) - nonstatic build testing
+
+### FAQs
+
+#### Why is C++ and Python used and not only Python?
+
+The Intel Core i3 CPU is quite slow and in the lower end of Intel's CPU lineup. Therefore it is important for highest efficiency to use C++, as Python is built on C and very inefficient. DieKnow does not only use C++ because most executables are blocked by organizations' AppLocker policy. This can be mitigated by using ctypes and building a shared object or dynamic link library from C++ files.
+
+### How can I compile this myself?
+
+First, ensure you have everything set up to run DyKnow. Take a look at the GitHub Actions [`build.yml`](.github/workflows/build.yml) workflow and follow along with it.
