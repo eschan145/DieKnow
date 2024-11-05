@@ -16,19 +16,6 @@ using namespace std;
 namespace fs = std::filesystem;
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.22.9";
-const int BUTTON_WIDTH = 200;
-const int BUTTON_HEIGHT = 35;
-
-namespace Widgets {
-    enum Button {
-        RUNNING = 0,
-        EXIT,
-        DIRECTORY,
-        INTERVAL_LABEL,
-        INTERVAL,
-        INTERVAL_SET
-    };
-}
 
 extern "C"
 {

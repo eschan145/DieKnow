@@ -5,6 +5,22 @@
 
 #include "api.cpp"
 
+const int BUTTON_WIDTH = 200;
+const int BUTTON_HEIGHT = 35;
+const int PADDING = 10;
+
+namespace Widgets {
+    enum Button {
+        RUNNING = 0,
+        EXIT,
+        DIRECTORY,
+        INTERVAL_LABEL,
+        INTERVAL,
+        INTERVAL_SET
+    };
+}
+
+
 extern "C" {
     __declspec(dllexport) void create_window();
 }
@@ -102,14 +118,14 @@ public:
         }
 
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
-        MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + 50, 600, TRUE);
+        MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
 
         HWND running_button = CreateWindow(
             "BUTTON",
             "Start",
             WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-            10,
-            10,
+            PADDING,
+            PADDING,
             BUTTON_WIDTH,
             BUTTON_HEIGHT,
             hwnd,
@@ -121,8 +137,8 @@ public:
             "BUTTON",
             "Quit and Exit",
             WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-            10,
-            BUTTON_HEIGHT + 20,
+            PADDING,
+            BUTTON_HEIGHT + (PADDING * 2),
             BUTTON_WIDTH,
             BUTTON_HEIGHT,
             hwnd,
@@ -134,8 +150,8 @@ public:
             "LISTBOX",
             nullptr,
             WS_VISIBLE | WS_CHILD | LBS_STANDARD,
-            BUTTON_WIDTH + 20,
-            10,
+            BUTTON_WIDTH + (PADDING * 2),
+            PADDING,
             BUTTON_WIDTH,
             170,
             hwnd,
@@ -147,7 +163,7 @@ public:
             "STATIC",
             "Interval:",
             WS_VISIBLE | WS_CHILD,
-            10,
+            PADDING,
             158 + BUTTON_HEIGHT,
             50, 18,
             hwnd,
@@ -159,7 +175,7 @@ public:
             "EDIT",
             "",
             WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-            100,
+            BUTTON_WIDTH + (PADDING * 2),
             156 + BUTTON_HEIGHT,
             50, 22,
             hwnd,
@@ -171,7 +187,7 @@ public:
             "BUTTON",
             "Set interval",
             WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-            230,
+            BUTTON_WIDTH + (PADDING * 2),
             150 + BUTTON_HEIGHT,
             BUTTON_WIDTH,
             BUTTON_HEIGHT,
