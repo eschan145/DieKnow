@@ -237,9 +237,8 @@ public:
 
                         std::string message = "Successfully set interval buffer to " + std::string(buffer);
 
-                        MessageBox(hwnd, message.c_str(), "Message", MB_ICONINFORMATION)
+                        MessageBox(hwnd, message.c_str(), "Message", MB_ICONINFORMATION);
                     }
-
                 }
 
                 if (LOWORD(wParam) == Widgets::EXIT) {
@@ -293,7 +292,7 @@ public:
             SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
         }
 
-        if (!GetFocus() == widgets[Widgets::INTERVAL]) {
+        if (GetFocus() != widgets[Widgets::INTERVAL]) {
             SetWindowText(widgets[Widgets::INTERVAL], std::to_string(read("interval.txt")).c_str());
         }
     }
