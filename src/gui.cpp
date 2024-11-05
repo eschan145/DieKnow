@@ -61,8 +61,6 @@ public:
     std::vector<std::string> previous_executables;
 
     Application() {
-        MessageBox(NULL, std::filesystem::current_path().string().c_str(), "Message", MB_OK);
-
         InitCommonControls();
 
         const char CLASS_NAME[] = "DieKnow";
@@ -295,7 +293,7 @@ public:
         }
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
-            SetWindowText(widgets[Widgets::INTERVAL], std::to_string(read("interval.txt")).c_str());
+            SetWindowText(widgets[Widgets::INTERVAL], std::to_string(read("../interval.txt")).c_str());
         }
     }
 };
