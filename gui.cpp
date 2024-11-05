@@ -144,7 +144,7 @@ public:
         HWND interval_edit = CreateWindow(
             "EDIT",
             "",
-            WS_VISIBLE | WS_EX_CLIENTEDGE | WS_CHILD | ES_NUMBER,
+            WS_VISIBLE | WS_CHILD | ES_NUMBER,
             100,
             156 + BUTTON_HEIGHT,
             50, 22,
