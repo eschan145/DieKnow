@@ -102,7 +102,7 @@ public:
         }
 
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
-        MoveWindow(hwnd, 0, 0, 450, 600, TRUE);
+        MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + 30, 600, TRUE);
 
         HWND running_button = CreateWindow(
             "BUTTON",
@@ -136,7 +136,7 @@ public:
             WS_VISIBLE | WS_CHILD | LBS_STANDARD,
             BUTTON_WIDTH + 20,
             10,
-            BUTTON_WIDTH + 50,
+            BUTTON_WIDTH,
             170,
             hwnd,
             (HMENU)Widgets::DIRECTORY,
