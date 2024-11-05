@@ -61,7 +61,7 @@ public:
     std::vector<std::string> previous_executables;
 
     Application() {
-        MessageBox(NULL, std::filesystem::current_path(), "Message", MB_OK);
+        MessageBox(NULL, std::filesystem::current_path().string().c_str(), "Message", MB_OK);
 
         InitCommonControls();
 
