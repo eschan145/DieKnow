@@ -177,7 +177,7 @@ public:
         tooltip(hwnd, exit_button, "Exit the DieKnow application and terminate all processes");
         tooltip(hwnd, directory, "Directory of the DyKnow files");
         tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow");
-        tooltip(hand, interval_set, "Set the interval between ticks for closing DyKnow");
+        tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow");
 
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
