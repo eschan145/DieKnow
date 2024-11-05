@@ -212,6 +212,8 @@ public:
                 }
 
                 if (LOWORD(wParam) == Widgets::INTERVAL_SET) {
+                    MessageBox(nullptr, "Success", "Error", NULL);
+
                     char buffer[16];
 
                     GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
