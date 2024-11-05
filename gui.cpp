@@ -137,7 +137,7 @@ public:
             158 + BUTTON_HEIGHT,
             50, 18,
             hwnd,
-            NULL,
+            (HMENU)Widgets::INTERVAL_LABEL,
             wc.hInstance,
             NULL
         );
@@ -213,9 +213,12 @@ public:
 
                 if (LOWORD(wParam) == Widgets::INTERVAL_SET) {
                     char buffer[16];
+                    char buffer2[16];
 
                     GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
                     MessageBox(nullptr, buffer, "Success", NULL);
+                    GetWindowText(app->widgets[Widgets::INTERVAL_LABEL], buffer2, sizeof(buffer2));
+                    MessageBox(nullptr, buffer2, "Success2", NULL);
                     int value = atoi(buffer);
 
                     if (value > 0) {

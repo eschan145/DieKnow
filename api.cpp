@@ -24,6 +24,7 @@ namespace Widgets {
         RUNNING = 0,
         EXIT,
         DIRECTORY,
+        INTERVAL_LABEL,
         INTERVAL,
         INTERVAL_SET
     };
