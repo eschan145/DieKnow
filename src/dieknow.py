@@ -4,6 +4,8 @@
 import ctypes
 from ctypes import wintypes
 
+import os
+
 # Button Options
 MB_OK = 0x00000000
 MB_OKCANCEL = 0x00000001
@@ -25,7 +27,9 @@ MB_DEFBUTTON2 = 0x00000100
 MB_DEFBUTTON3 = 0x00000200
 MB_DEFBUTTON4 = 0x00000300
 
-lib = ctypes.CDLL("./api.dll")
+lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
+
+lib = ctypes.CDLL(lib_dll_path)
 
 lib.start_monitoring.argtypes = [ctypes.c_char_p]
 lib.stop_monitoring.restype = None
@@ -45,5 +49,8 @@ is_running = lib.is_running
 bsod = lib.bsod
 dialog = lib.dialog
 
-guilib = ctypes.CDLL("./gui.dll")
+
+gui_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "gui.dll")
+
+guilib = ctypes.CDLL(gui_dll_path)
 create_window = guilib.create_window

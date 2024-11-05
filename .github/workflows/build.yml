@@ -16,7 +16,7 @@ jobs:
         path: |
           C:\msys64\var\cache\pacman\pkg
           C:\msys64\var\lib\pacman\sync
-        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('api.dll') }}
+        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('dlls/api.dll') }}
 
     - name: Set up MSYS2
       uses: msys2/setup-msys2@v2
@@ -27,10 +27,10 @@ jobs:
     - name: Compile to .dll
       shell: msys2 {0}
       run: |
-        g++ -Ofast -Wall -shared -std=c++20 -static -o api.dll api.cpp -lgdi32
-        g++ -Ofast -Wall -shared -std=c++20 -static -o gui.dll gui.cpp -lgdi32 -lcomctl32
-        ls -l api.dll
-        ls -l gui.dll
+        g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/api.dll src/api.cpp -lgdi32
+        g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgdi32 -lcomctl32
+        ls -l src/api.dll
+        ls -l src/gui.dll
 
     - name: Commit and push .dll file
       run: |
@@ -49,6 +49,6 @@ jobs:
         path: |
           C:\msys64\var\cache\pacman\pkg
           C:\msys64\var\lib\pacman\sync
-        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('api.cpp') }}
+        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('src/api.cpp') }}
         restore-keys: |
           msys2-pkgs-${{ runner.os }}-
