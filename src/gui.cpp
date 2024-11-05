@@ -225,7 +225,7 @@ public:
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
         }
 
-        SetTimer(hwnd, 1, 50, nullptr);
+        SetTimer(hwnd, 1, 200, nullptr);
 
         ShowWindow(hwnd, SW_SHOW);
         UpdateWindow(hwnd);
