@@ -16,14 +16,14 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
         CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
         hwnd, NULL, NULL, NULL
     );
-    
+
     TOOLINFO tool_info = {};
     tool_info.cbSize = sizeof(tool_info);
     tool_info.uFlags = TTF_SUBCLASS;
     tool_info.hwnd = control;
     tool_info.hinst = NULL;
     tool_info.lpszText = const_cast<LPSTR>(text);
-    
+
     // Get dimensions of the control
     GetClientRect(control, &tool_info.rect);
     SendMessage(htooltip, TTM_ADDTOOL, 0, (LPARAM)&tool_info);
@@ -31,13 +31,27 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
 
 void write(const std::string& filename, int value) {
     std::ofstream file(filename);
-    
+
     if (file.is_open()) {
         file << value;
         file.close();
     } else {
-        MessageBox(nullptr, "Failed to open file", "Error", NULL);
+        MessageBox(nullptr, "Failed to open file", "Error", MB_ICONERROR);
     }
+}
+
+int read(const std::string& filename) {
+    std::ifstream file(filename);
+    int value = 0;
+
+    if (file.is_open()) {
+        file >> value;
+        file.close();
+    } else {
+        MessageBox(nullptr, "Failed to open file", "Error", MB_ICONERROR);
+    }
+
+    return value;
 }
 
 
@@ -213,17 +227,19 @@ public:
 
                 if (LOWORD(wParam) == Widgets::INTERVAL_SET) {
                     char buffer[16];
-                    char buffer2[16];
 
                     GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
-                    MessageBox(nullptr, buffer, "Success", NULL);
-                    GetWindowText(app->widgets[Widgets::INTERVAL_LABEL], buffer2, sizeof(buffer2));
-                    MessageBox(nullptr, buffer2, "Success2", NULL);
+
                     int value = atoi(buffer);
 
                     if (value > 0) {
                         write("interval.txt", value);
+
+                        std::string message = "Successfully set interval buffer to " + std::string(buffer);
+
+                        MessageBox(hwnd, message.c_str(), "Message", MB_ICONINFORMATION)
                     }
+
                 }
 
                 if (LOWORD(wParam) == Widgets::EXIT) {
@@ -275,6 +291,10 @@ public:
 
         for (const std::string& file_name : current_executables) {
             SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
+        }
+
+        if (!GetFocus() == widgets[Widgets::INTERVAL]) {
+            SetWindowText(widgets[Widgets::INTERVAL], std::to_string(read("interval.txt")).c_str());
         }
     }
 };
