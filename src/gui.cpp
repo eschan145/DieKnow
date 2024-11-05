@@ -187,7 +187,7 @@ public:
             "EDIT",
             "",
             WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-            BUTTON_WIDTH + (PADDING * 2),
+            50 + (PADDING * 2),
             156 + BUTTON_HEIGHT,
             50, 22,
             hwnd,
