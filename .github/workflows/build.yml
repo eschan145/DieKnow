@@ -29,8 +29,8 @@ jobs:
       run: |
         g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/api.dll src/api.cpp -lgdi32
         g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgdi32 -lcomctl32
-        ls -l src/api.dll
-        ls -l src/gui.dll
+        ls -l src/dlls/api.dll
+        ls -l src/dlls/gui.dll
 
     - name: Commit and push .dll file
       run: |
