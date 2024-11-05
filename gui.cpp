@@ -144,7 +144,7 @@ public:
         HWND interval_edit = CreateWindow(
             "EDIT",
             "",
-            WS_VISIBLE | WS_CHILD | ES_NUMBER,
+            WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
             100,
             156 + BUTTON_HEIGHT,
             50, 22,
@@ -173,7 +173,11 @@ public:
         widgets.push_back(interval_edit);
         widgets.push_back(interval_set);
 
-        // tooltip(hwnd, interval_edit, "Delay between ticks for closing.");
+        tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped");
+        tooltip(hwnd, exit_button, "Exit the DieKnow application and terminate all processes");
+        tooltip(hwnd, directory, "Directory of the DyKnow files");
+        tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow");
+        tooltip(hand, interval_set, "Set the interval between ticks for closing DyKnow");
 
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
