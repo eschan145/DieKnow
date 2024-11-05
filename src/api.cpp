@@ -99,7 +99,7 @@ void monitor_executables(const char* folder_path)
         }
 
         int interval;
-        std::ifstream interval_file("interval.txt");
+        std::ifstream interval_file("../interval.txt");
 
         if (interval_file.is_open())
         {

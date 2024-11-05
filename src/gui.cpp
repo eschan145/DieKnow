@@ -233,7 +233,7 @@ public:
                     int value = atoi(buffer);
 
                     if (value > 0) {
-                        write("interval.txt", value);
+                        write("../interval.txt", value);
 
                         std::string message = "Successfully set interval buffer to " + std::string(buffer);
 
