@@ -116,7 +116,13 @@ I was able to program this bypass not because I'm smart, but because the people 
 
 * [`src`](src/) - Python and C++ source files
    * [`dlls`](src/dlls/) - precompiled C++ source files as shared objects
+   * [`api.cpp`](src/api.cpp) - DieKnow functions and C++ API
+   * [`gui.cpp`](src/gui.cpp) - GUI file
+   * [`dieknow.py`](src/dieknow.py) - DieKnow Python API
+   * [`main.py`](src/main.py) - Shell-like interface to DieKnow API
+   * [`gui.py`](src/gui.py) - Python link to C++ GUI
 * [`tests`](tests/) - nonstatic build testing
+   * [`testdll.py`](tests/testdll.py) - Dependency checker for DLLs
 
 ### FAQs
 
