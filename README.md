@@ -5,6 +5,7 @@ A bypass of DyKnow, powered primarily by the Windows win32 API.
 DieKnow will significantly improve the performance of your laptop by a large amount, especially on the CPU. However, it will use around 3% of the CPU when running. But this is minimal compared to DyKnow, which uses up to 15% of the CPU consistently, and on an Intel Core i3, there isn't much to spare. It's not lightweight for something to take screenshots of your entire device screen at 4K resolution and at sixty frames per second.
 
 For ease of use, a beta GUI application is located in [`gui.py`](gui.py), powered by the Windows win32 API.
+![image](https://github.com/user-attachments/assets/2f73ad85-2d43-4511-a712-60f10a8dd82d)
 
 About this:
 * This **DOES NOT** need administrator privelleges, just a Python installation, which is often found in the Software Center.
@@ -115,9 +116,9 @@ I was able to program this bypass not because I'm smart, but because the people 
 **Directory structure**:
 
 * [`src`](src/) - Python and C++ source files
-   * [`dlls`](src/dlls/) - precompiled C++ source files as shared objects
+   * [`dlls`](src/dlls/) - precompiled C++ source files as shared objects. It's advised not to mess around with these files.
    * [`api.cpp`](src/api.cpp) - DieKnow functions and C++ API
-   * [`gui.cpp`](src/gui.cpp) - GUI file
+   * [`gui.cpp`](src/gui.cpp) - GUI application
    * [`dieknow.py`](src/dieknow.py) - DieKnow Python API
    * [`main.py`](src/main.py) - Shell-like interface to DieKnow API
    * [`gui.py`](src/gui.py) - Python link to C++ GUI
@@ -130,6 +131,6 @@ I was able to program this bypass not because I'm smart, but because the people 
 
 The Intel Core i3 CPU is quite slow and in the lower end of Intel's CPU lineup. Therefore it is important for highest efficiency to use C++, as Python is built on C and very inefficient. DieKnow does not only use C++ because most executables are blocked by organizations' AppLocker policy. This can be mitigated by using ctypes and building a shared object or dynamic link library from C++ files.
 
-### How can I compile this myself?
+#### How can I compile this myself?
 
-First, ensure you have everything set up to run DyKnow. Take a look at the GitHub Actions [`build.yml`](.github/workflows/build.yml) workflow and follow along with it.
+First, ensure you have everything set up to run DieKnow. Take a look at the GitHub Actions [`build.yml`](.github/workflows/build.yml) workflow and follow along with it.
