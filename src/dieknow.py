@@ -1,10 +1,9 @@
 """DieKnow API.
 """
 
-import ctypes
-from ctypes import wintypes
-
 import os
+import sys
+
 
 # Button Options
 MB_OK = 0x00000000
@@ -26,6 +25,26 @@ MB_DEFBUTTON1 = 0x00000000
 MB_DEFBUTTON2 = 0x00000100
 MB_DEFBUTTON3 = 0x00000200
 MB_DEFBUTTON4 = 0x00000300
+
+
+if sys.platform == "darwin":
+    os.system(f'''
+        osascript -e 'display dialog "DieKnow is only compatible with Windows \
+        platforms!" with title "Fatal Error" buttons {{"OK"}} default button \
+        "OK"'
+    ''')
+    sys.exit(1)
+elif sys.platform.startswith("linux"):
+    os.system(
+        f'zenity --info --title="Fatal Error" --text="DieKnow is only \
+compatible with Windows platforms!"'
+    )
+    sys.exit(1)
+
+
+import ctypes
+from ctypes import wintypes
+
 
 lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
 
