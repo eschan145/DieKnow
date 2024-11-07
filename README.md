@@ -4,7 +4,7 @@ A bypass of DyKnow, powered primarily by the Windows win32 API.
 
 DieKnow will significantly improve the performance of your laptop by a large amount, especially on the CPU. However, it will use around 3% of the CPU when running. But this is minimal compared to DyKnow, which uses up to 15% of the CPU consistently, and on an Intel Core i3, there isn't much to spare. It's not lightweight for something to take screenshots of your entire device screen at 4K resolution and at sixty frames per second.
 
-For ease of use, a beta GUI application is located in [`gui.py`](gui.py), powered by the Windows win32 API.
+For ease of use, a beta GUI application is located in [`gui.py`](src/gui.py), powered by the Windows win32 API.
 ![image](https://github.com/user-attachments/assets/2f73ad85-2d43-4511-a712-60f10a8dd82d)
 
 About this:
@@ -43,18 +43,18 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 3. Click on Download Zip
    ![image](https://github.com/user-attachments/assets/1b77af9c-c6ce-4197-94d8-29ae63c499c5)
 4. Extract the compressed zip
-5. Double-click on the [`main.py`](main.py) file in the extracted folder.
+5. Double-click on the [`main.py`](src/main.py) file in the extracted folder.
 6. Enjoy :)
 
 ## Commands
 
 ### Quickstart
 
-Double-click the [`main.py`](main.py) and type `start` to start the monitoring and closing of DyKnow. If a shell is too complicated for you, you can use the GUI application in [`gui.py`](gui.py) by double-clicking it. Ensure Python is installed.
+Double-click the [`main.py`](src/main.py) and type `start` to start the monitoring and closing of DyKnow. If a shell is too complicated for you, you can use the GUI application in [`gui.py`](src/gui.py) by double-clicking it. Ensure Python is installed.
 
 If you want to allow DyKnow to start up once the computer is logged on, you can perform the following steps:
 
-1. Create a shortcut to the [`main.py`](main.py) or [`gui.py`](gui.py) file, depending if you want to start up with a GUI or a console.
+1. Create a shortcut to the [`main.py`](src/main.py) or [`gui.py`](src/gui.py) file, depending if you want to start up with a GUI or a console.
 2. Cut the shortcut by pressing `Ctrl-X`.
 3. Press `Windows-R` to open up the Run window.
 4. Type `shell:startup` in the input box that appears.
@@ -101,13 +101,13 @@ Exit the DieKnow application and destroy all threads associated with it.
 
 ## DieKnow API
 
-DieKnow provides an API that is accessible at [`dieknow.py`](dieknow.py), which just calls the C++ functions.
+DieKnow provides an API that is accessible at [`dieknow.py`](src/dieknow.py), which just calls the C++ functions.
 
 ## About
 
 DyKnow creates executables dynamically. Once you kill its process using Task Manager or the `taskkill` command, it restarts right back up every few seconds, but with a modified executable name. How it does this is unknown, but it likely uses Task Scheduler. My approach leverages the Windows win32 API, specifically the [`TerminateProcess`](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-terminateprocess) function, to repeatedly close DyKnow.
 
-A `ctypes` precompiled C++ binary is located in [`api.dll`](api.dll), which is accessed by [`main.py`](main.py) to call the C++ functions. C++ is used as it lowers the CPU usage of DieKnow compared to Python. The DLL file is over 3 MBs because it is statically built (with use of the `-static` g++ option), allowing easy distribution of it and without having to manage all the dependencies, such as `<windows>`.
+A `ctypes` precompiled C++ binary is located in [`api.dll`](src/api.dll), which is accessed by [`main.py`](src/main.py) to call the C++ functions. C++ is used as it lowers the CPU usage of DieKnow compared to Python. The DLL file is over 3 MBs because it is statically built (with use of the `-static` g++ option), allowing easy distribution of it and without having to manage all the dependencies, such as `<windows>`.
 
 Using a command such as [`taskkill`](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/taskkill) will result in an error: `Access is Denied`.
 
