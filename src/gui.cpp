@@ -288,8 +288,15 @@ public:
                 if (LOWORD(wParam) == Widgets::TASKKILL) {
                     const char* selected = get_selected(app->widgets[Widgets::DIRECTORY]);
 
-                    close_application_by_exe(selected);
-                    MessageBox(hwnd, selected, "Message", MB_ICONINFORMATION); 
+                    if (selected && strlen(selected) > 0) {
+                        close_application_by_exe(selected);
+
+                        std::string message = "Successfully closed " + std::string(selected);
+                        MessageBox(hwnd, message.c_str(), "Success", MB_ICONINFORMATION)
+                    }
+                    else {
+                        MessageBox(hwnd, "Please select an item in the listbox.", "Error", MB_ICONERROR);
+                    }
                 }
 
                 if (LOWORD(wParam) == Widgets::INTERVAL_SET) {
