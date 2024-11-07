@@ -286,7 +286,7 @@ public:
                 }
                 
                 if (LOWORD(wParam) == Widgets::TASKKILL) {
-                    const char* selected = get_selected(app->widgets[Widgets::TASKKILL]);
+                    const char* selected = get_selected(app->widgets[Widgets::DIRECTORY]);
 
                     close_application_by_exe(selected);
                     MessageBox(hwnd, selected, "Message", MB_ICONINFORMATION); 
