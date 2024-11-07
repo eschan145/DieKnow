@@ -12,6 +12,7 @@ const int PADDING = 10;
 namespace Widgets {
     enum Button {
         RUNNING = 0,
+        TASKKILL,
         EXIT,
         DIRECTORY,
         INTERVAL_LABEL,
@@ -82,6 +83,22 @@ int read(const std::string& filename) {
     return value;
 }
 
+const char* get_selected(HWND listbox) {
+    int index = SendMessage(listbox, LB_GETCURSEL, 0, 0);
+    if (index == LB_ERR) {
+        return "";
+    }
+
+    int length = SendMessage(listbox, LB_GETTEXTLEN, index, 0);
+
+    char* buffer = new char[length + 1];
+    SendMessage(listbox, LB_GETTEXT, index, (LPARAM)buffer);
+
+    const char* text = _strdup(buffer);
+    delete[] buffer;
+
+    return text;
+}
 
 class Application {
 public:
@@ -145,12 +162,25 @@ public:
             wc.hInstance,
             NULL);
 
+        HWND taskkill_button = CreateWindow(
+            "BUTTON",
+            "Terminate selected",
+            WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+            PADDING,
+            BUTTON_HEIGHT + (PADDING * 2),
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            hwnd,
+            (HMENU)Widgets::TASKKILL,
+            wc.hInstance,
+            NULL);
+
         HWND exit_button = CreateWindow(
             "BUTTON",
             "Quit and Exit",
             WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
             PADDING,
-            BUTTON_HEIGHT + (PADDING * 2),
+            BUTTON_HEIGHT + (PADDING * 3),
             BUTTON_WIDTH,
             BUTTON_HEIGHT,
             hwnd,
@@ -209,6 +239,7 @@ public:
             NULL
         );
         widgets.push_back(running_button);
+        widgets.push_back(taskkill_button)
         widgets.push_back(exit_button);
         widgets.push_back(directory);
         widgets.push_back(interval_label);
@@ -251,6 +282,10 @@ public:
 
                     std::string status = running ? "Stop" : "Start";
                     SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
+                }
+                
+                if (LOWORD(wParam) == Widgets::TASKKILL) {
+                    close_application_by_exe(get_selected(app->widgets[Widgets::TASKKILL])); 
                 }
 
                 if (LOWORD(wParam) == Widgets::INTERVAL_SET) {
