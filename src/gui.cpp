@@ -247,6 +247,7 @@ public:
         widgets.push_back(interval_set);
 
         tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped");
+        tooltip(hwnd, taskkill_button, "Terminate the selected executable in the listbox");
         tooltip(hwnd, exit_button, "Exit the DieKnow application and terminate all processes");
         tooltip(hwnd, directory, "Directory of the DyKnow files");
         tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow");
@@ -285,7 +286,10 @@ public:
                 }
                 
                 if (LOWORD(wParam) == Widgets::TASKKILL) {
-                    close_application_by_exe(get_selected(app->widgets[Widgets::TASKKILL])); 
+                    const char* selected = get_selected(app->widgets[Widgets::TASKKILL]);
+
+                    close_application_by_exe(selected);
+                    MessageBox(hwnd, selected, "Message", MB_ICONINFORMATION); 
                 }
 
                 if (LOWORD(wParam) == Widgets::INTERVAL_SET) {
