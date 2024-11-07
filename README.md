@@ -133,4 +133,14 @@ The Intel Core i3 CPU is quite slow and in the lower end of Intel's CPU lineup. 
 
 #### How can I compile this myself?
 
-First, ensure you have everything set up to run DieKnow. Take a look at the GitHub Actions [`build.yml`](.github/workflows/build.yml) workflow and follow along with it.
+First, ensure you have everything set up to run DieKnow. Take a look at the GitHub Actions [`build.yml`](.github/workflows/build.yml) workflow and follow along with it. You'll need a C++ compiler, preferably `g++` or MSVC, compile it as a shared object (with the `-shared` flag), and link the required libraries (`-lgdi32` and `-lcomctl32`). The commands DieKnow uses to build itself are:
+
+```bash
+g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/api.dll src/api.cpp -lgdi32
+g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgdi32 -lcomctl32
+```
+
+#### I'm getting high CPU usage for DieKnow. What can I do?
+
+I'm working to optimize the DieKnow process, and it uses higher CPU than it should. However, it still significantly less than what DieKnow uses.
+
