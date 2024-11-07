@@ -239,7 +239,7 @@ public:
             NULL
         );
         widgets.push_back(running_button);
-        widgets.push_back(taskkill_button)
+        widgets.push_back(taskkill_button);
         widgets.push_back(exit_button);
         widgets.push_back(directory);
         widgets.push_back(interval_label);
