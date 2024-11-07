@@ -180,7 +180,7 @@ public:
             "Quit and Exit",
             WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
             PADDING,
-            BUTTON_HEIGHT + (PADDING * 3),
+            (BUTTON_HEIGHT * 2) + (PADDING * 3),
             BUTTON_WIDTH,
             BUTTON_HEIGHT,
             hwnd,
