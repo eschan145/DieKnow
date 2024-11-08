@@ -245,7 +245,7 @@ public:
             WS_VISIBLE | WS_CHILD,
             PADDING,
             150 + (BUTTON_HEIGHT * 2),
-            120, 18,
+            BUTTON_WIDTH, 18,
             hwnd,
             (HMENU)Widgets::EXECUTABLES_KILLED,
             wc.hInstance,
