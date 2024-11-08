@@ -17,7 +17,8 @@ namespace Widgets {
         DIRECTORY,
         INTERVAL_LABEL,
         INTERVAL,
-        INTERVAL_SET
+        INTERVAL_SET,
+        EXECUTABLES_KILLED
     };
 }
 
@@ -238,6 +239,18 @@ public:
             wc.hInstance,
             NULL
         );
+        HWND exectuables_killed = CreateWindow(
+            "STATIC",
+            "Executables killed:",
+            WS_VISIBLE | WS_CHILD,
+            PADDING,
+            178 + BUTTON_HEIGHT,
+            120, 18,
+            hwnd,
+            (HMENU)Widgets::EXECUTABLES_KILLED,
+            wc.hInstance,
+            NULL
+        );
         widgets.push_back(running_button);
         widgets.push_back(taskkill_button);
         widgets.push_back(exit_button);
@@ -245,6 +258,7 @@ public:
         widgets.push_back(interval_label);
         widgets.push_back(interval_edit);
         widgets.push_back(interval_set);
+        widgets.push_back(executables_killed);
 
         tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped");
         tooltip(hwnd, taskkill_button, "Terminate the selected executable in the listbox");
@@ -252,6 +266,7 @@ public:
         tooltip(hwnd, directory, "Directory of the DyKnow files");
         tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow");
         tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow");
+        tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow");
 
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
@@ -363,12 +378,21 @@ public:
         SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
 
         for (const std::string& file_name : current_executables) {
-            SendMessage(widgets[Widgets::DIRECTORY], LB_ADDSTRING, 0, (LPARAM)file_name.c_str());
+            SendMessage(
+                widgets[Widgets::DIRECTORY],
+                LB_ADDSTRING, 0,
+                (LPARAM)file_name.c_str());
         }
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
-            SetWindowText(widgets[Widgets::INTERVAL], std::to_string(read("../interval.txt")).c_str());
+            SetWindowText(
+                widgets[Widgets::INTERVAL],
+                std::to_string(read("../interval.txt")).c_str());
         }
+
+        SetWindowText(
+            widgets[Widgets::EXECUTABLES_KILLED],
+            std::to_string(get_killed_count()).c_str());
     }
 };
 
