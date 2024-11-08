@@ -239,7 +239,7 @@ public:
             wc.hInstance,
             NULL
         );
-        HWND exectuables_killed = CreateWindow(
+        HWND executables_killed = CreateWindow(
             "STATIC",
             "Executables killed:",
             WS_VISIBLE | WS_CHILD,
