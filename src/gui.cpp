@@ -393,7 +393,7 @@ public:
         std::string message = "Executables terminated: " + std::to_string(get_killed_count());
         SetWindowText(
             widgets[Widgets::EXECUTABLES_KILLED],
-            messages.c_str());
+            message.c_str());
     }
 };
 
