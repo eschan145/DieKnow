@@ -244,7 +244,7 @@ public:
             "Executables terminated:",
             WS_VISIBLE | WS_CHILD,
             PADDING,
-            150 + (BUTTON_HEIGHT * 2),
+            150 + (BUTTON_HEIGHT * 2) + PADDING,
             BUTTON_WIDTH, 18,
             hwnd,
             (HMENU)Widgets::EXECUTABLES_KILLED,
