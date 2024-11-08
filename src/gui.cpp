@@ -241,10 +241,10 @@ public:
         );
         HWND executables_killed = CreateWindow(
             "STATIC",
-            "Executables killed:",
+            "Executables terminated:",
             WS_VISIBLE | WS_CHILD,
             PADDING,
-            178 + BUTTON_HEIGHT,
+            150 + (BUTTON_HEIGHT * 2),
             120, 18,
             hwnd,
             (HMENU)Widgets::EXECUTABLES_KILLED,
@@ -390,9 +390,10 @@ public:
                 std::to_string(read("../interval.txt")).c_str());
         }
 
+        std::string message = "Executables terminated: " + std::to_string(get_killed_count);
         SetWindowText(
             widgets[Widgets::EXECUTABLES_KILLED],
-            std::to_string(get_killed_count()).c_str());
+            messages.c_str());
     }
 };
 
