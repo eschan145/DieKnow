@@ -4,7 +4,7 @@ A bypass of DyKnow, powered primarily by the Windows win32 API.
 
 DieKnow will significantly improve the performance of your laptop by a large amount, especially on the CPU. However, it will use around 3% of the CPU when running. But this is minimal compared to DyKnow, which uses up to 15% of the CPU consistently, and on an Intel Core i3, there isn't much to spare. It's not lightweight for something to take screenshots of your entire device screen at 4K resolution and at sixty frames per second.
 
-For ease of use, a beta GUI application is located in [`gui.py`](src/gui.py), powered by the Windows win32 API.
+For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), powered by the Windows win32 API.
 
 ![Screenshot of DieKnow GUI](screenshot.png)
 
@@ -51,11 +51,11 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 
 ### Quickstart
 
-Double-click the [`main.py`](src/main.py) and type `start` to start the monitoring and closing of DyKnow. If a shell is too complicated for you, you can use the GUI application in [`gui.py`](src/gui.py) by double-clicking it. Ensure Python is installed.
+Double-click the [`main.py`](src/main.py) and type `start` to start the monitoring and closing of DyKnow. If a shell is too complicated for you, you can use the GUI application in [`gui.pyw`](src/gui.pyw) by double-clicking it. Ensure Python is installed.
 
 If you want to allow DyKnow to start up once the computer is logged on, you can perform the following steps:
 
-1. Create a shortcut to the [`main.py`](src/main.py) or [`gui.py`](src/gui.py) file, depending if you want to start up with a GUI or a console.
+1. Create a shortcut to the [`main.py`](src/main.py) or [`gui.pyw`](src/gui.pyw) file, depending if you want to start up with a GUI or a console.
 2. Cut the shortcut by pressing `Ctrl-X`.
 3. Press `Windows-R` to open up the Run window.
 4. Type `shell:startup` in the input box that appears.
@@ -122,7 +122,7 @@ I was able to program this bypass not because I'm smart, but because the people 
    * [`gui.cpp`](src/gui.cpp) - GUI application
    * [`dieknow.py`](src/dieknow.py) - DieKnow Python API
    * [`main.py`](src/main.py) - Shell-like interface to DieKnow API
-   * [`gui.py`](src/gui.py) - Python link to C++ GUI
+   * [`gui.pyw`](src/gui.pyw) - Python link to C++ GUI
 * [`tests`](tests/) - nonstatic build testing
    * [`testdll.py`](tests/testdll.py) - Dependency checker for DLLs
 
