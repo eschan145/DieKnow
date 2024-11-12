@@ -18,7 +18,8 @@ namespace Widgets {
         INTERVAL_LABEL,
         INTERVAL,
         INTERVAL_SET,
-        EXECUTABLES_KILLED
+        EXECUTABLES_KILLED,
+        OPEN_EXPLORER
     };
 }
 
@@ -251,6 +252,19 @@ public:
             wc.hInstance,
             NULL
         );
+        HWND open_explorer = CreateWindow(
+            "BUTTON",
+            "Open in Explorer",
+            WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+            BUTTON_WIDTH + (PADDING * 2),
+            150 + (BUTTON_HEIGHT * 2) + PADDING,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            hwnd,
+            (HMENU)Widgets::OPEN_EXPLORER,
+            wc.hInstance,
+            NULL
+        );
         widgets.push_back(running_button);
         widgets.push_back(taskkill_button);
         widgets.push_back(exit_button);
@@ -259,6 +273,7 @@ public:
         widgets.push_back(interval_edit);
         widgets.push_back(interval_set);
         widgets.push_back(executables_killed);
+        widgets.push_back(open_explorer);
 
         tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped");
         tooltip(hwnd, taskkill_button, "Terminate the selected executable in the listbox");
@@ -267,6 +282,7 @@ public:
         tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow");
         tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow");
         tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow");
+        tooltip(hwnd, open_explorer, "Open the DyKnow file directory in the Windows Explorer");
 
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
