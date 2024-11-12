@@ -311,6 +311,7 @@ public:
 
                 std::string status = running ? "Stop" : "Start";
                 SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
+                break;
             }
         
             case Widgets::TASKKILL: {
@@ -325,6 +326,7 @@ public:
                 else {
                     MessageBox(hwnd, "Please select an item in the listbox.", "Error", MB_ICONERROR);
                 }
+                break;
             }
 
             case Widgets::INTERVAL_SET: {
@@ -341,14 +343,17 @@ public:
 
                     MessageBox(hwnd, message.c_str(), "Message", MB_ICONINFORMATION);
                 }
+                break;
             }
 
             case Widgets::OPEN_EXPLORER: {
                 ShellExecute(NULL, "open", FOLDER_PATH, NULL, NULL, SW_SHOWDEFAULT);
+                break;
             }
 
             case Widgets::EXIT: {
                 DestroyWindow(hwnd);
+                break;
             }
         }
     }
