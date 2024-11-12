@@ -86,6 +86,10 @@ int read(const std::string& filename) {
 }
 
 const char* get_selected(HWND listbox) {
+    /*
+    Get the selected item in a listbox.
+    */
+
     int index = SendMessage(listbox, LB_GETCURSEL, 0, 0);
     if (index == LB_ERR) {
         return "";
@@ -301,6 +305,12 @@ public:
     }
 
     void manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+        /*
+        Manage button commands in a switch statement.
+
+        This function is usually called by `WindowProc`.
+        */
+
         switch (LOWORD(wParam)) {
             case Widgets::RUNNING: {
                 if (running) {
@@ -313,7 +323,7 @@ public:
                 SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
                 break;
             }
-        
+
             case Widgets::TASKKILL: {
                 const char* selected = get_selected(app->widgets[Widgets::DIRECTORY]);
 
@@ -359,6 +369,12 @@ public:
     }
 
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+        /*
+        Manage window events.
+
+        This is called internally by the Windows API.
+        */
+
         Application* app = reinterpret_cast<Application*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
         switch (uMsg) {
@@ -392,6 +408,15 @@ public:
     }
 
     void update() {
+        /*
+        Update display labels and listbox.
+
+        * Update listbox if files have been changed
+        * Update interval text based on `interval.txt`
+        * Update label displaying executables terminated
+        */
+
+        // Update directory listbox
         std::vector<std::string> current_executables;
 
         for (const auto& entry : fs::directory_iterator(FOLDER_PATH)) {
