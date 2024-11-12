@@ -275,14 +275,14 @@ public:
         widgets.push_back(executables_killed);
         widgets.push_back(open_explorer);
 
-        tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped");
-        tooltip(hwnd, taskkill_button, "Terminate the selected executable in the listbox");
-        tooltip(hwnd, exit_button, "Exit the DieKnow application and terminate all processes");
-        tooltip(hwnd, directory, "Directory of the DyKnow files");
-        tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow");
-        tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow");
-        tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow");
-        tooltip(hwnd, open_explorer, "Open the DyKnow file directory in the Windows Explorer");
+        tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped.");
+        tooltip(hwnd, taskkill_button, "Terminate the selected executable in the listbox.");
+        tooltip(hwnd, exit_button, "Exit the DieKnow application and terminate all processes.");
+        tooltip(hwnd, directory, "Directory of the DyKnow files.");
+        tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow.");
+        tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow.");
+        tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow.");
+        tooltip(hwnd, open_explorer, "Open the DyKnow file directory in the Windows Explorer.");
 
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
@@ -344,6 +344,10 @@ public:
 
                         MessageBox(hwnd, message.c_str(), "Message", MB_ICONINFORMATION);
                     }
+                }
+
+                if (LOWORD(wParam) == Widgets::OPEN_EXPLORER) {
+                    ShellExecute(NULL, "open", FOLDER_PATH, NULL, NULL, SW_SHOWDEFAULT);
                 }
 
                 if (LOWORD(wParam) == Widgets::EXIT) {
