@@ -300,59 +300,65 @@ public:
         }
     }
 
+    void manage_command(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+        switch (LOWORD(wParam)) {
+            case Widgets::RUNNING: {
+                if (running) {
+                    stop_monitoring();
+                } else {
+                    start_monitoring(FOLDER_PATH);
+                }
+
+                std::string status = running ? "Stop" : "Start";
+                SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
+            }
+        
+            case Widgets::TASKKILL: {
+                const char* selected = get_selected(app->widgets[Widgets::DIRECTORY]);
+
+                if (selected && strlen(selected) > 0) {
+                    close_application_by_exe(selected);
+
+                    std::string message = "Successfully closed " + std::string(selected);
+                    MessageBox(hwnd, message.c_str(), "Success", MB_ICONINFORMATION);
+                }
+                else {
+                    MessageBox(hwnd, "Please select an item in the listbox.", "Error", MB_ICONERROR);
+                }
+            }
+
+            case Widgets::INTERVAL_SET: {
+                char buffer[16];
+
+                GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
+
+                int value = atoi(buffer);
+
+                if (value > 0) {
+                    write("../interval.txt", value);
+
+                    std::string message = "Successfully set interval buffer to " + std::string(buffer);
+
+                    MessageBox(hwnd, message.c_str(), "Message", MB_ICONINFORMATION);
+                }
+            }
+
+            case Widgets::OPEN_EXPLORER: {
+                ShellExecute(NULL, "open", FOLDER_PATH, NULL, NULL, SW_SHOWDEFAULT);
+            }
+
+            case Widgets::EXIT: {
+                DestroyWindow(hwnd);
+            }
+        }
+    }
+
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         Application* app = reinterpret_cast<Application*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
         switch (uMsg) {
             case WM_COMMAND:
-                if (LOWORD(wParam) == Widgets::RUNNING) {
-                    if (running) {
-                        stop_monitoring();
-                    } else {
-                        start_monitoring(FOLDER_PATH);
-                    }
-
-                    std::string status = running ? "Stop" : "Start";
-                    SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
-                }
-                
-                if (LOWORD(wParam) == Widgets::TASKKILL) {
-                    const char* selected = get_selected(app->widgets[Widgets::DIRECTORY]);
-
-                    if (selected && strlen(selected) > 0) {
-                        close_application_by_exe(selected);
-
-                        std::string message = "Successfully closed " + std::string(selected);
-                        MessageBox(hwnd, message.c_str(), "Success", MB_ICONINFORMATION);
-                    }
-                    else {
-                        MessageBox(hwnd, "Please select an item in the listbox.", "Error", MB_ICONERROR);
-                    }
-                }
-
-                if (LOWORD(wParam) == Widgets::INTERVAL_SET) {
-                    char buffer[16];
-
-                    GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
-
-                    int value = atoi(buffer);
-
-                    if (value > 0) {
-                        write("../interval.txt", value);
-
-                        std::string message = "Successfully set interval buffer to " + std::string(buffer);
-
-                        MessageBox(hwnd, message.c_str(), "Message", MB_ICONINFORMATION);
-                    }
-                }
-
-                if (LOWORD(wParam) == Widgets::OPEN_EXPLORER) {
-                    ShellExecute(NULL, "open", FOLDER_PATH, NULL, NULL, SW_SHOWDEFAULT);
-                }
-
-                if (LOWORD(wParam) == Widgets::EXIT) {
-                    DestroyWindow(hwnd);
-                }
+                manage_command(hwnd, uMsg, wParam, lParam);
                 break;
 
             case WM_CHAR:
