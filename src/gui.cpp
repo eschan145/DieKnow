@@ -300,7 +300,7 @@ public:
         }
     }
 
-    void manage_command(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    void manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         switch (LOWORD(wParam)) {
             case Widgets::RUNNING: {
                 if (running) {
@@ -358,7 +358,7 @@ public:
 
         switch (uMsg) {
             case WM_COMMAND:
-                manage_command(hwnd, uMsg, wParam, lParam);
+                app->manage_command(app, hwnd, uMsg, wParam, lParam);
                 break;
 
             case WM_CHAR:
