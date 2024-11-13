@@ -17,6 +17,7 @@ namespace fs = std::filesystem;
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.22.9";
 
+// Prevent name mangling that happens as a result of function overloading in C++
 extern "C"
 {
     bool running = false;
@@ -55,24 +56,34 @@ void close_application_by_exe(const char* exe_name) {
     Close a Windows PE executable file given the executable name.
     */
 
+    // Create a snapshot of all running process(es)
     HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     PROCESSENTRY32 pe32;
     pe32.dwSize = sizeof(PROCESSENTRY32);
 
+    // Break out if the snapshot failed
     if (hProcessSnap == INVALID_HANDLE_VALUE) return;
 
+    // Iterate through the process list and terminate them as desired
     if (Process32First(hProcessSnap, &pe32)) {
+        // Populate `pe32` with process snapshot information
         do {
+            // Check if the executable name is the one given as a parameter
             if (_stricmp(pe32.szExeFile, exe_name) == 0) {
+                // Open a HANDLE to the process. This is a little ambiguous as
+                // it appears we are opening the process
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
                 if (hProcess) {
                     TerminateProcess(hProcess, 0);
+                    // Destroy the process handle to avoid memory leaks
                     CloseHandle(hProcess);
                     killed++;
                 }
             }
         } while (Process32Next(hProcessSnap, &pe32));
     }
+
+    // Destroy the snapshot to avoid memory leaks
     CloseHandle(hProcessSnap);
 }
 
@@ -98,6 +109,7 @@ void monitor_executables(const char* folder_path) {
                 interval = 0;
             }
 
+            // Minimize CPU usage
             this_thread::sleep_for(chrono::seconds(interval));
             interval_file.close();
         }
@@ -120,8 +132,14 @@ void stop_monitoring() {
     Stop monitoring executables.
     */
 
+    // Although just a variable is set to false, because the DieKnow process is
+    // in a separate thread it will finish immediately.
+
     running = false;
 }
+
+// Both get_killed_count and is_running must be declared as functions as ctypes
+// does not support retrieving variables.
 
 int get_killed_count() {
     /*
@@ -149,6 +167,7 @@ const char* get_executables_in_folder(const char* folder_path) {
 
     for (const auto& entry : fs::directory_iterator(folder_path)) {
         if (entry.is_regular_file() && entry.path().extension() == ".exe") {
+            // Add newline to print out nicely
             result += entry.path().filename().string() + "\n";
         }
     }
