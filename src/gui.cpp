@@ -5,8 +5,11 @@
 
 #include "api.cpp"
 
+// Or more correctly, widget dimensions
 const int BUTTON_WIDTH = 200;
 const int BUTTON_HEIGHT = 35;
+
+// Space between widgets as padding
 const int PADDING = 10;
 
 namespace Widgets {
@@ -108,10 +111,14 @@ const char* get_selected(HWND listbox) {
 
 class Application {
 public:
+    // Used to call `WM_SETFONT`
     std::vector<HWND> widgets;
+
+    // Used to determine whether or not to refresh the listbox
     std::vector<std::string> previous_executables;
 
     Application() {
+        // Used for help popup balloon
         InitCommonControls();
 
         const char CLASS_NAME[] = "DieKnow";
@@ -153,6 +160,8 @@ public:
         }
 
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+
+        // Resize the window
         MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
 
         HWND running_button = CreateWindow(
@@ -292,6 +301,7 @@ public:
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
         }
 
+        // In ms -- set to 5 ticks per second
         SetTimer(hwnd, 1, 200, nullptr);
 
         ShowWindow(hwnd, SW_SHOW);
@@ -325,8 +335,10 @@ public:
             }
 
             case Widgets::TASKKILL: {
+                // Check if the listbox has a selected item
                 const char* selected = get_selected(app->widgets[Widgets::DIRECTORY]);
 
+                // If it does, terminate its process
                 if (selected && strlen(selected) > 0) {
                     close_application_by_exe(selected);
 
@@ -334,6 +346,7 @@ public:
                     MessageBox(hwnd, message.c_str(), "Success", MB_ICONINFORMATION);
                 }
                 else {
+                    // Display an error if it doesn't
                     MessageBox(hwnd, "Please select an item in the listbox.", "Error", MB_ICONERROR);
                 }
                 break;
@@ -368,6 +381,7 @@ public:
         }
     }
 
+    // Use `static` to allow it to be called as an event by Windows API
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         /*
         Manage window events.
