@@ -24,6 +24,7 @@ VERSION: 1.0.1
 #include <string>
 #include <sstream>
 
+
 std::string get_cpu_name() {
     HKEY hKey;
     char cpuName[256];
