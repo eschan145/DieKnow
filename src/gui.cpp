@@ -414,6 +414,23 @@ public:
                 break;
             }
 
+            case Widgets::SYSTEM_INFORMATION: {
+                std::string cpu_name = get_cpu_name();
+                std::string gpu_name = get_gpu_name();
+                std::string os_info = get_os_info();
+                std::string avaliable_ram = get_available_ram();
+
+                std::ostringstream message;
+                message << "CPU: " << cpu_name << "\n"
+                        << "GPU: " << gpu_name << "\n"
+                        << "OS: " << os_info << "\n"
+                        << "RAM: " << avaliable_ram;
+
+                MessageBox(hwnd, message.str().c_str(), "System Information", MB_OK | MB_ICONINFORMATION);
+
+                break;
+            }
+
             case Widgets::EXIT: {
                 DestroyWindow(hwnd);
                 break;
