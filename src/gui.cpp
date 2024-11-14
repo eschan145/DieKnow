@@ -307,7 +307,7 @@ public:
             "System information...",
             WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
             BUTTON_WIDTH + (PADDING * 2),
-            150 + (BUTTON_HEIGHT * 2) + PADDING,
+            150 + (BUTTON_HEIGHT * 3) + PADDING,
             BUTTON_WIDTH,
             BUTTON_HEIGHT,
             hwnd,
