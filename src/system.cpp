@@ -26,28 +26,34 @@ VERSION: 1.0.1
 
 
 std::string get_cpu_name() {
-    HKEY hKey;
-    char cpuName[256];
-    DWORD bufSize = sizeof(cpuName);
+    HKEY hkey;
+    char cpu_name[256];
+    DWORD buffer_size = sizeof(cpu_name);
 
     if (RegOpenKeyExA(HKEY_LOCAL_MACHINE,
                       "HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0",
-                      0, KEY_READ, &hKey) == ERROR_SUCCESS) {
-        RegQueryValueExA(hKey, "ProcessorNameString", NULL, NULL, (LPBYTE)cpuName, &bufSize);
-        RegCloseKey(hKey);
+                      0, KEY_READ, &hkey) == ERROR_SUCCESS) {
+        RegQueryValueExA(
+            hkey,
+            "ProcessorNameString",
+            NULL, NULL,
+            (LPBYTE)cpu_name,
+            &buffer_size);
+
+        RegCloseKey(hkey);
     }
-    return std::string(cpuName);
+    return std::string(cpu_name);
 }
 
 std::string get_gpu_name() {
     DISPLAY_DEVICEA dd;
     dd.cb = sizeof(dd);
-    std::string gpuName = "Unknown GPU";
+    std::string name = "Unknown GPU";
 
     if (EnumDisplayDevicesA(NULL, 0, &dd, 0)) {
-        gpuName = dd.DeviceString;
+        name = dd.DeviceString;
     }
-    return gpuName;
+    return name;
 }
 
 std::string get_os_info() {
@@ -60,10 +66,10 @@ std::string get_os_info() {
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEXA);
     GetVersionExA((LPOSVERSIONINFOA)&osvi);
 
-    std::ostringstream osInfo;
-    osInfo << "Windows " << osvi.dwMajorVersion << "." << osvi.dwMinorVersion
+    std::ostringstream os_info;
+    os_info << "Windows " << osvi.dwMajorVersion << "." << osvi.dwMinorVersion
            << " (Build " << osvi.dwBuildNumber << "), " << arch;
-    return osInfo.str();
+    return os_info.str();
 }
 
 std::string get_available_ram() {
@@ -71,7 +77,7 @@ std::string get_available_ram() {
     statex.dwLength = sizeof(statex);
     GlobalMemoryStatusEx(&statex);
 
-    std::ostringstream ramInfo;
-    ramInfo << (statex.ullAvailPhys / (1024 * 1024)) << " MB available";
-    return ramInfo.str();
+    std::ostringstream ram_info;
+    ram_info << (statex.ullAvailPhys / (1024 * 1024)) << " MB available";
+    return ram_info.str();
 }
