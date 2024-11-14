@@ -26,6 +26,7 @@ VERSION: 1.0.1
 #include <commctrl.h>
 
 #include "api.cpp"
+#include "system.cpp"
 
 // Or more correctly, widget dimensions
 const int BUTTON_WIDTH = 200;
