@@ -8,6 +8,8 @@ For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), 
 
 ![Screenshot of DieKnow GUI](screenshot.png)
 
+Compilation instructions can be found here: 
+
 About this:
 * This **DOES NOT** need administrator privelleges, just a Python installation, which is often found in the Software Center.
 * It's very compact (just around 600 lines).
