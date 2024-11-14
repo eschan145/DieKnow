@@ -421,10 +421,12 @@ public:
                 std::string avaliable_ram = get_available_ram();
 
                 std::ostringstream message;
-                message << "CPU: " << cpu_name << "\n"
+                message << "SYSTEM INFORMATION" << "\n"
+                        << "==================" << "\n"
+                        << "CPU: " << cpu_name << "\n"
                         << "GPU: " << gpu_name << "\n"
-                        << "OS: " << os_info << "\n"
-                        << "RAM: " << avaliable_ram;
+                        << "Operating system: " << os_info << "\n"
+                        << "Free RAM: " << avaliable_ram;
 
                 MessageBox(hwnd, message.str().c_str(), "System Information", MB_OK | MB_ICONINFORMATION);
 
