@@ -334,7 +334,7 @@ public:
         tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow.");
         tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow.");
         tooltip(hwnd, open_explorer, "Open the DyKnow file directory in the Windows Explorer.");
-        tooltip(hwnd, display_information, "Show system information.")
+        tooltip(hwnd, display_information, "Show system information.");
 
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
