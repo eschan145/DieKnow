@@ -6,7 +6,9 @@ DieKnow will significantly improve the performance of your laptop by a large amo
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), powered by the Windows win32 API.
 
-![Screenshot of DieKnow GUI](screenshot.png)
+Supported DyKnow version: `7.10.45.7`
+
+![Screenshot of DieKnow GUI](screenshot2.png)
 
 Compilation instructions can be found here: 
 

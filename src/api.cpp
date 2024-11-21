@@ -68,12 +68,15 @@ void validate() {
         std::ostringstream msg;
         msg << "A DyKnow installation was not able to be found on your device.\n"
             << "Ensure the folder \"" << FOLDER_PATH
-            << "\" exists and you have the permissions to access it!";
+            << "\" exists and you have the permissions to access it!\n\n"
+            << "Additionally, ensure you have one of the supported DyKnow versions. "
+            << "You may need to upgarde your DieKnow to a later version.";
 
         MessageBox(nullptr, msg.str().c_str(), "FATAL ERROR", MB_ICONERROR);
         std::exit(EXIT_FAILURE);
     }
 }
+
 bool exists(const char* path) {
     /*
     Check if a filepath exists.
