@@ -70,7 +70,7 @@ void validate() {
             << "Ensure the folder \"" << FOLDER_PATH
             << "\" exists and you have the permissions to access it!";
 
-        MessageBox(nullptr, msg.str().c_str(), "FATAL ERROR");
+        MessageBox(nullptr, msg.str().c_str(), "FATAL ERROR", MB_ICONERROR);
         std::exit(EXIT_FAILURE);
     }
 }
