@@ -1,9 +1,6 @@
 """DieKnow main interface.
 """
 
-import os
-import sys
-
 import dieknow
 
 
@@ -19,7 +16,7 @@ def main():
 
         if user_input == "start":
             if not dieknow.is_running():
-                dieknow.start_monitoring(dieknow.get_folder_path())
+                dieknow.start_monitoring(dieknow.folder_path())
                 print("Monitoring started...")
             else:
                 dieknow.dialog(
@@ -44,8 +41,10 @@ def main():
             killed = dieknow.get_killed_count()
             print(f"Executables killed: {killed}")
         elif user_input == "directory":
-            executables = dieknow.get_executables_in_folder(folder_path)
-            print(f"Files in {folder_path.decode()}:")
+            executables = dieknow.get_executables_in_folder(
+                dieknow.folder_path()
+            )
+            print(f"Files in {dieknow.folder_path().decode()}:")
             print(executables.decode())
         elif user_input == "gui":
             dieknow.create_window()
