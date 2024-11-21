@@ -49,6 +49,10 @@ lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
 
 lib = ctypes.CDLL(lib_dll_path)
 
+lib.validate.argtypes = None
+lib.validate.restype = None
+lib.get_folder_path.argtypes = None
+lib.get_folder_path.restype = ctypes.c_char_p
 lib.start_monitoring.argtypes = [ctypes.c_char_p]
 lib.stop_monitoring.restype = None
 lib.get_killed_count.restype = ctypes.c_int
@@ -59,6 +63,8 @@ lib.bsod.restype = ctypes.c_int
 lib.dialog.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.UINT]
 lib.dialog.restype = ctypes.c_int
 
+validate = lib.validate
+folder_path = lib.get_folder_path
 start_monitoring = lib.start_monitoring
 stop_monitoring = lib.stop_monitoring
 get_killed_count = lib.get_killed_count

@@ -10,15 +10,7 @@ import dieknow
 def main():
     """Main starting point."""
 
-    folder_path = b"C:/Program Files/DyKnow/Cloud/7.10.22.9"
-    if not os.path.exists(folder_path):
-        dieknow.dialog(
-            "A DyKnow installation was not able to be found on your device. "
-            f"Ensure {folder_path}s exists and you have the permissions to "
-            "access it!", "FATAL ERROR",
-            dieknow.MB_ICONERROR
-        )
-        sys.exit()
+    dieknow.validate()
 
     print("DieKnow Shell\n=============")
 
@@ -27,7 +19,7 @@ def main():
 
         if user_input == "start":
             if not dieknow.is_running():
-                dieknow.start_monitoring(folder_path)
+                dieknow.start_monitoring(dieknow.get_folder_path())
                 print("Monitoring started...")
             else:
                 dieknow.dialog(

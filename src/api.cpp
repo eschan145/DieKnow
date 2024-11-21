@@ -27,6 +27,8 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <string>
 #include <thread>
 #include <filesystem>
+#include <sstream>
+#include <cstdlib>
 #include <fstream>
 #include <windows.h>
 #include <winternl.h>
@@ -35,7 +37,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 using namespace std;
 namespace fs = std::filesystem;
 
-const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.22.9";
+const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.45.7";
 
 // Prevent name mangling that happens as a result of function overloading in C++
 extern "C"
@@ -43,6 +45,8 @@ extern "C"
     bool running = false;
     int killed = 0;
 
+    __declspec(dllexport) void validate();
+    __declspec(dllexport) const char* get_folder_path();
     __declspec(dllexport) void start_monitoring(const char* folder_path);
     __declspec(dllexport) void stop_monitoring();
     __declspec(dllexport) int get_killed_count();
@@ -59,6 +63,17 @@ extern "C"
     __declspec(dllexport) int __stdcall bsod();
 }
 
+void validate() {
+    if (!std::filesystem::exists(FOLDER_PATH)) {
+        std::ostringstream msg;
+        msg << "A DyKnow installation was not able to be found on your device.\n"
+            << "Ensure the folder \"" << FOLDER_PATH
+            << "\" exists and you have the permissions to access it!";
+
+        MessageBox(nullptr, msg.str().c_str(), "FATAL ERROR");
+        std::exit(EXIT_FAILURE);
+    }
+}
 bool exists(const char* path) {
     /*
     Check if a filepath exists.
@@ -134,6 +149,10 @@ void monitor_executables(const char* folder_path) {
             interval_file.close();
         }
     }
+}
+
+const char* get_folder_path() {
+    return FOLDER_PATH;
 }
 
 void start_monitoring(const char* folder_path = FOLDER_PATH) {

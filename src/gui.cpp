@@ -142,6 +142,8 @@ public:
     std::vector<std::string> previous_executables;
 
     Application() {
+        validate();
+
         // Used for help popup balloon
         InitCommonControls();
 
