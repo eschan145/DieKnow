@@ -369,6 +369,7 @@ public:
                     stop_monitoring();
                     toggle_internet();
                 } else {
+                    SetFocus(NULL);
                     toggle_internet();
                     start_monitoring(FOLDER_PATH);
                     toggle_internet();

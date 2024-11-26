@@ -117,7 +117,6 @@ void toggle_internet() {
 
     std::this_thread::sleep_for(std::chrono::duration<double>(WINDOW_DELAY));
 
-    push(0x20);
-
-    push(0x1B);
+    push(0x20); // Space
+    push(0x1B); // Escape
 }
