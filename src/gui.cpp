@@ -454,7 +454,7 @@ public:
 
                 if (!RegisterClass(&ws_wc)) {
                     MessageBox(NULL, "Window class registration for window shower failed!", "Error", MB_ICONERROR);
-                    return -1;
+                    return;
                 }
 
                 HWND ws_hwnd = CreateWindowEx(
@@ -474,7 +474,7 @@ public:
 
                 if (ws_hwnd == NULL) {
                     MessageBox(NULL, "Window creation failed for new window!", "Error", MB_OK);
-                    return -1;
+                    return;
                 }
 
                 ShowWindow(ws_hwnd, SW_SHOWNORMAL);
@@ -563,6 +563,7 @@ public:
         switch (uMsg) {
             case WM_DESTROY:
                 PostQuitMessage(0);
+                return 0;
                 break;
 
             default:
