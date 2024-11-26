@@ -23,6 +23,8 @@ VERSION: 1.0.1
 #include <windows.h>
 #include <string>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 
 std::string get_cpu_name() {
@@ -88,4 +90,24 @@ void press(BYTE key) {
 
 void release(BYTE key) {
     keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
+}
+
+void enable_internet() {
+    /*
+    Enable internet by the following keypresses:
+    
+    1. Press Windows-A
+    2. Press Space
+    3. Press Windows-A
+    */
+
+    press(0x5B);
+    press(0x41);
+    release(0x41);
+    release(0x5b);
+
+    std::this_thread::sleep_for(std::chrono::seconds(0.7));
+
+    press(0x20);
+    release(0x20);
 }
