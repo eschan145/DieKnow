@@ -45,6 +45,8 @@ extern "C"
     bool running = false;
     int killed = 0;
 
+    // __declspec allows it to be exported and used in ctypes
+
     __declspec(dllexport) void validate();
     __declspec(dllexport) const char* get_folder_path();
     __declspec(dllexport) void start_monitoring(const char* folder_path);

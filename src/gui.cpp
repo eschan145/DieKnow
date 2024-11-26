@@ -90,6 +90,14 @@ void write(const std::string& filename, int value) {
         file << value;
         file.close();
     } else {
+        std::ostringstream message;
+        message << "Unable to open the file "
+                << filename << ".\n\n"
+                << "Ensure it:" << "\n"
+                << "* Exists," << "\n"
+                << "* Is not in use by another application, and" << "\n"
+                << "* Is avaliable and downloaded to OneDrive." << "\n";
+            
         MessageBox(nullptr, "Failed to open file", "Error", MB_ICONERROR);
     }
 }
@@ -119,15 +127,20 @@ const char* get_selected(HWND listbox) {
 
     int index = SendMessage(listbox, LB_GETCURSEL, 0, 0);
     if (index == LB_ERR) {
+        // Unable to get listbox contents for some reason (no selection?)
         return "";
     }
 
+    // Needed to specify memory allocation
     int length = SendMessage(listbox, LB_GETTEXTLEN, index, 0);
 
+    // Create a character buffer to output the selected item
     char* buffer = new char[length + 1];
     SendMessage(listbox, LB_GETTEXT, index, (LPARAM)buffer);
 
     const char* text = _strdup(buffer);
+
+    // Cleanup
     delete[] buffer;
 
     return text;
@@ -334,7 +347,7 @@ public:
         tooltip(hwnd, exit_button, "Exit the DieKnow application and terminate all processes.");
         tooltip(hwnd, directory, "Directory of the DyKnow files.");
         tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow.");
-        tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow.");
+        tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow. Beware - an interval of 0 can saturate a CPU core.");
         tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow.");
         tooltip(hwnd, open_explorer, "Open the DyKnow file directory in the Windows Explorer.");
         tooltip(hwnd, display_information, "Show system information.");
@@ -360,7 +373,7 @@ public:
         /*
         Manage button commands in a switch statement.
 
-        This function is usually called by `WindowProc`.
+        This function is called by `WindowProc`.
         */
 
         switch (LOWORD(wParam)) {
@@ -454,6 +467,7 @@ public:
         This is called internally by the Windows API.
         */
 
+        // We'll have to use reinterpret_cast as this function is static
         Application* app = reinterpret_cast<Application*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
         switch (uMsg) {

@@ -62,8 +62,13 @@ std::string get_gpu_name() {
 }
 
 std::string get_os_info() {
+    /*
+    Retrieve OS information, such as Windows build information.
+    */
+
     SYSTEM_INFO si;
     GetNativeSystemInfo(&si);
+    // Get architecture
     std::string arch = (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64) ? "64-bit" : "32-bit";
 
     OSVERSIONINFOEXA osvi;
@@ -88,14 +93,26 @@ std::string get_available_ram() {
 }
 
 void press(BYTE key) {
+    /*
+    Press a key.
+    */
+
     keybd_event(key, 0, 0, 0);
 }
 
 void release(BYTE key) {
+    /*
+    Release a held key.
+    */
+
     keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
 }
 
 inline void push(BYTE key) {
+    /*
+    Shortcut to push and release keys.
+    */
+
     press(key);
     release(key);
 }
