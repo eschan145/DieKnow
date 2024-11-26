@@ -366,11 +366,12 @@ public:
         switch (LOWORD(wParam)) {
             case Widgets::RUNNING: {
                 if (running) {
-                    toggle_internet();
                     stop_monitoring();
+                    toggle_internet();
                 } else {
                     toggle_internet();
                     start_monitoring(FOLDER_PATH);
+                    toggle_internet();
                 }
 
                 std::string status = running ? "Stop" : "Start";
