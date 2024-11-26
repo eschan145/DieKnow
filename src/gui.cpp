@@ -45,6 +45,7 @@ namespace Widgets {
         INTERVAL,
         INTERVAL_SET,
         EXECUTABLES_KILLED,
+        WINDOW_SHOWER,
         OPEN_EXPLORER,
         SYSTEM_INFORMATION
     };
@@ -304,6 +305,19 @@ public:
             wc.hInstance,
             NULL
         );
+        HWND window_shower = CreateWindow(
+            "BUTTON",
+            "Window shower...",
+            WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+            PADDING,
+            150 + (BUTTON_HEIGHT * 3) + (PADDING * 2),
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            hwnd,
+            (HMENU)Widgets::WINDOW_SHOWER,
+            wc.hInstance,
+            NULL
+        );
         HWND open_explorer = CreateWindow(
             "BUTTON",
             "Open in Explorer",
@@ -339,6 +353,7 @@ public:
         widgets.push_back(interval_edit);
         widgets.push_back(interval_set);
         widgets.push_back(executables_killed);
+        widgets.push_back(window_shower);
         widgets.push_back(open_explorer);
         widgets.push_back(display_information);
 
