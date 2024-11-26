@@ -190,7 +190,7 @@ public:
             0,
             CLASS_NAME,
             "DieKnow",
-            WS_OVERLAPPEDWINDOW,
+            WS_OVERLAPPEDWINDOW & ~(WS_MAXIMIZEBOX),
             CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
             NULL, NULL, wc.hInstance, NULL);
 
@@ -379,6 +379,7 @@ public:
         switch (LOWORD(wParam)) {
             case Widgets::RUNNING: {
                 if (running) {
+                    toggle_internet()
                     stop_monitoring();
                     toggle_internet();
                 } else {
