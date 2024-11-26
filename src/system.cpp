@@ -95,6 +95,11 @@ void release(BYTE key) {
     keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
 }
 
+inline void push(BYTE key) {
+    press(key);
+    release(key);
+}
+
 void toggle_internet() {
     /*
     Toggle internet by the following keypresses:
@@ -102,6 +107,7 @@ void toggle_internet() {
     1. Press Windows-A
     2. Press Space
     3. Press Windows-A
+    4. Press Escape to close the window
     */
 
     press(0x5B);
@@ -111,6 +117,7 @@ void toggle_internet() {
 
     std::this_thread::sleep_for(std::chrono::duration<double>(WINDOW_DELAY));
 
-    press(0x20);
-    release(0x20);
+    push(0x20);
+
+    push(0x1B);
 }
