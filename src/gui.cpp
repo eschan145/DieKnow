@@ -394,7 +394,7 @@ public:
         switch (LOWORD(wParam)) {
             case Widgets::RUNNING: {
                 if (running) {
-                    toggle_internet()
+                    toggle_internet();
                     stop_monitoring();
                     toggle_internet();
                 } else {
