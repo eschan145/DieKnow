@@ -6,7 +6,7 @@ DieKnow will significantly improve the performance of your laptop by a large amo
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), powered by the Windows win32 API.
 
-Supported DyKnow version: `7.10.45.7`
+Supported DyKnow version: `7.10.45.7`. DieKnow will not work for any other version (TODO).
 
 ![Screenshot of DieKnow GUI](screenshot2.png)
 
@@ -134,7 +134,7 @@ I was able to program this bypass not because I'm smart, but because the people 
 
 #### Why is C++ and Python used and not only Python?
 
-The Intel Core i3 CPU is quite slow and in the lower end of Intel's CPU lineup. Therefore it is important for highest efficiency to use C++, as Python is built on C and very inefficient. DieKnow does not only use C++ because most executables are blocked by organizations' AppLocker policy. This can be mitigated by using ctypes and building a shared object or dynamic link library from C++ files.
+The Intel Core i3 CPU is quite slow and at the lower end of Intel's CPU lineup. Therefore it is important for highest efficiency to use C++, as Python is built on C and very inefficient. DieKnow does not only use C++ because most executables are blocked by organizations' AppLocker policy. This can be mitigated by using ctypes and building a shared object or dynamic link library from C++ files.
 
 #### How can I compile this myself?
 
@@ -148,4 +148,3 @@ g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgd
 #### I'm getting high CPU usage for DieKnow. What can I do?
 
 I'm working to optimize the DieKnow process, and it uses higher CPU than it should. However, it still significantly less than what DieKnow uses.
-
