@@ -27,6 +27,9 @@ VERSION: 1.0.1
 #include <thread>
 
 
+const double WINDOW_DELAY = 0.7;
+
+
 std::string get_cpu_name() {
     HKEY hkey;
     char cpu_name[256];
@@ -92,9 +95,9 @@ void release(BYTE key) {
     keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
 }
 
-void enable_internet() {
+void toggle_internet() {
     /*
-    Enable internet by the following keypresses:
+    Toggle internet by the following keypresses:
     
     1. Press Windows-A
     2. Press Space
@@ -106,7 +109,7 @@ void enable_internet() {
     release(0x41);
     release(0x5b);
 
-    std::this_thread::sleep_for(std::chrono::seconds(0.7));
+    std::this_thread::sleep_for(std::chrono::duration<double>(WINDOW_DELAY));
 
     press(0x20);
     release(0x20);
