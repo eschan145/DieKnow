@@ -444,6 +444,45 @@ public:
                 break;
             }
 
+            case Widgets::WINDOW_SHOWER: {
+                const char* ws_class_name = "WindowShower";
+
+                WNDCLASS ws_wc = {};
+                ws_wc.lpfnWndProc = Application::WSWindowProc;
+                ws_wc.hInstance = GetModuleHandle(NULL);
+                ws_wc.lpszClassName = ws_class_name;
+
+                if (!RegisterClass(&ws_wc)) {
+                    MessageBox(NULL, "Window class registration for window shower failed!", "Error", MB_ICONERROR);
+                    return -1;
+                }
+
+                HWND ws_hwnd = CreateWindowEx(
+                    0,
+                    ws_class_name,
+                    "Window Shower",
+                    WS_OVERLAPPEDWINDOW,
+                    CW_USEDEFAULT,
+                    CW_USEDEFAULT,
+                    500,
+                    400,
+                    NULL,
+                    NULL,
+                    ws_wc.hInstance,
+                    NULL
+                );
+
+                if (ws_hwnd == NULL) {
+                    MessageBox(NULL, "Window creation failed for new window!", "Error", MB_OK);
+                    return -1;
+                }
+
+                ShowWindow(ws_hwnd, SW_SHOWNORMAL);
+                UpdateWindow(ws_hwnd);
+
+                break;
+            }
+
             case Widgets::OPEN_EXPLORER: {
                 ShellExecute(NULL, "open", FOLDER_PATH, NULL, NULL, SW_SHOWDEFAULT);
                 break;
@@ -514,6 +553,21 @@ public:
         }
 
         return DefWindowProc(hwnd, uMsg, wParam, lParam);
+    }
+
+    static LRESULT CALLBACK WSWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+        /*
+        WindowProc for window shower.
+        */
+
+        switch (uMsg) {
+            case WM_DESTROY:
+                PostQuitMessage(0);
+                break;
+
+            default:
+                return DefWindowProc(hwnd, uMsg, wParam, lParam);
+        }
     }
 
     void update() {
