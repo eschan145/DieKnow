@@ -98,7 +98,7 @@ void write(const std::string& filename, int value) {
                 << "* Is not in use by another application, and" << "\n"
                 << "* Is avaliable and downloaded to OneDrive." << "\n";
             
-        MessageBox(nullptr, "Failed to open file", "Error", MB_ICONERROR);
+        MessageBox(nullptr, message.str().c_str(), "Error", MB_ICONERROR);
     }
 }
 
