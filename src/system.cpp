@@ -81,3 +81,11 @@ std::string get_available_ram() {
     ram_info << (statex.ullAvailPhys / (1024 * 1024)) << " MB available";
     return ram_info.str();
 }
+
+void press(BYTE key) {
+    keybd_event(key, 0, 0, 0);
+}
+
+void release(BYTE key) {
+    keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
+}
