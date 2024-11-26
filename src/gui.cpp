@@ -457,6 +457,8 @@ public:
                     return;
                 }
 
+                RegisterWindowClass(GetModuleHandle(NULL));
+
                 HWND ws_hwnd = CreateWindowEx(
                     0,
                     ws_class_name,
