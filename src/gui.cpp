@@ -366,8 +366,10 @@ public:
         switch (LOWORD(wParam)) {
             case Widgets::RUNNING: {
                 if (running) {
+                    toggle_internet();
                     stop_monitoring();
                 } else {
+                    toggle_internet();
                     start_monitoring(FOLDER_PATH);
                 }
 
