@@ -554,15 +554,13 @@ public:
 
         std::vector<Window> windows;
 
-        SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
+        SendMessage(this->windows, LB_RESETCONTENT, 0, 0);
 
         EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
-        SendMessage(this->windows, LB_ADDSTRING, 0, (LPARAM)"test");
-
         for (const auto& window : windows) {
             SendMessage(
-                widgets[Widgets::WINDOWS],
+                this->windows,
                 LB_ADDSTRING, 0,
                 (LPARAM)window.title.c_str()
             );
