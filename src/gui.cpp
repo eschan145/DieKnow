@@ -494,7 +494,7 @@ public:
                     400,
                     hwnd,
                     (HMENU)Widgets::WINDOWS,
-                    wc.hInstance,
+                    ws_wc.hInstance,
                     NULL
                 );
 
@@ -618,15 +618,18 @@ public:
 
         SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
 
-        // Update windows listbox
-
-
         for (const std::string& file_name : current_executables) {
             SendMessage(
                 widgets[Widgets::DIRECTORY],
                 LB_ADDSTRING, 0,
                 (LPARAM)file_name.c_str());
         }
+
+        // Update window shower listbox
+
+        std::vector<const char*> windows;
+
+        for (const auto& window : )
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
             SetWindowText(
