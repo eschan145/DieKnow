@@ -557,7 +557,7 @@ public:
 
         for (const auto& window : windows) {
             SendMessage(
-                widgets[Widgets::WINDOWS],
+                widgets[Widgets::DIRECTORY],
                 LB_ADDSTRING, 0,
                 (LPARAM)window.title.c_str()
             );
