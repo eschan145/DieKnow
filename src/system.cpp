@@ -29,6 +29,12 @@ VERSION: 1.0.1
 
 
 const double WINDOW_DELAY = 0.7;
+const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
+    "GDI+",
+    "DDE Server Window",
+    "Default IME",
+    "MSCTFIME UI"
+};
 
 struct Window {
     HWND hwnd;
@@ -42,6 +48,15 @@ struct Window {
     }
 };
 
+bool is_valid(const Window& window) {
+    for (const auto& word : WINDOW_EXCLUDE_LIST) {
+        if (window.title.find(word) != std::string::npos) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 std::string get_cpu_name() {
     HKEY hkey;
@@ -161,7 +176,9 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     GetClassNameA(hwnd, class_name, sizeof(class_name));
 
     if (title[0]) {
-        windows->push_back({hwnd, title, class_name});
+        if (is_valid(window)) {
+            windows->push_back({hwnd, title, class_name});
+        }
     }
 
     return TRUE;
