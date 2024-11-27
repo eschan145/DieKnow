@@ -637,7 +637,6 @@ public:
             EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
             for (const Window& window : windows) {
-                MessageBox(nullptr, window.title.c_str(), "", MB_ICONERROR);
                 SendMessage(
                     widgets[Widgets::WINDOWS],
                     LB_ADDSTRING, 0,
