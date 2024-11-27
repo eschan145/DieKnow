@@ -475,7 +475,7 @@ public:
                     400,
                     NULL,
                     NULL,
-                    ws_wc.hInstance,
+                    GetModuleHandle(NULL),
                     NULL
                 );
 
