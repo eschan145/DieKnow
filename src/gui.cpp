@@ -637,7 +637,7 @@ public:
 
             EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
-            for (const std::string& window : windows) {
+            for (const auto& window : windows) {
                 SendMessage(
                     widgets[Widgets::DIRECTORY],
                     LB_ADDSTRING, 0,
