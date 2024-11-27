@@ -475,8 +475,8 @@ public:
                     WS_OVERLAPPEDWINDOW,
                     CW_USEDEFAULT,
                     CW_USEDEFAULT,
-                    500,
-                    400,
+                    width + (PADDING * 2),
+                    height + (PADDING * 2),
                     NULL,
                     NULL,
                     GetModuleHandle(NULL),
@@ -487,8 +487,6 @@ public:
                     MessageBox(NULL, "Window creation failed for new window!", "Error", MB_OK);
                     return;
                 }
-
-                MoveWindow(app->ws_hwnd, 0, 0, width + (PADDING * 2), height + (PADDING * 2), TRUE);
 
                 HWND listbox = CreateWindow(
                     "LISTBOX",
