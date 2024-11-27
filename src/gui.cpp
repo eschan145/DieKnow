@@ -46,6 +46,7 @@ namespace Widgets {
         INTERVAL_SET,
         EXECUTABLES_KILLED,
         WINDOW_SHOWER,
+        WINDOWS,
         OPEN_EXPLORER,
         SYSTEM_INFORMATION
     };
@@ -479,6 +480,20 @@ public:
                     return;
                 }
 
+                HWND listbox = CreateWindow(
+                    "LISTBOX",
+                    nullptr,
+                    WS_VISIBLE | WS_CHILD | LBS_STANDARD,
+                    PADDING,
+                    PADDING,
+                    300,
+                    400,
+                    hwnd,
+                    (HMENU)Widgets::WINDOWS,
+                    wc.hInstance,
+                    NULL
+                );
+
                 ShowWindow(ws_hwnd, SW_SHOWNORMAL);
                 UpdateWindow(ws_hwnd);
 
@@ -598,6 +613,9 @@ public:
         previous_executables = current_executables;
 
         SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
+
+        // Update windows listbox
+
 
         for (const std::string& file_name : current_executables) {
             SendMessage(
