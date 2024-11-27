@@ -629,21 +629,21 @@ public:
 
         // Update window shower listbox
 
-        std::vector<Window> windows;
+        if (IsWindow(this->ws_hwnd)) {
+            std::vector<Window> windows;
 
-        SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
+            SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
 
-        EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
+            EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
-        MessageBox(nullptr, std::to_string(windows.size()).c_str(), "Vector Size", MB_OK);
-
-        for (const Window& window : windows) {
-            MessageBox(nullptr, window.title.c_str(), "", MB_ICONERROR);
-            SendMessage(
-                widgets[Widgets::WINDOWS],
-                LB_ADDSTRING, 0,
-                (LPARAM)window.title.c_str()
-            );
+            for (const Window& window : windows) {
+                MessageBox(nullptr, window.title.c_str(), "", MB_ICONERROR);
+                SendMessage(
+                    widgets[Widgets::WINDOWS],
+                    LB_ADDSTRING, 0,
+                    (LPARAM)window.title.c_str()
+                );
+            }
         }
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
