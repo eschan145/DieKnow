@@ -635,7 +635,10 @@ public:
 
         EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
+        MessageBox(nullptr, std::to_string(windows.size()).c_str(), "Vector Size", MB_OK);
+
         for (const Window& window : windows) {
+            MessageBox(nullptr, window.title.c_str(), "", MB_ICONERROR);
             SendMessage(
                 widgets[Widgets::WINDOWS],
                 LB_ADDSTRING, 0,
