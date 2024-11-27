@@ -560,7 +560,7 @@ public:
         if (!(current_windows == previous_windows)) {
             previous_windows = current_windows;
 
-            for (const auto& window : windows) {
+            for (const auto& window : current_windows) {
                 SendMessage(
                     this->windows,
                     LB_ADDSTRING, 0,
@@ -568,9 +568,6 @@ public:
                 );
             }
         }
-
-        SendMessage(this->windows, WM_SETREDRAW, TRUE, 0);
-        RedrawWindow(this->windows, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
             SetWindowText(
