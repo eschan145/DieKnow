@@ -22,12 +22,21 @@ VERSION: 1.0.1
 
 #include <windows.h>
 #include <string>
+#include <vector>
 #include <sstream>
 #include <chrono>
 #include <thread>
 
 
 const double WINDOW_DELAY = 0.7;
+
+struct Window {
+    HWND hwnd;
+    std::string title;
+    std::string class_name;
+}
+
+std::vector<Window> windows;
 
 
 std::string get_cpu_name() {
@@ -136,4 +145,16 @@ void toggle_internet() {
 
     push(0x20); // Space
     push(0x1B); // Escape
+}
+
+BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
+    char title[256];
+    char class_name[256];
+
+    GetWindowText(hwnd, title, sizeof(title));
+    GetClassNameA(hwnd, class_name, sizeof(class_name));
+
+    windows.push_back({hwnd, title, class_name});
+
+    return TRUE;
 }

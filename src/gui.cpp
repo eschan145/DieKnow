@@ -451,7 +451,7 @@ public:
                 const char* ws_class_name = "WindowShower";
 
                 if (!app->is_ws_registered) {
-                    ws_wc = {};
+                    WNDCLASSS ws_wc = {};
                     ws_wc.lpfnWndProc = Application::WSWindowProc;
                     ws_wc.hInstance = GetModuleHandle(NULL);
                     ws_wc.lpszClassName = ws_class_name;
@@ -627,9 +627,9 @@ public:
 
         // Update window shower listbox
 
-        std::vector<const char*> windows;
+        // std::vector<const char*> windows;
 
-        for (const auto& window : )
+        // for (const auto& window : )
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
             SetWindowText(
