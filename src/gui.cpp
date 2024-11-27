@@ -372,6 +372,8 @@ public:
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
         }
 
+        SendMessage(windows, LB_ADDSTRING, 0, (LPARAM)"test");
+
         // In ms -- set to 5 ticks per second
         SetTimer(hwnd, 1, 200, nullptr);
 
