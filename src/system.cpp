@@ -154,7 +154,7 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     GetWindowText(hwnd, title, sizeof(title));
     GetClassNameA(hwnd, class_name, sizeof(class_name));
 
-    if (str[0]) {
+    if (title[0]) {
         windows->push_back({hwnd, title, class_name});
     }
 
