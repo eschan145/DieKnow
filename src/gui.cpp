@@ -337,10 +337,10 @@ public:
             WS_VISIBLE | WS_CHILD | LBS_STANDARD,
             PADDING,
             150 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
-            BUTTON_WIDTH * 2,
+            PADDING + (BUTTON_WIDTH * 2),
             200,
             hwnd,
-            (HMENU)Widgets::DIRECTORY,
+            (HMENU)Widgets::WINDOWS,
             wc.hInstance,
             NULL
         );
