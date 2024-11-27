@@ -627,9 +627,19 @@ public:
 
         // Update window shower listbox
 
-        // std::vector<const char*> windows;
+        std::vector<Window> windows;
 
-        // for (const auto& window : )
+        SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
+
+        EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
+
+        for (const Window& window : windows) {
+            SendMessage(
+                widgets[Widgets::WINDOWS],
+                LB_ADDSTRING, 0,
+                (LPARAM)window.c_str()
+            );
+        }
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
             SetWindowText(

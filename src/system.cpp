@@ -34,9 +34,7 @@ struct Window {
     HWND hwnd;
     std::string title;
     std::string class_name;
-}
-
-std::vector<Window> windows;
+};
 
 
 std::string get_cpu_name() {
@@ -148,13 +146,15 @@ void toggle_internet() {
 }
 
 BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
+    std::vector<Window>* windows = reinterpret_cast<std::vector<Window>*>(lParam);
+
     char title[256];
     char class_name[256];
 
     GetWindowText(hwnd, title, sizeof(title));
     GetClassNameA(hwnd, class_name, sizeof(class_name));
 
-    windows.push_back({hwnd, title, class_name});
+    windows->push_back({hwnd, title, class_name});
 
     return TRUE;
 }
