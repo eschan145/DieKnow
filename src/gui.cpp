@@ -156,6 +156,8 @@ public:
     // Used to determine whether or not to refresh the listbox
     std::vector<std::string> previous_executables;
 
+    bool is_ws_registered = false;
+
     Application() {
         validate();
 
@@ -448,17 +450,19 @@ public:
             case Widgets::WINDOW_SHOWER: {
                 const char* ws_class_name = "WindowShower";
 
-                WNDCLASS ws_wc = {};
-                ws_wc.lpfnWndProc = Application::WSWindowProc;
-                ws_wc.hInstance = GetModuleHandle(NULL);
-                ws_wc.lpszClassName = ws_class_name;
+                if (!app->is_ws_registered) {
+                    ws_wc = {};
+                    ws_wc.lpfnWndProc = Application::WSWindowProc;
+                    ws_wc.hInstance = GetModuleHandle(NULL);
+                    ws_wc.lpszClassName = ws_class_name;
 
-                if (!RegisterClass(&ws_wc)) {
-                    MessageBox(NULL, "Window class registration for window shower failed!", "Error", MB_ICONERROR);
-                    return;
+                    if (!RegisterClass(&ws_wc)) {
+                        MessageBox(NULL, "Window class registration for window shower failed!", "Error", MB_ICONERROR);
+                        return;
+                    }
+
+                    app->is_ws_registered = true;
                 }
-
-                RegisterWindowClass(GetModuleHandle(NULL));
 
                 HWND ws_hwnd = CreateWindowEx(
                     0,
