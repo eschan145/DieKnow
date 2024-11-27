@@ -633,13 +633,13 @@ public:
             std::vector<Window> windows;
             std::string str = "test";
 
-            SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
+            SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
 
             EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
             for (const auto& window : windows) {
                 SendMessage(
-                    widgets[Widgets::DIRECTORY],
+                    widgets[Widgets::WINDOWS],
                     LB_ADDSTRING, 0,
                     (LPARAM)str.c_str()
                 );
