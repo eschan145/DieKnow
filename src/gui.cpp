@@ -451,8 +451,8 @@ public:
 
             case Widgets::WINDOW_SHOWER: {
                 const char* ws_class_name = "WindowShower";
-                const int width = 500;
-                const int height = 400;
+                const int width = 400;
+                const int height = 500;
 
                 if (!app->is_ws_registered) {
                     WNDCLASS ws_wc = {};
@@ -494,8 +494,8 @@ public:
                     WS_VISIBLE | WS_CHILD | LBS_STANDARD,
                     PADDING,
                     PADDING,
-                    300,
-                    400,
+                    width,
+                    height,
                     app->ws_hwnd,
                     (HMENU)Widgets::WINDOWS,
                     GetModuleHandle(NULL),
