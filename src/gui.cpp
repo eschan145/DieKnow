@@ -451,6 +451,8 @@ public:
 
             case Widgets::WINDOW_SHOWER: {
                 const char* ws_class_name = "WindowShower";
+                const int width = 500;
+                const int height = 400;
 
                 if (!app->is_ws_registered) {
                     WNDCLASS ws_wc = {};
@@ -485,6 +487,8 @@ public:
                     MessageBox(NULL, "Window creation failed for new window!", "Error", MB_OK);
                     return;
                 }
+
+                MoveWindow(app->ws_hwnd, 0, 0, width + (PADDING * 2), height + (PADDING * 2), TRUE);
 
                 HWND listbox = CreateWindow(
                     "LISTBOX",
@@ -612,19 +616,17 @@ public:
             }
         }
 
-        if (current_executables == previous_executables) {
-            return;
-        }
+        if (!(current_executables == previous_executables)) {
+            previous_executables = current_executables;
 
-        previous_executables = current_executables;
+            SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
 
-        SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
-
-        for (const std::string& file_name : current_executables) {
-            SendMessage(
-                widgets[Widgets::DIRECTORY],
-                LB_ADDSTRING, 0,
-                (LPARAM)file_name.c_str());
+            for (const std::string& file_name : current_executables) {
+                SendMessage(
+                    widgets[Widgets::DIRECTORY],
+                    LB_ADDSTRING, 0,
+                    (LPARAM)file_name.c_str());
+            }
         }
 
         // Update window shower listbox
