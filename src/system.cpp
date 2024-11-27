@@ -34,6 +34,12 @@ struct Window {
     HWND hwnd;
     std::string title;
     std::string class_name;
+
+    bool operator==(const Window& other) const {
+        return (title == other.title) &&
+               (class_name == other.class_name) &&
+               (hwnd = other.hwnd);
+    }
 };
 
 
