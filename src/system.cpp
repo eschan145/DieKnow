@@ -33,7 +33,13 @@ const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
     "GDI+",
     "DDE Server Window",
     "Default IME",
-    "MSCTFIME UI"
+    "MSCTFIME UI",
+    ".NET-BroadcastEventWindow",
+    "DesktopWindowXamlSource",
+    "HardwareMonitorWindow",
+    "WISPTIS",
+    "SystemResourceNotifyWindow",
+    "DesktopWindow"
 };
 
 struct Window {
