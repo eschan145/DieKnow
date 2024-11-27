@@ -155,6 +155,7 @@ public:
 
     // Used to determine whether or not to refresh the listbox
     std::vector<std::string> previous_executables;
+    std::vector<Window> previous_windows;
 
     HWND windows;
 
@@ -552,19 +553,20 @@ public:
 
         // Update window shower listbox
 
-        std::vector<Window> windows;
+        std::vector<Window> current_windows;
 
-        SendMessage(this->windows, WM_SETREDRAW, FALSE, 0);
-        SendMessage(this->windows, LB_RESETCONTENT, 0, 0);
+        EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&current_windows));
 
-        EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
+        if (!(current_windows == previous_windows)) {
+            previous_windows = current_windows;
 
-        for (const auto& window : windows) {
-            SendMessage(
-                this->windows,
-                LB_ADDSTRING, 0,
-                (LPARAM)window.title.c_str()
-            );
+            for (const auto& window : windows) {
+                SendMessage(
+                    this->windows,
+                    LB_ADDSTRING, 0,
+                    (LPARAM)window.title.c_str()
+                );
+            }
         }
 
         SendMessage(this->windows, WM_SETREDRAW, TRUE, 0);
