@@ -646,7 +646,7 @@ public:
                 SendMessage(
                     widgets[Widgets::WINDOWS],
                     LB_ADDSTRING, 0,
-                    (LPARAM)str.c_str()
+                    (LPARAM)window.title.c_str()
                 );
             }
         }
