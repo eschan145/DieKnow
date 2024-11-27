@@ -20,6 +20,7 @@ DATE: 2024-11-13
 VERSION: 1.0.1
 */
 
+#include <iostream>
 #include <vector>
 #include <string>
 #include <windows.h>
@@ -555,9 +556,12 @@ public:
 
         EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
+        std::cout << "Widgets::WINDOWS HWND: " << widgets[Widgets::WINDOWS] << std::endl;
+        std::cout << "Widgets::DIRECTORY HWND: " << widgets[Widgets::DIRECTORY] << std::endl;
+
         for (const auto& window : windows) {
             SendMessage(
-                widgets[Widgets::DIRECTORY],
+                widgets[Widgets::WINDOWS],
                 LB_ADDSTRING, 0,
                 (LPARAM)window.title.c_str()
             );
