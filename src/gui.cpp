@@ -554,6 +554,7 @@ public:
 
         std::vector<Window> windows;
 
+        SendMessage(this->windows, WM_SETREDRAW, FALSE, 0);
         SendMessage(this->windows, LB_RESETCONTENT, 0, 0);
 
         EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
@@ -565,6 +566,9 @@ public:
                 (LPARAM)window.title.c_str()
             );
         }
+
+        SendMessage(this->windows, WM_SETREDRAW, TRUE, 0);
+        RedrawWindow(this->windows, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
             SetWindowText(
