@@ -505,6 +505,12 @@ public:
                 ShowWindow(app->ws_hwnd, SW_SHOWNORMAL);
                 UpdateWindow(app->ws_hwnd);
 
+                MSG msg = {};
+                while (GetMessage(&msg, NULL, 0, 0)) {
+                    TranslateMessage(&msg);
+                    DispatchMessage(&msg);
+                }
+
                 break;
             }
 
@@ -631,7 +637,6 @@ public:
 
         if (IsWindow(this->ws_hwnd)) {
             std::vector<Window> windows;
-            std::string str = "test";
 
             SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
 
