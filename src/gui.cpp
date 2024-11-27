@@ -156,6 +156,8 @@ public:
     // Used to determine whether or not to refresh the listbox
     std::vector<std::string> previous_executables;
 
+    HWND windows;
+
     Application() {
         validate();
 
@@ -332,7 +334,7 @@ public:
             wc.hInstance,
             NULL
         );
-        HWND windows = CreateWindow(
+        windows = CreateWindow(
             "LISTBOX",
             nullptr,
             WS_VISIBLE | WS_CHILD | LBS_STANDARD,
@@ -371,8 +373,6 @@ public:
         for (HWND widget : widgets) {
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
         }
-
-        SendMessage(windows, LB_ADDSTRING, 0, (LPARAM)"test");
 
         // In ms -- set to 5 ticks per second
         SetTimer(hwnd, 1, 200, nullptr);
@@ -558,8 +558,7 @@ public:
 
         EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
-        std::cout << "Widgets::WINDOWS HWND: " << widgets[Widgets::WINDOWS] << std::endl;
-        std::cout << "Widgets::DIRECTORY HWND: " << widgets[Widgets::DIRECTORY] << std::endl;
+        SendMessage(this->windows, LB_ADDSTRING, 0, (LPARAM)"test");
 
         for (const auto& window : windows) {
             SendMessage(
