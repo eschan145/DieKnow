@@ -494,7 +494,7 @@ public:
                     400,
                     hwnd,
                     (HMENU)Widgets::WINDOWS,
-                    ws_wc.hInstance,
+                    GetModuleHandle(NULL),
                     NULL
                 );
 
