@@ -560,6 +560,8 @@ public:
         if (!(current_windows == previous_windows)) {
             previous_windows = current_windows;
 
+            SendMessage(this->windows, LB_RESETCONTENT, 0, 0);
+
             for (const auto& window : current_windows) {
                 SendMessage(
                     this->windows,
