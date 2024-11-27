@@ -53,11 +53,11 @@ bool is_valid(const char* title) {
 
     for (const auto& word : WINDOW_EXCLUDE_LIST) {
         if (caption.find(word) != std::string::npos) {
-            return true;
+            return false;
         }
     }
 
-    return false;
+    return true;
 }
 
 std::string get_cpu_name() {
