@@ -48,9 +48,11 @@ struct Window {
     }
 };
 
-bool is_valid(const Window& window) {
+bool is_valid(const char* title) {
+    std::string caption(title);
+
     for (const auto& word : WINDOW_EXCLUDE_LIST) {
-        if (window.title.find(word) != std::string::npos) {
+        if (caption.find(word) != std::string::npos) {
             return true;
         }
     }
@@ -176,7 +178,7 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     GetClassNameA(hwnd, class_name, sizeof(class_name));
 
     if (title[0]) {
-        if (is_valid(window)) {
+        if (is_valid(title)) {
             windows->push_back({hwnd, title, class_name});
         }
     }
