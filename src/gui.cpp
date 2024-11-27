@@ -45,7 +45,6 @@ namespace Widgets {
         INTERVAL,
         INTERVAL_SET,
         EXECUTABLES_KILLED,
-        WINDOW_SHOWER,
         WINDOWS,
         OPEN_EXPLORER,
         SYSTEM_INFORMATION
@@ -150,15 +149,11 @@ const char* get_selected(HWND listbox) {
 
 class Application {
 public:
-    HWND ws_hwnd;
-
     // Used to call `WM_SETFONT`
     std::vector<HWND> widgets;
 
     // Used to determine whether or not to refresh the listbox
     std::vector<std::string> previous_executables;
-
-    bool is_ws_registered = false;
 
     Application() {
         validate();
@@ -310,19 +305,6 @@ public:
             wc.hInstance,
             NULL
         );
-        HWND window_shower = CreateWindow(
-            "BUTTON",
-            "Window shower...",
-            WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-            PADDING,
-            150 + (BUTTON_HEIGHT * 3) + (PADDING * 2),
-            BUTTON_WIDTH,
-            BUTTON_HEIGHT,
-            hwnd,
-            (HMENU)Widgets::WINDOW_SHOWER,
-            wc.hInstance,
-            NULL
-        );
         HWND open_explorer = CreateWindow(
             "BUTTON",
             "Open in Explorer",
@@ -349,6 +331,19 @@ public:
             wc.hInstance,
             NULL
         );
+        HWND windows = CreateWindow(
+            "LISTBOX",
+            nullptr,
+            WS_VISIBLE | WS_CHILD | LBS_STANDARD,
+            PADDING,
+            150 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
+            BUTTON_WIDTH * 2,
+            200,
+            hwnd,
+            (HMENU)Widgets::DIRECTORY,
+            wc.hInstance,
+            NULL
+        );
 
         widgets.push_back(running_button);
         widgets.push_back(taskkill_button);
@@ -358,9 +353,9 @@ public:
         widgets.push_back(interval_edit);
         widgets.push_back(interval_set);
         widgets.push_back(executables_killed);
-        widgets.push_back(window_shower);
         widgets.push_back(open_explorer);
         widgets.push_back(display_information);
+        widgets.push_back(windows);
 
         tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped.");
         tooltip(hwnd, taskkill_button, "Terminate the selected executable in the listbox.");
@@ -449,71 +444,6 @@ public:
                 break;
             }
 
-            case Widgets::WINDOW_SHOWER: {
-                const char* ws_class_name = "WindowShower";
-                const int width = 400;
-                const int height = 500;
-
-                if (!app->is_ws_registered) {
-                    WNDCLASS ws_wc = {};
-                    ws_wc.lpfnWndProc = Application::WSWindowProc;
-                    ws_wc.hInstance = GetModuleHandle(NULL);
-                    ws_wc.lpszClassName = ws_class_name;
-
-                    if (!RegisterClass(&ws_wc)) {
-                        MessageBox(NULL, "Window class registration for window shower failed!", "Error", MB_ICONERROR);
-                        return;
-                    }
-
-                    app->is_ws_registered = true;
-                }
-
-                app->ws_hwnd = CreateWindowEx(
-                    0,
-                    ws_class_name,
-                    "Window Shower",
-                    WS_OVERLAPPEDWINDOW,
-                    CW_USEDEFAULT,
-                    CW_USEDEFAULT,
-                    width + (PADDING * 2),
-                    height + (PADDING * 2),
-                    NULL,
-                    NULL,
-                    GetModuleHandle(NULL),
-                    NULL
-                );
-
-                if (app->ws_hwnd == NULL) {
-                    MessageBox(NULL, "Window creation failed for new window!", "Error", MB_OK);
-                    return;
-                }
-
-                HWND listbox = CreateWindow(
-                    "LISTBOX",
-                    nullptr,
-                    WS_VISIBLE | WS_CHILD | LBS_STANDARD,
-                    PADDING,
-                    PADDING,
-                    width,
-                    height,
-                    app->ws_hwnd,
-                    (HMENU)Widgets::WINDOWS,
-                    GetModuleHandle(NULL),
-                    NULL
-                );
-
-                ShowWindow(app->ws_hwnd, SW_SHOWNORMAL);
-                UpdateWindow(app->ws_hwnd);
-
-                MSG msg = {};
-                while (GetMessage(&msg, NULL, 0, 0)) {
-                    TranslateMessage(&msg);
-                    DispatchMessage(&msg);
-                }
-
-                break;
-            }
-
             case Widgets::OPEN_EXPLORER: {
                 ShellExecute(NULL, "open", FOLDER_PATH, NULL, NULL, SW_SHOWDEFAULT);
                 break;
@@ -586,22 +516,6 @@ public:
         return DefWindowProc(hwnd, uMsg, wParam, lParam);
     }
 
-    static LRESULT CALLBACK WSWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-        /*
-        WindowProc for window shower.
-        */
-
-        switch (uMsg) {
-            case WM_DESTROY:
-                DestroyWindow(0);
-                return 0;
-                break;
-
-            default:
-                return DefWindowProc(hwnd, uMsg, wParam, lParam);
-        }
-    }
-
     void update() {
         /*
         Update display labels and listbox.
@@ -635,20 +549,18 @@ public:
 
         // Update window shower listbox
 
-        if (IsWindow(this->ws_hwnd)) {
-            std::vector<Window> windows;
+        std::vector<Window> windows;
 
-            SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
+        SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
 
-            EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
+        EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
-            for (const auto& window : windows) {
-                SendMessage(
-                    widgets[Widgets::WINDOWS],
-                    LB_ADDSTRING, 0,
-                    (LPARAM)window.title.c_str()
-                );
-            }
+        for (const auto& window : windows) {
+            SendMessage(
+                widgets[Widgets::WINDOWS],
+                LB_ADDSTRING, 0,
+                (LPARAM)window.title.c_str()
+            );
         }
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
