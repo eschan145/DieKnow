@@ -619,12 +619,12 @@ public:
 
             SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
 
-            for (const std::string& file_name : current_executables) {
-                SendMessage(
-                    widgets[Widgets::DIRECTORY],
-                    LB_ADDSTRING, 0,
-                    (LPARAM)file_name.c_str());
-            }
+            // for (const std::string& file_name : current_executables) {
+            //     SendMessage(
+            //         widgets[Widgets::DIRECTORY],
+            //         LB_ADDSTRING, 0,
+            //         (LPARAM)file_name.c_str());
+            // }
         }
 
         // Update window shower listbox
@@ -632,14 +632,13 @@ public:
         if (IsWindow(this->ws_hwnd)) {
             std::vector<Window> windows;
 
-            SendMessage(widgets[Widgets::WINDOWS], LB_RESETCONTENT, 0, 0);
+            SendMessage(widgets[Widgets::DIRECTORY], LB_RESETCONTENT, 0, 0);
 
             EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
             for (const auto& window : windows) {
-                MessageBox(nullptr, window.title.c_str(), "Info", MB_ICONERROR);
                 SendMessage(
-                    widgets[Widgets::WINDOWS],
+                    widgets[Widgets::DIRECTORY],
                     LB_ADDSTRING, 0,
                     (LPARAM)window.title.c_str()
                 );
