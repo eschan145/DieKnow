@@ -38,7 +38,7 @@ struct Window {
     bool operator==(const Window& other) const {
         return (title == other.title) &&
                (class_name == other.class_name) &&
-               (hwnd = other.hwnd);
+               (hwnd == other.hwnd);
     }
 };
 
