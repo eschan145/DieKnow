@@ -629,6 +629,10 @@ public:
 
         // Update window shower listbox
 
+        if (!IsWindow(widgets[Widgets::WINDOWS])) {
+            MessageBox(nullptr, "Not a valid window", "Error", MB_OK);
+        }
+
         if (IsWindow(this->ws_hwnd)) {
             std::vector<Window> windows;
 
@@ -637,11 +641,17 @@ public:
             EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&windows));
 
             for (const Window& window : windows) {
-                SendMessage(
+                if (window.title.empty()) {
+                    MessageBox(nullptr, "Empty title", "Error", MB_OK);
+                }
+                LRESULT result = SendMessage(
                     widgets[Widgets::WINDOWS],
                     LB_ADDSTRING, 0,
                     (LPARAM)window.title.c_str()
                 );
+                if (result == LB_ERR) {
+                    MessageBox(nullptr, "Failed to add window", "Error", MB_OK);
+                }
             }
         }
 
