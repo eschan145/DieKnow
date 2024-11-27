@@ -150,6 +150,8 @@ const char* get_selected(HWND listbox) {
 
 class Application {
 public:
+    HWND ws_hwnd;
+
     // Used to call `WM_SETFONT`
     std::vector<HWND> widgets;
 
@@ -464,7 +466,7 @@ public:
                     app->is_ws_registered = true;
                 }
 
-                HWND ws_hwnd = CreateWindowEx(
+                app->ws_hwnd = CreateWindowEx(
                     0,
                     ws_class_name,
                     "Window Shower",
@@ -479,14 +481,14 @@ public:
                     NULL
                 );
 
-                if (ws_hwnd == NULL) {
+                if (app->ws_hwnd == NULL) {
                     MessageBox(NULL, "Window creation failed for new window!", "Error", MB_OK);
                     return;
                 }
 
                 HWND listbox = CreateWindow(
                     "LISTBOX",
-                    nullptr,
+                    app->ws_hwnd,
                     WS_VISIBLE | WS_CHILD | LBS_STANDARD,
                     PADDING,
                     PADDING,
@@ -498,8 +500,8 @@ public:
                     NULL
                 );
 
-                ShowWindow(ws_hwnd, SW_SHOWNORMAL);
-                UpdateWindow(ws_hwnd);
+                ShowWindow(app->ws_hwnd, SW_SHOWNORMAL);
+                UpdateWindow(app->ws_hwnd);
 
                 break;
             }
