@@ -39,7 +39,24 @@ const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
     "HardwareMonitorWindow",
     "WISPTIS",
     "SystemResourceNotifyWindow",
-    "DesktopWindow"
+    "DesktopWindow",
+    "Battery Meter",
+    "BluetoothNotificationAreaIconWindowClass",
+    "CiceroUIWndFrame",
+    "DesktopInfo",
+    "MediaContextNotificationWindow",
+    "TclNotifier",
+    "Task Switching",
+    "Task Host Window",
+    "Shell Handwriting Canvas",
+    "System tray overflow window.",
+    "SecurityHealthSystray",
+    "Win HCP",
+    "Windows Input Experience",
+    "OfficePowerManagerWindow",
+    "PopupHost",
+    "Progress",
+    "RealtekAudioAdminBackgroundProcessClass"
 };
 
 struct Window {
