@@ -451,7 +451,7 @@ public:
                 const char* ws_class_name = "WindowShower";
 
                 if (!app->is_ws_registered) {
-                    WNDCLASSS ws_wc = {};
+                    WNDCLASS ws_wc = {};
                     ws_wc.lpfnWndProc = Application::WSWindowProc;
                     ws_wc.hInstance = GetModuleHandle(NULL);
                     ws_wc.lpszClassName = ws_class_name;
