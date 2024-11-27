@@ -488,13 +488,13 @@ public:
 
                 HWND listbox = CreateWindow(
                     "LISTBOX",
-                    app->ws_hwnd,
+                    nullptr,
                     WS_VISIBLE | WS_CHILD | LBS_STANDARD,
                     PADDING,
                     PADDING,
                     300,
                     400,
-                    hwnd,
+                    app->ws_hwnd,
                     (HMENU)Widgets::WINDOWS,
                     GetModuleHandle(NULL),
                     NULL
