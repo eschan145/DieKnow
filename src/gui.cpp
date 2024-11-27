@@ -622,7 +622,7 @@ public:
             SendMessage(
                 widgets[Widgets::DIRECTORY],
                 LB_ADDSTRING, 0,
-                (LPARAM)file_name.title.c_str());
+                (LPARAM)file_name.c_str());
         }
 
         // Update window shower listbox
@@ -637,7 +637,7 @@ public:
             SendMessage(
                 widgets[Widgets::WINDOWS],
                 LB_ADDSTRING, 0,
-                (LPARAM)window.c_str()
+                (LPARAM)window.title.c_str()
             );
         }
 
