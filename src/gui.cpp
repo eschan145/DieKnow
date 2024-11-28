@@ -336,9 +336,9 @@ public:
             NULL
         );
         windows = CreateWindow(
-            "LISTBOX",
+            WC_LISTVIEW,
             nullptr,
-            WS_VISIBLE | WS_CHILD | LBS_STANDARD,
+            WS_VISIBLE | WS_CHILD | LVS_REPORT,
             PADDING,
             160 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
             PADDING + (BUTTON_WIDTH * 2),
@@ -375,6 +375,8 @@ public:
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
         }
 
+        SendMessage(this->windows, LM_SETEXTENDEDLISTVIEWSTYLE, 0, LVS_EX_CHECKBOXES);
+
         // In ms -- set to 5 ticks per second
         SetTimer(hwnd, 1, 200, nullptr);
 
@@ -394,6 +396,27 @@ public:
 
         This function is called by `WindowProc`.
         */
+
+        // switch ((HWND)lParam) {
+        //     case this->windows: {
+        //         if (HIWORD(wParam) == LBN_DBLCLK) {
+        //             char buffer[256];
+
+        //             int index = SendMessage(this->windows, LB_GETCURSEL, 0, 0);
+        //             int message = SendMessage(this->windows, LB_GETTEXT, index, (LPARAM)buffer);
+
+        //             if (message == LB_ERROR) {
+        //                 MessageBox(this->windows, "Failed to retrieve item text!", "Error", MB_ICONERROR);
+        //             }
+        //             else {
+        //                 HWND window = FindWindow(NULL, buffer);
+
+        //                 if (window) {
+        //                     ShowWindow(window, SW_SHOWNORMAL);
+        //                 }
+        //             }
+        //     }
+        // }
 
         switch (LOWORD(wParam)) {
             case Widgets::RUNNING: {
@@ -560,14 +583,16 @@ public:
         if (!(current_windows == previous_windows)) {
             previous_windows = current_windows;
 
-            SendMessage(this->windows, LB_RESETCONTENT, 0, 0);
+            SendMessage(this->windows, LVM_DELETEALLITEMS, 0, 0);
 
             for (const auto& window : current_windows) {
-                SendMessage(
-                    this->windows,
-                    LB_ADDSTRING, 0,
-                    (LPARAM)window.title.c_str()
-                );
+                LVITEM item = {0};
+
+                item.mask = LVIF_TEXT;
+                item.iItem = ListView_GetItemCount(this->windows);
+                item.pszText = const_cast<char*>(window.title.c_str());
+
+                ListView_InsertItem(this->windows, &item);
             }
         }
 
