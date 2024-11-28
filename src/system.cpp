@@ -56,7 +56,21 @@ const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
     "OfficePowerManagerWindow",
     "PopupHost",
     "Progress",
-    "RealtekAudioAdminBackgroundProcessClass"
+    "RealtekAudioAdminBackgroundProcessClass",
+    "CFD File Open Message Window",
+    "Core Sync",
+    "Desktop Info",
+    "Graphics Command Center",
+    "MenuWindow",
+    "Microsoft OneNote - Windows taskbar",
+    "MS_WebcheckMonitor",
+    "Network Flyout",
+    "Per Monitor Aware Window",
+    "Program Manager",
+    "Rtc Video PnP Listener",
+    "TtkMonitorWindow",
+    "Windows Push Notifications Platform",
+    "DWM Notification Window"
 };
 
 struct Window {
