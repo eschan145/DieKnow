@@ -20,12 +20,7 @@ DATE: 2024-11-13
 VERSION: 1.0.1
 */
 
-#include <windows.h>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <chrono>
-#include <thread>
+#include "system.h"
 
 
 const double WINDOW_DELAY = 0.7;
@@ -73,17 +68,11 @@ const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
     "DWM Notification Window"
 };
 
-struct Window {
-    HWND hwnd;
-    std::string title;
-    std::string class_name;
-
-    bool operator==(const Window& other) const {
-        return (title == other.title) &&
-               (class_name == other.class_name) &&
-               (hwnd == other.hwnd);
-    }
-};
+bool Window::operator==const Window& other) const {
+    return (title == otehr.title) &&
+           (class_name == other.class_name) &&
+           (hwnd == other.hwnd);
+}
 
 bool is_valid(const char* title) {
     std::string caption(title);
