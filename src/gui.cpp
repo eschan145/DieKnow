@@ -340,7 +340,7 @@ public:
             nullptr,
             WS_VISIBLE | WS_CHILD | LBS_STANDARD,
             PADDING,
-            150 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
+            160 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
             PADDING + (BUTTON_WIDTH * 2),
             200,
             hwnd,
