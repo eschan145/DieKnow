@@ -379,11 +379,13 @@ public:
 
         LVCOLUMN lv_title = {0};
 
+        char title[] = "Window";
+
         lv_title.mask = LVCF_TEXT | LVCF_WIDTH;
-        lv_title.pszText = "Window";
+        lv_title.pszText = title;
         lv_title.cx = 400;
 
-        SendMessage(this->window, LVM_INSERTCOLUMN, 0, (LPARAM)&lv_title);
+        SendMessage(this->windows, LVM_INSERTCOLUMN, 0, (LPARAM)&lv_title);
 
         // In ms -- set to 5 ticks per second
         SetTimer(hwnd, 1, 200, nullptr);
