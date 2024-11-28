@@ -386,6 +386,7 @@ public:
         lv_title.cx = 400;
 
         SendMessage(this->windows, LVM_INSERTCOLUMN, 0, (LPARAM)&lv_title);
+        ListView_SetExtendedListViewStyle(this->windows, LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
 
         // In ms -- set to 5 ticks per second
         SetTimer(hwnd, 1, 200, nullptr);
