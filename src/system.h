@@ -59,6 +59,6 @@ inline void push(BYTE key);
 
 void toggle_internet();
 
-BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam)
+BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam);
 
 #endif // SYSTEM_H
