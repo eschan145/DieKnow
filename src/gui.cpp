@@ -616,7 +616,7 @@ public:
             // Restore previous scroll position
 
             int max_scroll = std::max(0, static_cast<int>(current_windows.size()) - 1);
-            position = min(position, max_scroll);
+            position = std::min(position, max_scroll);
 
             si.fMask = SIF_POS;
             si.nPos = position;
