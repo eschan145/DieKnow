@@ -593,17 +593,35 @@ public:
         if (!(current_windows == previous_windows)) {
             previous_windows = current_windows;
 
+            // Capture current scroll position, as it is reset in the next step
+            SCROLLINFO si = {0};
+            si.cbSize = sizeof(SCROLLINFO);
+            si.fMask = SIF_POS | SIF_RANGE;
+
+            GetScrollInfo(this->windows, SB_VERT, &si);
+
+            int position = si.nPos;
+
             SendMessage(this->windows, LVM_DELETEALLITEMS, 0, 0);
 
             for (const auto& window : current_windows) {
                 LVITEM item = {0};
-
                 item.mask = LVIF_TEXT;
                 item.iItem = ListView_GetItemCount(this->windows);
                 item.pszText = const_cast<char*>(window.title.c_str());
 
                 ListView_InsertItem(this->windows, &item);
             }
+
+            // Restore previous scroll position
+
+            int max_scroll = std::max(0, static_cast<int>(current_windows.size()) - 1);
+            position = min(position, max_scroll);
+
+            si.fMask = SIF_POS;
+            si.nPos = position;
+            SetScrollInfo(this->windows, SB_VERT, &si, TRUE);
+            SendMessage(this->windows, LVM_SCROLL, 0, position);
         }
 
         if (GetFocus() != widgets[Widgets::INTERVAL]) {
