@@ -35,10 +35,10 @@ extern const std::vector<std::string> WINDOW_EXCLUDE_LIST;
 
 struct Window {
     HWND hwnd;
-    std:string title;
+    std::string title;
     std::string class_name;
 
-    bool operator==(const Window& other const);
+    bool operator==(const Window& other) const;
 };
 
 bool is_valid(const char* title);

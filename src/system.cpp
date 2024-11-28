@@ -68,8 +68,8 @@ const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
     "DWM Notification Window"
 };
 
-bool Window::operator==const Window& other) const {
-    return (title == otehr.title) &&
+bool Window::operator==(const Window& other) const {
+    return (title == other.title) &&
            (class_name == other.class_name) &&
            (hwnd == other.hwnd);
 }
