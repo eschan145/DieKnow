@@ -375,7 +375,7 @@ public:
             SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
         }
 
-        SendMessage(this->windows, LM_SETEXTENDEDLISTVIEWSTYLE, 0, LVS_EX_CHECKBOXES);
+        SendMessage(this->windows, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, LVS_EX_CHECKBOXES);
 
         // In ms -- set to 5 ticks per second
         SetTimer(hwnd, 1, 200, nullptr);
