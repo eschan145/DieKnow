@@ -22,48 +22,10 @@ VERSION: 1.0.1
 Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 */
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <thread>
-#include <filesystem>
-#include <sstream>
-#include <cstdlib>
-#include <fstream>
-#include <windows.h>
-#include <winternl.h>
-#include <tlhelp32.h>
-
-using namespace std;
-namespace fs = std::filesystem;
+#include "api.h"
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.45.7";
 
-// Prevent name mangling that happens as a result of function overloading in C++
-extern "C"
-{
-    bool running = false;
-    int killed = 0;
-
-    // __declspec allows it to be exported and used in ctypes
-
-    __declspec(dllexport) void validate();
-    __declspec(dllexport) const char* get_folder_path();
-    __declspec(dllexport) void start_monitoring(const char* folder_path);
-    __declspec(dllexport) void stop_monitoring();
-    __declspec(dllexport) int get_killed_count();
-    __declspec(dllexport) bool is_running();
-    __declspec(dllexport) const char* get_executables_in_folder(const char* folder_path);
-    __declspec(dllexport) int __stdcall dialog(
-        LPCWSTR message,
-        LPCWSTR title,
-        UINT type
-    )
-    {
-        return MessageBoxW(nullptr, message, title, type);
-    }
-    __declspec(dllexport) int __stdcall bsod();
-}
 
 void validate() {
     if (!std::filesystem::exists(FOLDER_PATH)) {
@@ -133,7 +95,7 @@ void monitor_executables(const char* folder_path) {
     */
 
     while (running) {
-        for (const auto& entry : fs::directory_iterator(folder_path)) {
+        for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
             if (entry.is_regular_file() && entry.path().extension() == ".exe") {
                 close_application_by_exe(entry.path().filename().string().c_str());
             }
