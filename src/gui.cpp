@@ -499,7 +499,7 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
         case WM_NOTIFY: {
             LPNMHDR pnmhdr = (LPNMHDR)lParam;
 
-            if ((pnmhdr->idFrom == 1) &&
+            if ((pnmhdr->hwndFrom == app->windows) &&
                 (pnmhdr->code == LVN_ITEMCHANGED)) {
                 LPNMLISTVIEW pnmv = (LPNMLISTVIEW)lParam;
 
