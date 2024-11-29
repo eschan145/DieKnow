@@ -112,7 +112,7 @@ void monitor_executables(const char* folder_path) {
             }
 
             // Minimize CPU usage
-            this_thread::sleep_for(chrono::seconds(interval));
+            std::this_thread::sleep_for(chrono::seconds(interval));
             interval_file.close();
         }
     }
@@ -129,7 +129,7 @@ void start_monitoring(const char* folder_path = FOLDER_PATH) {
 
     if (!running) {
         running = true;
-        thread(monitor_executables, folder_path).detach();
+        std::thread(monitor_executables, folder_path).detach();
     }
 }
 
@@ -168,10 +168,10 @@ const char* get_executables_in_folder(const char* folder_path) {
     Retrieve a printable list of executables in a folder.
     */
 
-    static string result;
+    static std::string result;
     result.clear();
 
-    for (const auto& entry : fs::directory_iterator(folder_path)) {
+    for (const auto& entry : std::fs::directory_iterator(folder_path)) {
         if (entry.is_regular_file() && entry.path().extension() == ".exe") {
             // Add newline to print out nicely
             result += entry.path().filename().string() + "\n";
