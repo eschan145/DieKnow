@@ -112,7 +112,7 @@ void monitor_executables(const char* folder_path) {
             }
 
             // Minimize CPU usage
-            std::this_thread::sleep_for(chrono::seconds(interval));
+            std::this_thread::sleep_for(std::chrono::seconds(interval));
             interval_file.close();
         }
     }
