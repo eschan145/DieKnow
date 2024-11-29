@@ -330,8 +330,6 @@ Application::Application() {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
     }
 
-    SendMessage(this->windows, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, LVS_EX_CHECKBOXES);
-
     LVCOLUMN lv_title = {0};
 
     char title[] = "Window";
@@ -341,7 +339,12 @@ Application::Application() {
     lv_title.cx = 400;
 
     SendMessage(this->windows, LVM_INSERTCOLUMN, 0, (LPARAM)&lv_title);
-    ListView_SetExtendedListViewStyle(this->windows, LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
+    ListView_SetExtendedListViewStyle(
+        this->windows,
+        LVS_EX_CHECKBOXES |
+        LVS_EX_GRIDLINES |
+        LVS_EX_FULLROWSELECT
+    );
 
     // In ms -- set to 5 ticks per second
     SetTimer(hwnd, 1, 200, nullptr);
