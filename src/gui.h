@@ -32,10 +32,10 @@ VERSION: 1.0.1
 #include "api.cpp"
 #include "system.cpp"
 
-const int BUTTON_WIDTH = 200;
-const int BUTTON_HEIGHT = 35;
+const int BUTTON_WIDTH;
+const int BUTTON_HEIGHT;
 
-const int PADDING = 10;
+const int PADDING;
 
 namespace Widgets {
     enum Button {

@@ -29,27 +29,6 @@ const int BUTTON_HEIGHT = 35;
 // Space between widgets as padding
 const int PADDING = 10;
 
-namespace Widgets {
-    enum Button {
-        RUNNING = 0,
-        TASKKILL,
-        EXIT,
-        DIRECTORY,
-        INTERVAL_LABEL,
-        INTERVAL,
-        INTERVAL_SET,
-        EXECUTABLES_KILLED,
-        WINDOWS,
-        OPEN_EXPLORER,
-        SYSTEM_INFORMATION
-    };
-}
-
-
-extern "C" {
-    __declspec(dllexport) void create_window();
-}
-
 void tooltip(HWND hwnd, HWND control, const char* text) {
     /*
     Display a tooltip to aid user interactions.
@@ -383,7 +362,7 @@ Application::Application() {
     }
 }
 
-Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     /*
     Manage button commands in a switch statement.
 
@@ -495,7 +474,7 @@ Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wPara
     }
 }
 
-static LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     /*
     Manage window events.
 
@@ -547,7 +526,7 @@ void Application::update() {
     // Update directory listbox
     std::vector<std::string> current_executables;
 
-    for (const auto& entry : fs::directory_iterator(FOLDER_PATH)) {
+    for (const auto& entry : std::filesystem::directory_iterator(FOLDER_PATH)) {
         if (entry.is_regular_file() && entry.path().extension() == ".exe") {
             current_executables.push_back(entry.path().filename().string());
         }
