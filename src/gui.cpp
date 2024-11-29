@@ -517,7 +517,7 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
                     HWND target = FindWindow(NULL, name);
 
                     if (target) {
-                        ShowWindow(target, is_checked ? SW_SHOW : SW_HIDE);
+                        ShowWindow(target, is_checked ? SW_HIDE : SW_SHOW);
                     }
                 }
             }
