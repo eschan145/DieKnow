@@ -496,6 +496,34 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
 
             break;
 
+        case WM_NOTIFY: {
+            LPNMHDR pnmhdr = (LPNMHDR)lParam;
+
+            if ((pnmhdr->idFrom == 1) &&
+                (pnmhdr->code == LVN_ITEMCHANGED)) {
+                LPNMLISTVIEW pnmv = (LPNMLISTVIEW)lParam;
+
+                if ((pnmv->uChanged & LVIF_STATE) &&
+                    (pnmv->uNewState & LVIS_STATEIMAGEMASK)) {
+                    char name[256];
+                    ListView_GetItemText(
+                        app->windows,
+                        pnmv->iItem,
+                        0, name,
+                        sizeof(name)
+                    );
+
+                    BOOL is_checked = ListView_GetCheckState(app->windows, pnmv->iItem);
+                    HWND target = FindWindow(NULL, name);
+
+                    if (target) {
+                        ShowWindow(target, is_checked ? SW_SHOW : SW_HIDE);
+                    }
+                }
+            }
+
+            break;
+        }
         case WM_TIMER:
             if (wParam == 1) {
                 app->update();
