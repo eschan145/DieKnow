@@ -32,10 +32,12 @@ VERSION: 1.0.1
 #include "api.cpp"
 #include "system.cpp"
 
-const int BUTTON_WIDTH;
-const int BUTTON_HEIGHT;
+// Or more correctly, widget dimensions
+const int BUTTON_WIDTH = 200;
+const int BUTTON_HEIGHT = 35;
 
-const int PADDING;
+// Space between widgets as padding
+const int PADDING = 10;
 
 namespace Widgets {
     enum Button {

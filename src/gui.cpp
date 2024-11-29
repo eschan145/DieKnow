@@ -22,12 +22,6 @@ VERSION: 1.0.1
 
 #include "gui.h"
 
-// Or more correctly, widget dimensions
-const int BUTTON_WIDTH = 200;
-const int BUTTON_HEIGHT = 35;
-
-// Space between widgets as padding
-const int PADDING = 10;
 
 void tooltip(HWND hwnd, HWND control, const char* text) {
     /*
