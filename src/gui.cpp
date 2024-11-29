@@ -505,7 +505,7 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
 
                 if ((pnmv->uChanged & LVIF_STATE) &&
                     (pnmv->uNewState & LVIS_STATEIMAGEMASK)) {
-                    MessageBox(hwnd, "Checked", nullptr, MB_ICONERROR)
+                    MessageBox(hwnd, "Checked", nullptr, MB_ICONERROR);
                     char name[256];
                     ListView_GetItemText(
                         app->windows,
