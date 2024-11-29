@@ -512,13 +512,11 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
                         0, name,
                         sizeof(name)
                     );
-                    // MessageBox(hwnd, name, nullptr, MB_ICONERROR);
 
                     BOOL is_checked = ListView_GetCheckState(app->windows, pnmv->iItem);
                     HWND target = FindWindow(NULL, name);
 
                     if (target) {
-                        MessageBox(hwnd, "Targeted", nullptr, MB_ICONERROR);
                         ShowWindow(target, is_checked ? SW_SHOW : SW_HIDE);
                     }
                 }
