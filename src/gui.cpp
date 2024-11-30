@@ -496,6 +496,7 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
 
             break;
         }
+
         case WM_TIMER:
             if (wParam == 1) {
                 app->update(hwnd, uMsg, wParam, lParam);
@@ -583,37 +584,28 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SetScrollInfo(this->windows, SB_VERT, &si, TRUE);
         SendMessage(this->windows, LVM_SCROLL, 0, position);
 
-        LPNMHDR pnmhdr = reinterpret_cast<LPNMHDR>(lParam);
+        int count = ListView_GetItemCount(this->windows);
 
-        if (lParam == nullptr) {
-            MessageBox(nullptr, "Invalid lParam", "Message", MB_ICONERROR);
-        }
-        else {
-            MessageBox(nullptr, "Valid lParam", "Message", MB_ICONERROR);
-        }
+        for (int i = 0; i < count; ++i) {
+            LVITEM item = {0};
+            item.iItem = i;
+            item.mask = LVIF_STATE | LVIF_TEXT;
+            item.stateMask = LVIS_STATEIMAGEMASK;
+            item.pszText = new char[256];
 
-        if ((pnmhdr->hwndFrom == this->windows) &&
-            (pnmhdr->code == LVN_ITEMCHANGED)) {
-            LPNMLISTVIEW pnmv = (LPNMLISTVIEW)lParam;
+            if (ListView_GetItem(this->windows, &item)) {
+                bool is_checked = ((item.state & LVIS_STATEIMAGEMASK) == INDEXTOSTATEIMAGEMASK(1));
 
-            if ((pnmv->uChanged & LVIF_STATE) &&
-                (pnmv->uNewState & LVIS_STATEIMAGEMASK)) {
-                char name[256];
-                ListView_GetItemText(
-                    this->windows,
-                    pnmv->iItem,
-                    0, name,
-                    sizeof(name)
-                );
-
-                BOOL is_checked = ListView_GetCheckState(this->windows, pnmv->iItem);
-                HWND target = FindWindow(NULL, name);
-
-                // if (target) {
-                //     ShowWindow(target, is_checked ? SW_HIDE : SW_SHOW);
-                // }
+                std::cout << item.pszText << is_checked;
             }
         }
+        //         HWND target = FindWindow(NULL, name);
+
+        //         // if (target) {
+        //         //     ShowWindow(target, is_checked ? SW_HIDE : SW_SHOW);
+        //         // }
+        //     }
+        // }
     }
 
     // Update window visibility in listbox
