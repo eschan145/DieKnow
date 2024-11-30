@@ -548,7 +548,7 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&current_windows));
 
-    this->update_windows(&current_windows);
+    this->update_windows(current_windows);
 
     if (!(current_windows == previous_windows)) {
         previous_windows = current_windows;
@@ -623,32 +623,32 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     SetWindowText(
         widgets[Widgets::EXECUTABLES_KILLED],
         message.c_str());
-    
-    void update_windows(std::vector<Window>& current_windows) {
-        for (size_t i = 0; i < current_windows.size(); ++i) {
-            const auto& window = current_windows[i];
-            HWND target = FindWindow(NULL, window.title.c_str());
+}
 
-            if (target) {
-                int index = -1;
-                for (int j = 0; i < ListView_GetItemCount(this->windows); ++j) {
-                    char text[256];
-                    ListView_GetItemText(this->windows, j, 0, text, sizeof(text));
+void Application::update_windows(std::vector<Window>& current_windows) {
+    for (size_t i = 0; i < current_windows.size(); ++i) {
+        const auto& window = current_windows[i];
+        HWND target = FindWindow(NULL, window.title.c_str());
 
-                    if (window.title == text) {
-                        index = j;
-                        break;
-                    }
+        if (target) {
+            int index = -1;
+            for (int j = 0; i < ListView_GetItemCount(this->windows); ++j) {
+                char text[256];
+                ListView_GetItemText(this->windows, j, 0, text, sizeof(text));
+
+                if (window.title == text) {
+                    index = j;
+                    break;
                 }
             }
+        }
 
-            if (index >= 0) {
-                if (IsWindowVisible(target)) {
-                    ListView_SetCheckState(this->windows, index, TRUE);
-                }
-                else {
-                    ListView_SetCheckState(this->windos, index, FALSE);
-                }
+        if (index >= 0) {
+            if (IsWindowVisible(target)) {
+                ListView_SetCheckState(this->windows, index, TRUE);
+            }
+            else {
+                ListView_SetCheckState(this->windos, index, FALSE);
             }
         }
     }
