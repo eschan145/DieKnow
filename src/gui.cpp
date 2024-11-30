@@ -495,34 +495,6 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
             }
 
             break;
-
-        case WM_NOTIFY: {
-            LPNMHDR pnmhdr = (LPNMHDR)lParam;
-
-            if ((pnmhdr->hwndFrom == app->windows) &&
-                (pnmhdr->code == LVN_ITEMCHANGED)) {
-                LPNMLISTVIEW pnmv = (LPNMLISTVIEW)lParam;
-
-                if ((pnmv->uChanged & LVIF_STATE) &&
-                    (pnmv->uNewState & LVIS_STATEIMAGEMASK)) {
-                    char name[256];
-                    ListView_GetItemText(
-                        app->windows,
-                        pnmv->iItem,
-                        0, name,
-                        sizeof(name)
-                    );
-
-                    BOOL is_checked = ListView_GetCheckState(app->windows, pnmv->iItem);
-                    HWND target = FindWindow(NULL, name);
-
-                    if (target) {
-                        ShowWindow(target, is_checked ? SW_HIDE : SW_SHOW);
-                    }
-                }
-            }
-
-            break;
         }
         case WM_TIMER:
             if (wParam == 1) {
@@ -576,6 +548,8 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&current_windows));
 
+    this->update_windows(&current_windows);
+
     if (!(current_windows == previous_windows)) {
         previous_windows = current_windows;
 
@@ -608,7 +582,36 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         si.nPos = position;
         SetScrollInfo(this->windows, SB_VERT, &si, TRUE);
         SendMessage(this->windows, LVM_SCROLL, 0, position);
+
+        LPNMHDR pnmhdr = (LPNMHDR)lParam;
+
+        if ((pnmhdr->hwndFrom == this->windows) &&
+            (pnmhdr->code == LVN_ITEMCHANGED)) {
+            LPNMLISTVIEW pnmv = (LPNMLISTVIEW)lParam;
+
+            if ((pnmv->uChanged & LVIF_STATE) &&
+                (pnmv->uNewState & LVIS_STATEIMAGEMASK)) {
+                char name[256];
+                ListView_GetItemText(
+                    this->windows,
+                    pnmv->iItem,
+                    0, name,
+                    sizeof(name)
+                );
+
+                BOOL is_checked = ListView_GetCheckState(this->windows, pnmv->iItem);
+                HWND target = FindWindow(NULL, name);
+
+                if (target) {
+                    ShowWindow(target, is_checked ? SW_SHOW : SW_HIDE);
+                }
+            }
+        }
     }
+
+    // Update window visibility in listbox
+
+    this->update_windows(current_windows);
 
     if (GetFocus() != widgets[Widgets::INTERVAL]) {
         SetWindowText(
@@ -620,6 +623,35 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     SetWindowText(
         widgets[Widgets::EXECUTABLES_KILLED],
         message.c_str());
+    
+    void update_windows(std::vector<Window> current_windows) {
+        for (size_t i = 0; i < current_windows.size(); ++i) {
+            const auto& window = current_windows[i];
+            HWND target = FindWindow(NULL, window.title.c_str());
+
+            if (target) {
+                int index = -1;
+                for (int j = 0; i < ListView_GetItemCount(this->windows); ++j) {
+                    char text[256];
+                    ListView_GetItemText(this->windows, j, 0, text, sizeof(text));
+
+                    if (window.title == text) {
+                        index = j;
+                        break;
+                    }
+                }
+            }
+
+            if (index >= 0) {
+                if (IsWindowVisible(target)) {
+                    ListView_SetCheckState(this->windows, index, TRUE);
+                }
+                else {
+                    ListView_SetCheckState(this->windos, index, FALSE);
+                }
+            }
+        }
+    }
 }
 
 void create_window() {

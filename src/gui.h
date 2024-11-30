@@ -87,6 +87,8 @@ public:
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
     void update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+    void update_windows(std::vector<Window>& current_windows);
 };
 
 #endif // GUI_H
