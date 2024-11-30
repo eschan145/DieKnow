@@ -220,10 +220,10 @@ LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo) {
     std::cerr << "Exception Address: " << address << std::endl;
 
     CONTEXT* context = ExceptionInfo->ContextRecord;
-    std::cerr << "EAX: " << context->Eax << std::endl;
-    std::cerr << "EBX: " << context->Ebx << std::endl;
-    std::cerr << "ECX: " << context->Ecx << std::endl;
-    std::cerr << "EDX: " << context->Edx << std::endl;
+    std::cerr << "RAX: " << context->Rax << std::endl;
+    std::cerr << "RBX: " << context->Rbx << std::endl;
+    std::cerr << "RCX: " << context->Rcx << std::endl;
+    std::cerr << "RDX: " << context->Rdx << std::endl;
 
     return EXCEPTION_EXECUTE_HANDLER;
 }
