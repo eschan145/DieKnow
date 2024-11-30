@@ -486,7 +486,7 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
             app->manage_command(app, hwnd, uMsg, wParam, lParam);
             break;
 
-        case WM_CHAR:
+        case WM_CHAR: {
             if (GetFocus() == app->widgets[Widgets::INTERVAL]) {
                 if (wParam == VK_RETURN) {
                     SetFocus(NULL);
@@ -624,7 +624,7 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         widgets[Widgets::EXECUTABLES_KILLED],
         message.c_str());
     
-    void update_windows(std::vector<Window> current_windows) {
+    void update_windows(std::vector<Window>& current_windows) {
         for (size_t i = 0; i < current_windows.size(); ++i) {
             const auto& window = current_windows[i];
             HWND target = FindWindow(NULL, window.title.c_str());
