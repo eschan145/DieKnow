@@ -585,18 +585,13 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         LPNMHDR pnmhdr = reinterpret_cast<LPNMHDR>(lParam);
 
-        if (pnmhdr) {
-            MessageBox(nullptr, "Valid pnmhdr", "Message", MB_ICONERROR);
-        }
-        else {
-            MessageBox(nullptr, "Invalid pnmhdr", "Message", MB_ICONERROR);
-        }
-        if (lParam) {
-            MessageBox(nullptr, "Valid lParam", "Message", MB_ICONERROR);
-        }
-        else {
+        if (lParam == nullptr) {
             MessageBox(nullptr, "Invalid lParam", "Message", MB_ICONERROR);
         }
+        else {
+            MessageBox(nullptr, "Valid lParam", "Message", MB_ICONERROR);
+        }
+
         if ((pnmhdr->hwndFrom == this->windows) &&
             (pnmhdr->code == LVN_ITEMCHANGED)) {
             LPNMLISTVIEW pnmv = (LPNMLISTVIEW)lParam;
