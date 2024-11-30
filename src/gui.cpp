@@ -526,7 +526,7 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
         }
         case WM_TIMER:
             if (wParam == 1) {
-                app->update();
+                app->update(hwnd, uMsg, wParam, lParam);
             }
             return 0;
 
@@ -539,7 +539,7 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-void Application::update() {
+void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     /*
     Update display labels and listbox.
 

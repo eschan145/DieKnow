@@ -86,7 +86,7 @@ public:
     // Use `static` to allow it to be called as an event by Windows API
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-    void update();
+    void update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 };
 
 #endif // GUI_H
