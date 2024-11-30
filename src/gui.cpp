@@ -632,7 +632,7 @@ void Application::update_windows(std::vector<Window>& current_windows) {
 
         if (target) {
             int index = -1;
-            for (int j = 0; i < ListView_GetItemCount(this->windows); ++j) {
+            for (int j = 0; j < ListView_GetItemCount(this->windows); ++j) {
                 char text[256];
                 ListView_GetItemText(this->windows, j, 0, text, sizeof(text));
 
@@ -641,14 +641,14 @@ void Application::update_windows(std::vector<Window>& current_windows) {
                     break;
                 }
             }
-        }
 
-        if (index >= 0) {
-            if (IsWindowVisible(target)) {
-                ListView_SetCheckState(this->windows, index, TRUE);
-            }
-            else {
-                ListView_SetCheckState(this->windos, index, FALSE);
+            if (index >= 0) {
+                if (IsWindowVisible(target)) {
+                    ListView_SetCheckState(this->windows, index, TRUE);
+                }
+                else {
+                    ListView_SetCheckState(this->windows, index, FALSE);
+                }
             }
         }
     }
