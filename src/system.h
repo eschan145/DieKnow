@@ -26,7 +26,9 @@ VERSION: 1.0.1
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <iostream>
 #include <sstream>
+#include <exception>
 #include <chrono>
 #include <thread>
 
@@ -60,5 +62,7 @@ inline void push(BYTE key);
 void toggle_internet();
 
 BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam);
+
+LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo);
 
 #endif // SYSTEM_H

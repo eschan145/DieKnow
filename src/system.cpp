@@ -1,4 +1,4 @@
-/*
+ /*
 COPYRIGHT (C) 2024 ETHAN CHAN
 
 ALL RIGHTS RESERVED. UNAUTHORIZED COPYING, MODIFICATION, DISTRIBUTION, OR USE
@@ -210,4 +210,20 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     }
 
     return TRUE;
+}
+
+LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo) {
+    DWORD code = ExceptionInfo->ExceptionRecord->ExceptionCode;
+    PVOID address = ExceptionInfo->ExceptionRecord->ExceptionAddress;
+
+    std::cerr << "Exception Code: " << code << std::endl;
+    std::cerr << "Exception Address: " << address << std::endl;
+
+    CONTEXT* context = ExceptionInfo->ContextRecord;
+    std::cerr << "EAX: " << context->Eax << std::endl;
+    std::cerr << "EBX: " << context->Ebx << std::endl;
+    std::cerr << "ECX: " << context->Ecx << std::endl;
+    std::cerr << "EDX: " << context->Edx << std::endl;
+
+    return EXCEPTION_EXECUTE_HANDLER;
 }
