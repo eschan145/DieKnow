@@ -583,13 +583,19 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SetScrollInfo(this->windows, SB_VERT, &si, TRUE);
         SendMessage(this->windows, LVM_SCROLL, 0, position);
 
-        LPNMHDR pnmhdr = (LPNMHDR)lParam;
+        LPNMHDR pnmhdr = reinterpret_cast<LPNMHDR>(lParam);
 
         if (pnmhdr) {
             MessageBox(nullptr, "Valid pnmhdr", "Message", MB_ICONERROR);
         }
         else {
             MessageBox(nullptr, "Invalid pnmhdr", "Message", MB_ICONERROR);
+        }
+        if (lParam) {
+            MessageBox(nullptr, "Valid lParam", "Message", MB_ICONERROR);
+        }
+        else {
+            MessageBox(nullptr, "Invalid lParam", "Message", MB_ICONERROR);
         }
         if ((pnmhdr->hwndFrom == this->windows) &&
             (pnmhdr->code == LVN_ITEMCHANGED)) {
