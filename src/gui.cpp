@@ -498,7 +498,7 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
         }
         case WM_TIMER:
             if (wParam == 1) {
-                app->update(hwnd, uMsg, wParam, lParam);
+                // app->update(hwnd, uMsg, wParam, lParam);
             }
             return 0;
 
