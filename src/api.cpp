@@ -98,7 +98,7 @@ void monitor_executables(const char* folder_path) {
         // Search recursively through folder_path and terminate all "*.exe"s
         for (const auto& entry : std::filesystem::recursive_directory_iterator(folder_path)) {
             if (entry.is_regular_file() && entry.path().extension() == ".exe") {
-                std::cout << "Located " < entry.path().filename().string();
+                std::cout << "Located " << entry.path().filename().string();
                 close_application_by_exe(entry.path().filename().string().c_str());
             }
         }
