@@ -24,7 +24,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 #include "api.h"
 
-const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud\\7.10.45.7";
+const char* FOLDER_PATH = "C:\\Program Files\\DyKnow";
 
 
 void validate() {
