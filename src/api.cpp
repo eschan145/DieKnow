@@ -96,10 +96,18 @@ void monitor_executables(const char* folder_path) {
 
     while (running) {
         // Search recursively through folder_path and terminate all "*.exe"s
-        for (const auto& entry : std::filesystem::recursive_directory_iterator(folder_path)) {
-            if (entry.is_regular_file() && entry.path().extension() == ".exe") {
-                std::cout << "Located " << entry.path().filename().string();
-                close_application_by_exe(entry.path().filename().string().c_str());
+        for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
+            // If it's a directory, go through its subfiles
+            if (entry.is_directory()) {
+                for (const auto& sub_entry : std::filesystem::directory_iterator(entry.path())) {
+                    if ((sub_entry.is_regular_file()) &&
+                        (sub_entry.path().extension() == ".exe")) {
+                        close_application_by_exe(sub_entry.path().filename().string().c_str());
+                    }
+                }
+            }
+            else {
+                validate();
             }
         }
 
@@ -190,12 +198,22 @@ const char* get_executables_in_folder(const char* folder_path) {
     static std::string result;
     result.clear();
 
-    for (const auto& entry : std::filesystem::recursive_directory_iterator(folder_path)) {
-        if (entry.is_regular_file() && entry.path().extension() == ".exe") {
-            // Add newline to print out nicely
-            result += entry.path().filename().string() + "\n";
+    for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
+        // If it's a directory, go through its subfiles
+        if (entry.is_directory()) {
+            for (const auto& sub_entry : std::filesystem::directory_iterator(entry.path())) {
+                if ((sub_entry.is_regular_file()) &&
+                    (sub_entry.path().extension() == ".exe")) {
+                    // Add newline to print out nicely
+                    result += entry.path().filename().string() + "\n";
+                }
+            }
+        }
+        else {
+            validate();
         }
     }
+
     return result.c_str();
 }
 
