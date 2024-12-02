@@ -398,7 +398,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
             } else {
                 SetFocus(NULL);
                 toggle_internet();
-                start_monitoring(FOLDER_PATH);
+                start_monitoring();
                 toggle_internet();
             }
 
