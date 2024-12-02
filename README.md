@@ -10,7 +10,7 @@ Supported DyKnow version: `7.10.45.7`. DieKnow will not work for any other versi
 
 ![Screenshot of DieKnow GUI](screenshot2.png)
 
-Compilation instructions can be found here: 
+Compilation instructions can be found [here](COMPILING.md).
 
 About this:
 * This **DOES NOT** need administrator privelleges, just a Python installation, which is often found in the Software Center.
