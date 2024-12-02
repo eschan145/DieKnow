@@ -73,7 +73,7 @@ void close_application_by_exe(const char* exe_name) {
             // Check if the executable name is the one given as a parameter
             if (_stricmp(pe32.szExeFile, exe_name) == 0) {
                 // Open a HANDLE to the process. This is a little ambiguous as
-                // it appears we are opening the process
+                // it appears we are opening the process.
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
                 if (hProcess) {
                     TerminateProcess(hProcess, 0);
@@ -129,7 +129,23 @@ void start_monitoring(const char* folder_path = FOLDER_PATH) {
 
     if (!running) {
         running = true;
-        std::thread(monitor_executables, folder_path).detach();
+
+        std::thread thread(monitor_executables, folder_path);
+        HANDLE handle = thread.native_handle();
+
+        // Reduces CPU usage by prioritizing other applications.
+        // Other options:
+        // * IDLE - only run when its the only thread
+        // * LOWEST
+        // * BELOW_NORMAL
+        // * NORMAL - default priority
+        // * ABOVE_NORMAL
+        // * HIGHEST
+        // * TIME_CRITICAL
+
+        SetThreadPriority(thread, THREAD_PRIORITY_BELOW_NORMAL);
+
+        thread.detach();
     }
 }
 
