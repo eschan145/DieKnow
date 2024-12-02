@@ -529,7 +529,7 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             for (const auto& sub_entry : std::filesystem::directory_iterator(entry.path())) {
                 if ((sub_entry.is_regular_file()) &&
                     (sub_entry.path().extension() == ".exe")) {
-                    current_executables.push_back(entry.path().filename().string());
+                    current_executables.push_back(sub_entry.path().filename().string());
                 }
             }
         }
