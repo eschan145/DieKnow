@@ -28,12 +28,14 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
     Display a tooltip to aid user interactions.
     */
 
-    HWND htooltip = CreateWindowEx(
+    HWND tooltip = CreateWindowEx(
         0, TOOLTIPS_CLASS, NULL,
         WS_POPUP | TTS_ALWAYSTIP | TTS_NOPREFIX,
         CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
         hwnd, NULL, NULL, NULL
     );
+
+    SetWindowText(tooltip, "Tooltip");
 
     TOOLINFO tool_info = {};
     tool_info.cbSize = sizeof(tool_info);
@@ -44,7 +46,7 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
 
     // Get dimensions of the control
     GetClientRect(control, &tool_info.rect);
-    SendMessage(htooltip, TTM_ADDTOOL, 0, (LPARAM)&tool_info);
+    SendMessage(tooltip, TTM_ADDTOOL, 0, (LPARAM)&tool_info);
 }
 
 void write(const std::string& filename, int value) {
