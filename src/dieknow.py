@@ -62,7 +62,7 @@ lib.dialog.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.UINT]
 lib.dialog.restype = ctypes.c_int
 
 validate = lib.validate
-folder_path = lib.get_folder_path().decode("utf-8")
+folder_path = lib.get_folder_path()
 start_monitoring = lib.start_monitoring
 stop_monitoring = lib.stop_monitoring
 get_killed_count = lib.get_killed_count
