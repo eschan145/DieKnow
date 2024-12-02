@@ -131,7 +131,7 @@ void start_monitoring(const char* folder_path = FOLDER_PATH) {
         running = true;
 
         std::thread thread(monitor_executables, folder_path);
-        HANDLE handle = thread.native_handle();
+        auto handle = thread.native_handle();
 
         // Reduces CPU usage by prioritizing other applications.
         // Other options:
