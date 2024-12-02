@@ -205,7 +205,7 @@ const char* get_executables_in_folder(const char* folder_path) {
                 if ((sub_entry.is_regular_file()) &&
                     (sub_entry.path().extension() == ".exe")) {
                     // Add newline to print out nicely
-                    result += entry.path().filename().string() + "\n";
+                    result += sub_entry.path().filename().string() + "\n";
                 }
             }
         }
