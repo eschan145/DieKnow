@@ -42,7 +42,7 @@ def main():
             print(f"Executables killed: {killed}")
         elif user_input == "directory":
             executables = dieknow.get_executables_in_folder(
-                dieknow.folder_path()
+                dieknow.folder_path
             )
             print(f"Files in {dieknow.folder_path().decode()}:")
             print(executables.decode())
