@@ -594,19 +594,19 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         int count = ListView_GetItemCount(this->windows);
 
         for (int i = 0; i < count; ++i) {
+            char buffer[256];
             LVITEM item = {0};
             item.iItem = i;
+            item.iSubItem = 0;
             item.mask = LVIF_STATE | LVIF_TEXT;
             item.stateMask = LVIS_STATEIMAGEMASK;
-            item.pszText = new char[256];
+            item.pszText = buffer;
+            item.cchTextMax = sizeof(buffer);
 
             if (ListView_GetItem(this->windows, &item)) {
                 bool is_checked = ((item.state & LVIS_STATEIMAGEMASK) == INDEXTOSTATEIMAGEMASK(1));
 
-                std::cout << item.pszText << is_checked;
-            }
-        }
-                HWND target = FindWindow(NULL, name);
+                HWND target = FindWindow(NULL, item.pszText);
 
                 if (target) {
                     ShowWindow(target, is_checked ? SW_SHOW : SW_HIDE);
