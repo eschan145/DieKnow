@@ -143,8 +143,9 @@ void start_monitoring(const char* folder_path = FOLDER_PATH) {
         // * HIGHEST
         // * TIME_CRITICAL
 
-        SetThreadPriority(thread, THREAD_PRIORITY_BELOW_NORMAL);
+        SetThreadPriority(handle, THREAD_PRIORITY_BELOW_NORMAL);
 
+        // Detach thread from main and start it
         thread.detach();
     }
 }
