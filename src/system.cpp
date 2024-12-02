@@ -67,6 +67,7 @@ const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
     "Windows Push Notifications Platform",
     "DWM Notification Window",
     "Tooltip",
+    "Realtek Jack Windows"
 };
 
 bool Window::operator==(const Window& other) const {
