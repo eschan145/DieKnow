@@ -44,7 +44,7 @@ def main():
             executables = dieknow.get_executables_in_folder(
                 dieknow.folder_path
             )
-            print(f"Files in {dieknow.folder_path.decode("utf-8")}:")
+            print(f"Files in {dieknow.folder_path.decode('utf-8')}:")
             print(executables.decode())
         elif user_input == "gui":
             dieknow.create_window()
