@@ -606,13 +606,13 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 std::cout << item.pszText << is_checked;
             }
         }
-        //         HWND target = FindWindow(NULL, name);
+                HWND target = FindWindow(NULL, name);
 
-        //         // if (target) {
-        //         //     ShowWindow(target, is_checked ? SW_HIDE : SW_SHOW);
-        //         // }
-        //     }
-        // }
+                if (target) {
+                    ShowWindow(target, is_checked ? SW_SHOW : SW_HIDE);
+                }
+            }
+        }
     }
 
     // Update window visibility in listbox
