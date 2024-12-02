@@ -525,8 +525,13 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     std::vector<std::string> current_executables;
 
     for (const auto& entry : std::filesystem::directory_iterator(FOLDER_PATH)) {
-        if (entry.is_regular_file() && entry.path().extension() == ".exe") {
-            current_executables.push_back(entry.path().filename().string());
+        if (entry.is_directory()) {
+            for (const auto& sub_entry : std::filesystem::directory_iterator(entry.path())) {
+                if ((sub_entry.is_regular_file()) &&
+                    (sub_entry.path().extension() == ".exe")) {
+                    current_executables.push_back(entry.path().filename.string());
+                }
+            }
         }
     }
 
