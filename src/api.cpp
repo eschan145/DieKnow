@@ -188,7 +188,7 @@ const char* get_executables_in_folder(const char* folder_path) {
     static std::string result;
     result.clear();
 
-    for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
+    for (const auto& entry : std::filesystem::recursive_directory_iterator(folder_path)) {
         if (entry.is_regular_file() && entry.path().extension() == ".exe") {
             // Add newline to print out nicely
             result += entry.path().filename().string() + "\n";
