@@ -120,8 +120,9 @@ Application::Application() {
     validate();
 
     Settings configuration;
-    configuration.load("settings.txt");
+    bool result = configuration.load("settings.txt");
     configuration.print();
+    std::cout << result;
 
     // Used for help popup balloon
     InitCommonControls();
