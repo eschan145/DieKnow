@@ -114,6 +114,10 @@ void monitor_executables(const char* folder_path) {
         int interval;
         std::ifstream interval_file("../interval.txt");
 
+        std::filesystem::path file_path("../interval.txt");
+
+        std::cout << "Full interval path: " << std::filesystem::absolute(file_path) << std::endl;
+
         if (interval_file.is_open()) {
             interval_file >> interval;
 
