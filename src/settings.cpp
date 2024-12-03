@@ -38,6 +38,8 @@ bool Settings::load(const std::string& file_name) {
         return false;
     }
 
+    this->path = file_name;
+
     std::string line;
     while (std::getline(file, line)) {
         if ((line.empty()) ||
@@ -83,4 +85,8 @@ bool Settings::get<bool>(const std::string& key, bool default_value) const {
     if (value == "false" || value == "0") return false;
 
     return default_value;
+}
+
+void Settings::update() {
+    this->load(this->path);
 }

@@ -32,6 +32,9 @@ VERSION: 1.0.1
 #include <chrono>
 #include <thread>
 
+#include "settings.h"
+
+
 extern const double WINDOW_DELAY;
 extern const std::vector<std::string> WINDOW_EXCLUDE_LIST;
 

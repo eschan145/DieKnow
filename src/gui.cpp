@@ -119,12 +119,6 @@ const char* get_selected(HWND listbox) {
 Application::Application() {
     validate();
 
-    Settings settings;
-    settings.load("../settings.txt");
-    settings.print();
-
-    std::cout << "Internet toggler: " << settings.get<bool>("internet_toggler", false);
-
     // Used for help popup balloon
     InitCommonControls();
 
@@ -626,6 +620,8 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     // Update window visibility in listbox
 
     this->update_windows(current_windows);
+
+    settings.update();
 
     if (GetFocus() != widgets[Widgets::INTERVAL]) {
         SetWindowText(

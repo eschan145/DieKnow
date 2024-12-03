@@ -185,6 +185,8 @@ void toggle_internet() {
     4. Press Escape to close the window
     */
 
+    if (!settings.get<int>("internet_toggler", false)) return;
+
     press(0x5B);
     press(0x41);
     release(0x41);

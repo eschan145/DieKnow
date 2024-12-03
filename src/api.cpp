@@ -39,6 +39,9 @@ void validate() {
         MessageBox(nullptr, msg.str().c_str(), "FATAL ERROR", MB_ICONERROR);
         std::exit(EXIT_FAILURE);
     }
+
+    settings.load("../settings.txt");
+    settings.print();
 }
 
 bool exists(const char* path) {

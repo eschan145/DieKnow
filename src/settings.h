@@ -28,6 +28,7 @@ VERSION: 1.0.1
 
 class Settings {
     std::unordered_map<std::string, std::string> settings;
+    std::string path;
 
 public:
     bool load(const std::string& file_name);
