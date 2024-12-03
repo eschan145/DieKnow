@@ -35,11 +35,11 @@ bool Settings::load(const std::string& file_name) {
     while (std::getline(file, line)) {
         if (line.empty() || line[0] == '#') continue;
 
-        auto delimiterPos = line.find('=');
-        if (delimiterPos == std::string::npos) continue;
+        auto delimeter = line.find('=');
+        if (delimeter == std::string::npos) continue;
 
-        std::string key = line.substr(0, delimiterPos);
-        std::string value = line.substr(delimiterPos + 1);
+        std::string key = line.substr(0, delimeter);
+        std::string value = line.substr(delimeter + 1);
         settings[key] = value;
     }
     return true;
@@ -69,7 +69,7 @@ bool Settings::get<bool>(const std::string& key, bool default_value) const {
     auto it = settings.find(key);
     if (it == settings.end()) return default_value;
 
-    const std::string& val = it->second;
+    const std::string& value = it->second;
     if (value == "true" || value == "1") return true;
     if (value == "false" || value == "0") return false;
 

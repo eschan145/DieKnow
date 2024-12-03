@@ -32,7 +32,6 @@ class Settings {
 public:
     bool load(const std::string& file_name);
 
-    template <typename T>
     T get(const std::string& key, T default_value = T()) const;
 
     bool get<bool>(const std::string& key, bool default_value) const;
