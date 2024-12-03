@@ -125,6 +125,9 @@ void monitor_executables(const char* folder_path) {
             std::this_thread::sleep_for(std::chrono::seconds(interval));
             interval_file.close();
         }
+        else {
+            std::cout << "Failed to open interval.txt";
+        }
     }
 }
 
