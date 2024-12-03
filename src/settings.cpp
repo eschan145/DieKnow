@@ -109,3 +109,7 @@ bool Settings::set(const std::string& key, const std::string& value) {
 void Settings::update() {
     this->load(this->path);
 }
+
+template int Settings::get<int>(const std::string& key, int default_value) const;
+template double Settings::get<double>(const std::string& key, double default_value) const;
+template std::string Settings::get<std::string>(const std::string& key, std::string default_value) const;
