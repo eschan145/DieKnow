@@ -42,7 +42,7 @@ void validate() {
         std::exit(EXIT_FAILURE);
     }
 
-    settings.load("../settings.txt");
+    settings.load("./settings.conf");
 }
 
 bool exists(const char* path) {

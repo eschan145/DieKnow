@@ -31,7 +31,7 @@ VERSION: 1.0.1
 
 
 bool Settings::load(const std::string& file_name) {
-    std::ifstream file("./settings.txt");
+    std::ifstream file(file_name);
     if (!file.is_open()) {
         std::cerr << "Error: Could not open file " << file_name
                   << ". Reason: " << std::strerror(errno) << std::endl;
