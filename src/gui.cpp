@@ -119,10 +119,11 @@ const char* get_selected(HWND listbox) {
 Application::Application() {
     validate();
 
-    Settings configuration;
-    bool result = configuration.load("settings.txt");
-    configuration.print();
-    std::cout << result;
+    Settings settings;
+    settings.load("../settings.txt");
+    settings.print();
+
+    std::cout << "Internet toggler: " << settings.get<bool>("internet_toggler", false);
 
     // Used for help popup balloon
     InitCommonControls();

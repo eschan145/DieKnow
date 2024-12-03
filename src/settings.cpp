@@ -29,6 +29,7 @@ VERSION: 1.0.1
 #include <cstring>
 #include <cerrno>
 
+
 bool Settings::load(const std::string& file_name) {
     std::ifstream file(file_name);
     if (!file.is_open()) {
@@ -39,7 +40,9 @@ bool Settings::load(const std::string& file_name) {
 
     std::string line;
     while (std::getline(file, line)) {
-        if (line.empty() || line[0] == '#') continue;
+        if ((line.empty()) ||
+            (line[0] == "#") ||
+            (line.substr(0, 2) == "//")) continue;
 
         auto delimeter = line.find('=');
         if (delimeter == std::string::npos) continue;
