@@ -611,8 +611,8 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 bool is_checked = ((item.state & LVIS_STATEIMAGEMASK) == INDEXTOSTATEIMAGEMASK(1));
 
                 HWND target = FindWindow(NULL, item.pszText);
-                std::cout << "Text: " << item.pszText << "\n";
-                std::cout << "State: " << is_checked << "\n";
+                // std::cout << "Text: " << item.pszText << "\n";
+                // std::cout << "State: " << is_checked << "\n";
 
                 if (target) {
                     ShowWindow(target, is_checked ? SW_SHOW : SW_HIDE);
