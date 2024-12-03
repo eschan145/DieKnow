@@ -37,7 +37,8 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <winternl.h>
 #include <tlhelp32.h>
 
-#include "settings.cpp"
+#include "settings.h"
+
 
 extern const char* FOLDER_PATH;
 extern Settings settings;
