@@ -121,7 +121,7 @@ Application::Application() {
 
 
     Settings configuration;
-    configuration.load("settings.txt")
+    configuration.load("settings.txt");
     configuration.print();
 
     // Used for help popup balloon
