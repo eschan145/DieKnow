@@ -43,7 +43,6 @@ void validate() {
     }
 
     settings.load("../settings.txt");
-    settings.print();
 }
 
 bool exists(const char* path) {
