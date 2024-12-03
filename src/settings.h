@@ -37,6 +37,7 @@ public:
     T get(const std::string& key, T default_value = T()) const;
 
     void print() const;
+    void update();
 };
 
 template <>
