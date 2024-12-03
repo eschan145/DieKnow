@@ -31,6 +31,7 @@ VERSION: 1.0.1
 
 #include "api.cpp"
 #include "system.cpp"
+#include "settings.cpp"
 
 // Or more correctly, widget dimensions
 const int BUTTON_WIDTH = 200;

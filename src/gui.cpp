@@ -119,6 +119,11 @@ const char* get_selected(HWND listbox) {
 Application::Application() {
     validate();
 
+
+    Settings configuration;
+    configuration.load("settings.txt")
+    configuration.print();
+
     // Used for help popup balloon
     InitCommonControls();
 
