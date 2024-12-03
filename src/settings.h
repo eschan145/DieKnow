@@ -36,6 +36,7 @@ public:
     template <typename T>
     T get(const std::string& key, T default_value = T()) const;
 
+    bool set(const std::string& key, const std::string& value);
     void print() const;
     void update();
 };

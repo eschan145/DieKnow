@@ -87,6 +87,25 @@ bool Settings::get<bool>(const std::string& key, bool default_value) const {
     return default_value;
 }
 
+bool Settings::set(const std::string& key, const std::string& value) {
+    settings[key] = value;
+
+    if (!this->path) return;
+
+    std::ofstream file(this->path);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << this->path 
+                  << ". Reason: " << std::strerror(errno) << std::endl;
+        return false;
+    }
+
+    for (const auto& [key, value] : settings) {
+        file << key << "=" << value << "\n";
+    }
+
+    return true;
+}
+
 void Settings::update() {
     this->load(this->path);
 }

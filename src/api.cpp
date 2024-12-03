@@ -115,27 +115,10 @@ void monitor_executables(const char* folder_path) {
             }
         }
 
-        int interval;
-        std::ifstream interval_file("./interval.txt");
+        int interval = settings.get<int>("interval", 0);
 
-        std::filesystem::path file_path("./interval.txt");
-
-        std::cout << "Full interval path: " << std::filesystem::absolute(file_path) << std::endl;
-
-        if (interval_file.is_open()) {
-            interval_file >> interval;
-
-            if (interval_file.fail()) {
-                interval = 0;
-            }
-
-            // Minimize CPU usage
-            std::this_thread::sleep_for(std::chrono::seconds(interval));
-            interval_file.close();
-        }
-        else {
-            std::cout << "Failed to open interval.txt";
-        }
+        // Minimize CPU usage
+        std::this_thread::sleep_for(std::chrono::seconds(interval));
     }
 }
 

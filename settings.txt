@@ -1,1 +1,2 @@
-internet_toggler=false
+interval=1
+internet_toggler=true
