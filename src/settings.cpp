@@ -41,7 +41,7 @@ bool Settings::load(const std::string& file_name) {
     std::string line;
     while (std::getline(file, line)) {
         if ((line.empty()) ||
-            (line[0] == "#") ||
+            (line[0] == '#') ||
             (line.substr(0, 2) == "//")) continue;
 
         auto delimeter = line.find('=');
