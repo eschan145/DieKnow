@@ -90,7 +90,7 @@ bool Settings::get<bool>(const std::string& key, bool default_value) const {
 bool Settings::set(const std::string& key, const std::string& value) {
     settings[key] = value;
 
-    if (!this->path) return;
+    if (this->path.empty()) return false;
 
     std::ofstream file(this->path);
     if (!file.is_open()) {
