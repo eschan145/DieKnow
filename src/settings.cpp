@@ -70,5 +70,8 @@ bool Settings::get<bool>(const std::string& key, bool default_value) const {
     if (it == settings.end()) return default_value;
 
     const std::string& val = it->second;
-    return (val == "true" || val == "1");
+    if (value == "true" || value == "1") return true;
+    if (value == "false" || value == "0") return false;
+
+    return default_value;
 }
