@@ -25,7 +25,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include "api.h"
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
-
+Settings settings;
 
 void validate() {
     if (!std::filesystem::exists(FOLDER_PATH)) {
