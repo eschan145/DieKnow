@@ -26,6 +26,8 @@ VERSION: 1.0.1
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <cstring>
+#include <cerrno>
 
 bool Settings::load(const std::string& file_name) {
     std::ifstream file(file_name);
