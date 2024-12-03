@@ -439,7 +439,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
             int value = atoi(buffer);
 
             if (value > 0) {
-                write("../interval.txt", value);
+                write("./interval.txt", value);
 
                 std::string message = "Successfully set interval buffer to " + std::string(buffer);
 
@@ -630,7 +630,7 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (GetFocus() != widgets[Widgets::INTERVAL]) {
         SetWindowText(
             widgets[Widgets::INTERVAL],
-            std::to_string(read("../interval.txt")).c_str());
+            std::to_string(read("./interval.txt")).c_str());
     }
 
     std::string message = "Executables terminated: " + std::to_string(get_killed_count());
