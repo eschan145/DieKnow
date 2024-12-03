@@ -29,7 +29,11 @@ VERSION: 1.0.1
 
 bool Settings::load(const std::string& file_name) {
     std::ifstream file(file_name);
-    if (!file.is_open()) return false;
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << file_name
+                  << ". Reason: " << std::strerror(errno) << std::endl;
+        return false;
+    }
 
     std::string line;
     while (std::getline(file, line)) {
