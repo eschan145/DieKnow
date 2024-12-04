@@ -23,6 +23,8 @@ VERSION: 1.0.1
 #ifndef GUI_H
 #define GUI_H
 
+#include <boost/json.hpp>
+
 #include <iostream>
 #include <vector>
 #include <string>

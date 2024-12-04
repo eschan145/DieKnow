@@ -341,7 +341,7 @@ Application::Application() {
     tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow.");
     tooltip(hwnd, open_explorer, "Open the DyKnow file directory in the Windows Explorer.");
     tooltip(hwnd, display_information, "Show system information.");
-    tooltip(hwnd, take_snapshot, "Take a snapshot of the current windows to restore it later on.");
+    tooltip(hwnd, take_snapshot, "Take a snapshot of the current windows to restore them later on.");
 
     for (HWND widget : widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);

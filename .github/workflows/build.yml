@@ -24,6 +24,10 @@ jobs:
         update: true
         install: mingw-w64-x86_64-gcc
 
+    - name: Install Boost
+      run: |
+        pacman -S --noconfirm mingw-w64-x86_64-boost
+
     - name: Compile to .dll
       shell: msys2 {0}
       run: |
