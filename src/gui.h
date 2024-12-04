@@ -24,7 +24,6 @@ VERSION: 1.0.1
 #define GUI_H
 
 #include <boost/json.hpp>
-#include <QApplication>
 #include <raylib.h>
 
 #include <iostream>
