@@ -22,12 +22,9 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         update: true
-        install: mingw-w64-x86_64-gcc
-
-    - name: Install Boost
-      shell: bash
-      run: |
-        pacman -S --noconfirm mingw-w64-x86_64-boost
+        install: |
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-boost
 
     - name: Compile to .dll
       shell: msys2 {0}
