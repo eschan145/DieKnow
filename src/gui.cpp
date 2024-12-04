@@ -529,7 +529,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
                     message.str().c_str(),
                     "SUCCESS",
                     MB_ICONINFORMATION
-                )
+                );
             }
             else {
                 MessageBox(
