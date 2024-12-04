@@ -176,7 +176,8 @@ Application::Application() {
         hwnd,
         (HMENU)Widgets::RUNNING,
         wc.hInstance,
-        NULL);
+        NULL
+    );
 
     HWND taskkill_button = CreateWindow(
         "BUTTON",
@@ -189,7 +190,8 @@ Application::Application() {
         hwnd,
         (HMENU)Widgets::TASKKILL,
         wc.hInstance,
-        NULL);
+        NULL
+    );
 
     HWND exit_button = CreateWindow(
         "BUTTON",
@@ -305,7 +307,7 @@ Application::Application() {
         wc.hInstance,
         NULL
     );
-    HWND restore_snapshot = CreateWindow(
+    this->restore_snapshot = CreateWindow(
         "BUTTON",
         "Restore snapshot",
         WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
@@ -343,7 +345,7 @@ Application::Application() {
     widgets.push_back(open_explorer);
     widgets.push_back(display_information);
     widgets.push_back(take_snapshot);
-    widgets.push_back(restore_snapshot);
+    widgets.push_back(this->restore_snapshot);
     widgets.push_back(windows);
 
     tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped.");
@@ -569,7 +571,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
             message << "Of snapshot restoration, "
                     << success << " successful, "
-                    << missing << " missing, and"
+                    << missing << " missing, and "
                     << fail << " failed.";
 
             MessageBox(app->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
@@ -629,10 +631,13 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     /*
     Update display labels and listbox.
 
+    * Update restore snapshot focus state
     * Update listbox if files have been changed
     * Update interval text based on `interval.txt`
     * Update label displaying executables terminated
     */
+
+    EnableWindow(this->restore_snapshot, !this->snapshot.empty());
 
     // Update directory listbox
     std::vector<std::string> current_executables;

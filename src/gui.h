@@ -85,6 +85,7 @@ public:
 
     HWND hwnd;
     HWND windows;
+    HWND restore_snapshot;
 
     Application();
 
