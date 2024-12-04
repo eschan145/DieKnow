@@ -216,6 +216,23 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     return TRUE;
 }
 
+BOOL CALLBACK enum_snapshot(HWND hwnd, LPARAM lParam) {
+    std::vector<Window>* windows = reinterpret_cast<std::vector<Window>*>(lParam);
+
+    char title[256];
+    char class_name[256];
+
+    GetWindowText(hwnd, title, sizeof(title));
+    GetClassNameA(hwnd, class_name, sizeof(class_name));
+
+    if ((class_name[0]) &&
+        (IsWindowVisible(hwnd))) {
+        windows->push_back({hwnd, title, class_name});
+    }
+
+    return TRUE;
+}
+
 LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo) {
     DWORD code = ExceptionInfo->ExceptionRecord->ExceptionCode;
     PVOID address = ExceptionInfo->ExceptionRecord->ExceptionAddress;

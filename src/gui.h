@@ -56,7 +56,8 @@ namespace Widgets {
         WINDOWS,
         OPEN_EXPLORER,
         SYSTEM_INFORMATION,
-        TAKE_SNAPSHOT
+        TAKE_SNAPSHOT,
+        RESTORE_SNAPSHOT,
     };
 }
 

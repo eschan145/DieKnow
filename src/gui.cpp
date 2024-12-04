@@ -259,7 +259,7 @@ Application::Application() {
         "Executables terminated:",
         WS_VISIBLE | WS_CHILD,
         PADDING,
-        150 + (BUTTON_HEIGHT * 2) + PADDING,
+        120 + (BUTTON_HEIGHT * 2) + PADDING,
         BUTTON_WIDTH, 18,
         hwnd,
         (HMENU)Widgets::EXECUTABLES_KILLED,
@@ -297,11 +297,24 @@ Application::Application() {
         "Take snapshot",
         WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
         PADDING,
-        150 + (BUTTON_HEIGHT * 3) + (PADDING * 2),
+        130 + (BUTTON_HEIGHT * 3) + (PADDING * 2),
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
         hwnd,
         (HMENU)Widgets::TAKE_SNAPSHOT,
+        wc.hInstance,
+        NULL
+    );
+    HWND restore_snapshot = CreateWindow(
+        "BUTTON",
+        "Restore snapshot",
+        WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+        PADDING,
+        130 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
+        BUTTON_WIDTH,
+        BUTTON_HEIGHT,
+        hwnd,
+        (HMENU)Widgets::RESTORE_SNAPSHOT,
         wc.hInstance,
         NULL
     );
@@ -330,6 +343,7 @@ Application::Application() {
     widgets.push_back(open_explorer);
     widgets.push_back(display_information);
     widgets.push_back(take_snapshot);
+    widgets.push_back(restore_snapshot);
     widgets.push_back(windows);
 
     tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped.");
@@ -479,6 +493,24 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
             MessageBox(hwnd, message.str().c_str(), "System Information", MB_OK | MB_ICONINFORMATION);
 
             break;
+        }
+
+        case Widgets::TAKE_SNAPSHOT: {
+            std::vector<Window> new_snapshot;
+
+            EnumWindows(enum_snapshot, reinterpret_cast<LPARAM>(&new_snapshot));
+
+            if (!(new_snapshot == app->snapshot)) app->snapshot = new_snapshot;
+        }
+
+        case Widgets::RESTORE_SNAPSHOT: {
+            for (const auto& window : app->snapshot) {
+                HWND hwnd = FindWindow(window.class_name);
+
+                if (hwnd) {
+                    SetWindowVisible(hwnd, SW_SHOW);
+                }
+            }
         }
 
         case Widgets::EXIT: {
