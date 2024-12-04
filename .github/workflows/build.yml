@@ -25,6 +25,7 @@ jobs:
         install: mingw-w64-x86_64-gcc
 
     - name: Install Boost
+      shell: bash
       run: |
         pacman -S --noconfirm mingw-w64-x86_64-boost
 
