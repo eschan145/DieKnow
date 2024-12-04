@@ -25,6 +25,8 @@ jobs:
         install: |
           mingw-w64-x86_64-gcc
           mingw-w64-x86_64-boost
+          mingw-w64-x86_64-qt5
+          mingw-w64-x86_64-raylib
 
     - name: Compile to .dll
       shell: msys2 {0}
