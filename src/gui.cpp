@@ -605,7 +605,6 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         si.nPos = position;
         SetScrollInfo(this->windows, SB_VERT, &si, TRUE);
         SendMessage(this->windows, LVM_SCROLL, 0, position);
-        }
     }
 
     // Update window visibility in listbox
