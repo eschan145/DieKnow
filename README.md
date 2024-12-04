@@ -17,7 +17,7 @@ About this:
 * **DOES NOT** need to run an exectuable or a batch file, which is usually blocked by the school via Windows AppLocker.
 * **DOES NOT** have any external dependencies.
 
-What can DyKnow do (or does do):
+What can DyKnow do:
 
 * Monitor your device screen (including when you press "Show password" when typing a password)
 * Monitor your search history
@@ -28,11 +28,7 @@ What can DyKnow do (or does do):
 * Track your keystrokes
 * Make your computer useless
 
-It's possible that this information could be sold to third-party advertisers for a way to generate revenue, as DyKnow is actually quite cheap for the school.
-
 When it is running, you'll see the DyKnow icon dissapear from your taskbar. 💀
-
-You'll have to type `"exit"` to exit the application or some lingering multitasking threads will continue to run in the background.
 
 ## Installation
 
@@ -40,12 +36,13 @@ NOTE: this application only works on Windows, as it uses the Windows API.
 
 ### For Python
 
-1. Install Python 3
-2. Click on Code
-   ![image](https://github.com/user-attachments/assets/31ca7d0e-eaad-4a46-a11b-b38216639b05)
-3. Click on Download Zip
-   ![image](https://github.com/user-attachments/assets/1b77af9c-c6ce-4197-94d8-29ae63c499c5)
-4. Extract the compressed zip
+1. Install Python 3. On most school computers it should be installed by default.
+2. Click on **Releases**, found on the right side panel. If you're feeling brave, you can download the latest development ZIP. Note that this may not be as subject to as much testing as release branches, so downloading it is not recommended.
+
+   ![releases](releases.png)
+
+3. Download the `Complete.zip` file.
+4. Extract the compressed zip.
 5. Double-click on the [`main.py`](src/main.py) file in the extracted folder.
 6. Enjoy :)
 
