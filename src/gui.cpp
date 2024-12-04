@@ -623,16 +623,19 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     settings.update();
 
-    if (GetFocus() != widgets[Widgets::INTERVAL]) {
+    if ((GetFocus() != widgets[Widgets::INTERVAL]) ||
+        (GetFocus() != widgets[Widgets::INTERVAL_SET])) {
         SetWindowText(
             widgets[Widgets::INTERVAL],
-            std::to_string(settings.get<int>("interval", 0)).c_str());
+            std::to_string(settings.get<int>("interval", 0)).c_str()
+        );
     }
 
     std::string message = "Executables terminated: " + std::to_string(get_killed_count());
     SetWindowText(
         widgets[Widgets::EXECUTABLES_KILLED],
-        message.c_str());
+        message.c_str()
+    );
 }
 
 void Application::update_windows(std::vector<Window>& current_windows) {
