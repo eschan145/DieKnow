@@ -505,7 +505,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
         case Widgets::RESTORE_SNAPSHOT: {
             for (const auto& window : app->snapshot) {
-                HWND hwnd = FindWindow(window.class_name);
+                HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
 
                 if (hwnd) {
                     ShowWindow(hwnd, SW_SHOW);
