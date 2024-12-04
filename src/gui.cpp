@@ -500,12 +500,12 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
             BOOL window_enumeration = EnumWindows(enum_snapshot, reinterpret_cast<LPARAM>(&new_snapshot));
 
-            if (!window_enumeraation) {
+            if (!window_enumeration) {
                 std::ostringstream message;
                 message << "Failed to enumerate through windows."
                         << "Error: " << GetLastError();
 
-                MessageBox(app-hwnd, message, "Error", MB_ICONERROR);
+                MessageBox(app->hwnd, message, "Error", MB_ICONERROR);
                 break;
             }
 
@@ -518,11 +518,11 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
                 app->snapshot = new_snapshot;
 
                 std::ostringstream message;
-                std::size_t count = numbers.size();
+                std::size_t count = new_snapshot.size();
 
                 message << "Snapshot successfully taken with "
                         << count
-                        << " window(s)."
+                        << " window(s).";
 
                 MessageBox(
                     app->hwnd,
@@ -570,7 +570,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
             message << "Of snapshot restoration, "
                     << success << " successful, "
                     << missing << " missing, and"
-                    << failed << " failed."
+                    << fail << " failed.";
 
             MessageBox(app->hwnd, message, "Information", MB_ICONINFORMATION);
 
