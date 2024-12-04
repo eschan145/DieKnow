@@ -505,7 +505,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
                 message << "Failed to enumerate through windows."
                         << "Error: " << GetLastError();
 
-                MessageBox(app->hwnd, message, "Error", MB_ICONERROR);
+                MessageBox(app->hwnd, message.str().c_str(), "Error", MB_ICONERROR);
                 break;
             }
 
@@ -526,7 +526,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
                 MessageBox(
                     app->hwnd,
-                    message,
+                    message.str().c_str(),
                     "SUCCESS",
                     MB_ICONINFORMATION
                 )
@@ -572,7 +572,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
                     << missing << " missing, and"
                     << fail << " failed.";
 
-            MessageBox(app->hwnd, message, "Information", MB_ICONINFORMATION);
+            MessageBox(app->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
 
             break;
         }
