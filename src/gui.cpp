@@ -260,7 +260,7 @@ Application::Application() {
         WS_VISIBLE | WS_CHILD,
         PADDING,
         138 + BUTTON_WIDTH,
-        BUTTON_WIDTH, 18,
+        (BUTTON_HEIGHT * 3) + (PADDING * 4), 18,
         hwnd,
         (HMENU)Widgets::EXECUTABLES_KILLED,
         wc.hInstance,
