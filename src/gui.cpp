@@ -222,7 +222,7 @@ Application::Application() {
         "Interval:",
         WS_VISIBLE | WS_CHILD,
         PADDING,
-        138 + BUTTON_HEIGHT,
+        120 + (BUTTON_HEIGHT * 2) + PADDING,
         50, 18,
         hwnd,
         (HMENU)Widgets::INTERVAL_LABEL,
@@ -234,7 +234,7 @@ Application::Application() {
         "",
         WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
         40 + (PADDING * 2),
-        136 + BUTTON_HEIGHT,
+        120 + (BUTTON_HEIGHT * 2) + PADDING,
         50, 22,
         hwnd,
         (HMENU)Widgets::INTERVAL,
@@ -259,7 +259,7 @@ Application::Application() {
         "Executables terminated:",
         WS_VISIBLE | WS_CHILD,
         PADDING,
-        120 + (BUTTON_HEIGHT * 2) + PADDING,
+        138 + BUTTON_WIDTH,
         BUTTON_WIDTH, 18,
         hwnd,
         (HMENU)Widgets::EXECUTABLES_KILLED,
@@ -500,7 +500,18 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
             EnumWindows(enum_snapshot, reinterpret_cast<LPARAM>(&new_snapshot));
 
-            if (!(new_snapshot == app->snapshot)) app->snapshot = new_snapshot;
+            if (!(new_snapshot == app->snapshot)) {
+                app->snapshot = new_snapshot;
+            }
+            else {
+                MessageBox(
+                    app->hwnd,
+                    "The new snapshot matches the contents of the previous snapshot. Aborting.",
+                    "Information", MB_ICONINFORMATION
+                );
+            }
+
+            break;
         }
 
         case Widgets::RESTORE_SNAPSHOT: {
@@ -511,6 +522,8 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
                     ShowWindow(hwnd, SW_SHOW);
                 }
             }
+
+            break;
         }
 
         case Widgets::EXIT: {
