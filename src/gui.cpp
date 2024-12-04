@@ -259,7 +259,7 @@ Application::Application() {
         "Executables terminated:",
         WS_VISIBLE | WS_CHILD,
         PADDING,
-        (BUTTON_HEIGHT * 3) + (PADDING * 4),
+        (BUTTON_HEIGHT * 3) + (PADDING * 5),
         BUTTON_WIDTH, 18,
         hwnd,
         (HMENU)Widgets::EXECUTABLES_KILLED,
