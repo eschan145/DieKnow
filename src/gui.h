@@ -81,6 +81,7 @@ public:
     // Used to determine whether or not to refresh the listbox
     std::vector<std::string> previous_executables;
     std::vector<Window> previous_windows;
+    std::vector<Window> snapshot;
 
     HWND windows;
 

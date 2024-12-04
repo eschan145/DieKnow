@@ -508,7 +508,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
                 HWND hwnd = FindWindow(window.class_name);
 
                 if (hwnd) {
-                    SetWindowVisible(hwnd, SW_SHOW);
+                    ShowWindow(hwnd, SW_SHOW);
                 }
             }
         }
