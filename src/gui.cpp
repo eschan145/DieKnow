@@ -762,5 +762,10 @@ void create_window() {
     SetUnhandledExceptionFilter(ExceptionHandler);
 
     Application* application = new Application();
+
+    std::cout << "Program size: "
+              << sizeof(*application)
+              << " bytes." << std::endl;
+
     delete application;
 }
