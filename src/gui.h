@@ -52,7 +52,8 @@ namespace Widgets {
         EXECUTABLES_KILLED,
         WINDOWS,
         OPEN_EXPLORER,
-        SYSTEM_INFORMATION
+        SYSTEM_INFORMATION,
+        TAKE_SNAPSHOT
     };
 }
 

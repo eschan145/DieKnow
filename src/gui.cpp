@@ -292,6 +292,19 @@ Application::Application() {
         wc.hInstance,
         NULL
     );
+    HWND take_snapshot = CreateWindow(
+        "BUTTON",
+        "Take snapshot",
+        WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+        PADDING,
+        150 + (BUTTON_HEIGHT * 3) + (PADDING * 2),
+        BUTTON_WIDTH,
+        BUTTON_HEIGHT,
+        hwnd,
+        (HMENU)Widgets::TAKE_SNAPSHOT,
+        wc.hInstance,
+        NULL
+    );
     windows = CreateWindow(
         WC_LISTVIEW,
         nullptr,
@@ -316,6 +329,7 @@ Application::Application() {
     widgets.push_back(executables_killed);
     widgets.push_back(open_explorer);
     widgets.push_back(display_information);
+    widgets.push_back(take_snapshot);
     widgets.push_back(windows);
 
     tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped.");
@@ -327,6 +341,7 @@ Application::Application() {
     tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow.");
     tooltip(hwnd, open_explorer, "Open the DyKnow file directory in the Windows Explorer.");
     tooltip(hwnd, display_information, "Show system information.");
+    tooltip(hwnd, take_snapshot, "Take a snapshot of the current windows to restore it later on.");
 
     for (HWND widget : widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
@@ -590,30 +605,6 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         si.nPos = position;
         SetScrollInfo(this->windows, SB_VERT, &si, TRUE);
         SendMessage(this->windows, LVM_SCROLL, 0, position);
-
-        int count = ListView_GetItemCount(this->windows);
-
-        for (int i = 0; i < count; ++i) {
-            char buffer[256];
-            LVITEM item = {0};
-            item.iItem = i;
-            item.iSubItem = 0;
-            item.mask = LVIF_STATE | LVIF_TEXT;
-            item.stateMask = LVIS_STATEIMAGEMASK;
-            item.pszText = buffer;
-            item.cchTextMax = sizeof(buffer);
-
-            if (ListView_GetItem(this->windows, &item)) {
-                bool is_checked = ((item.state & LVIS_STATEIMAGEMASK) == INDEXTOSTATEIMAGEMASK(1));
-
-                HWND target = FindWindow(NULL, item.pszText);
-                // std::cout << "Text: " << item.pszText << "\n";
-                // std::cout << "State: " << is_checked << "\n";
-
-                if (target) {
-                    ShowWindow(target, is_checked ? SW_SHOW : SW_HIDE);
-                }
-            }
         }
     }
 
