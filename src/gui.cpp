@@ -259,7 +259,7 @@ Application::Application() {
         "Executables terminated:",
         WS_VISIBLE | WS_CHILD,
         PADDING,
-        (BUTTON_HEIGHT * 3) + (PADDING * 5),
+        (BUTTON_HEIGHT * 3) + (PADDING * 6),
         BUTTON_WIDTH, 18,
         hwnd,
         (HMENU)Widgets::EXECUTABLES_KILLED,
@@ -498,10 +498,38 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         case Widgets::TAKE_SNAPSHOT: {
             std::vector<Window> new_snapshot;
 
-            EnumWindows(enum_snapshot, reinterpret_cast<LPARAM>(&new_snapshot));
+            BOOL window_enumeration = EnumWindows(enum_snapshot, reinterpret_cast<LPARAM>(&new_snapshot));
+
+            if (!window_enumeraation) {
+                std::ostringstream message;
+                message << "Failed to enumerate through windows."
+                        << "Error: " << GetLastError();
+
+                MessageBox(app-hwnd, message, "Error", MB_ICONERROR);
+                break;
+            }
+
+            if (new_snapshot.empty()) {
+                MessageBox(app->hwnd, "Failed to retrieve windows.", "Error", MB_ICONERROR);
+                break;
+            }
 
             if (!(new_snapshot == app->snapshot)) {
                 app->snapshot = new_snapshot;
+
+                std::ostringstream message;
+                std::size_t count = numbers.size();
+
+                message << "Snapshot successfully taken with "
+                        << count
+                        << " window(s)."
+
+                MessageBox(
+                    app->hwnd,
+                    message,
+                    "SUCCESS",
+                    MB_ICONINFORMATION
+                )
             }
             else {
                 MessageBox(
@@ -515,13 +543,36 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         }
 
         case Widgets::RESTORE_SNAPSHOT: {
+            int success = 0;
+            int fail = 0;
+            int missing = 0;
+
             for (const auto& window : app->snapshot) {
                 HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
 
                 if (hwnd) {
                     ShowWindow(hwnd, SW_SHOW);
+
+                    if (IsWindowVisible(hwnd)) {
+                        success++;
+                    }
+                    else {
+                        fail++;
+                    }
+                }
+                else {
+                    missing++;
                 }
             }
+
+            std::ostringstream message;
+
+            message << "Of snapshot restoration, "
+                    << success << " successful, "
+                    << missing << " missing, and"
+                    << failed << " failed."
+
+            MessageBox(app->hwnd, message, "Information", MB_ICONINFORMATION);
 
             break;
         }
