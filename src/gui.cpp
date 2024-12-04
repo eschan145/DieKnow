@@ -380,7 +380,7 @@ Application::Application() {
     );
 
     // In ms -- set to 5 ticks per second
-    SetTimer(hwnd, 1, 200, nullptr);
+    SetTimer(hwnd, 1, settings.get<int>("update", 100), nullptr);
 
     ShowWindow(hwnd, SW_SHOW);
     UpdateWindow(hwnd);
@@ -569,7 +569,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
             std::ostringstream message;
 
-            message << "Of snapshot restoration, "
+            message << "Of snapshot restoration: "
                     << success << " successful, "
                     << missing << " missing, and "
                     << fail << " failed.";
