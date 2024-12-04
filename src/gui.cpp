@@ -148,7 +148,7 @@ Application::Application() {
         DEFAULT_PITCH | FF_SWISS,
         "Segoe UI");
 
-    HWND hwnd = CreateWindowEx(
+    hwnd = CreateWindowEx(
         0,
         CLASS_NAME,
         "DieKnow",

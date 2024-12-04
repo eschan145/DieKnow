@@ -83,6 +83,7 @@ public:
     std::vector<Window> previous_windows;
     std::vector<Window> snapshot;
 
+    HWND hwnd;
     HWND windows;
 
     Application();
