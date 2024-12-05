@@ -31,6 +31,7 @@ VERSION: 1.0.1
 #include <exception>
 #include <chrono>
 #include <thread>
+#include <streambuf>
 
 #include "settings.h"
 
@@ -67,5 +68,20 @@ void toggle_internet();
 BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam);
 
 LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo);
+
+class ErrorBuffer : public std::streambuf {
+  public:
+    explicit ErrorBuffer(std::streambuf *original);
+    ~ErrorBuffer();
+
+    static void enable_error();
+    static void disable_buffer();
+
+  protected:
+    int overflow(int c) override;
+
+  private:
+    std::streambuf *original_buffer;
+}
 
 #endif // SYSTEM_H

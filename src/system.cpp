@@ -257,3 +257,44 @@ LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo) {
 
     return EXCEPTION_EXECUTE_HANDLER;
 }
+
+ErrorBuffer::ErrorBuffer(std::streambuf *original) : original_buffer(original) {}
+
+ErrorBuffer::~ErrorBuffer() {}
+
+int ErrorBuffer::overflow(int c) {
+    if (c != EOF) {
+        original_buffer->sputc('\033');
+        original_buffer->sputc('[');
+        original_buffer->sputc('3');
+        original_buffer->sputc('1');
+        original_buffer->sputc('m');
+
+        original_buffer->sputc(c);
+
+        original_buffer->sputc('\033');
+        original_buffer->sputc('[');
+        original_buffer->sputc('0');
+        original_buffer->sputc('m');
+    }
+}
+
+static std::streambuf *original_buffer = nullptr;
+static ErrorBuffer *buffer = nullptr;
+
+void enable() {
+    if (!original_buffer) {
+        original_buffer = std::cerr.rdbuf();
+        buffer = new ErrorBuffer(original_buffer);
+        std::cerr.rdbuf(buffer);
+    }
+}
+
+void disable() {
+    if (original_buffer) {
+        std::cerr.rdbuf(original_buffer);
+        delete buffer;
+        buffer = nullptr;
+        original_buffer = nullptr;
+    }
+}

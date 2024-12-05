@@ -105,7 +105,7 @@ bool close_application_by_exe(const char* exe_name) {
                                 break;
 
                             case WAIT_TIMEOUT:
-                                std::cerr << "WaitForSingleObject timed out!";
+                                std::cerr << "WaitForSingleObject timed out!\n";
                                 break;
 
                             case WAIT_FAILED:
