@@ -264,8 +264,18 @@ ErrorBuffer::~ErrorBuffer() {}
 
 int ErrorBuffer::overflow(int c) {
     if (c != EOF) {
+        if (first) {
+            const char *message = "ERROR: ";
+            while (*message) {
+                originalBuffer->sputc(*message++);
+            }
+            first = false;
+        }
+
         original_buffer->sputc('\033');
         original_buffer->sputc('[');
+        original_buffer->sputc('1');
+        original_buffer->sputc(';');
         original_buffer->sputc('3');
         original_buffer->sputc('1');
         original_buffer->sputc('m');

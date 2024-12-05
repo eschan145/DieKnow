@@ -79,6 +79,7 @@ class ErrorBuffer : public std::streambuf {
 
   private:
     std::streambuf *original_buffer;
+    bool first = true;
 };
 
 #endif // SYSTEM_H
