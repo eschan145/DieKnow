@@ -153,7 +153,7 @@ DK_API const char* get_folder_path() {
     return FOLDER_PATH;
 }
 
-DK_API start_monitoring(const char* folder_path = FOLDER_PATH) {
+DK_API void start_monitoring(const char* folder_path = FOLDER_PATH) {
     /*
     Begin monitoring executables.
 
