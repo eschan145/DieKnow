@@ -64,7 +64,7 @@ bool exists(const char* path) {
     return (ftyp & FILE_ATTRIBUTE_DIRECTORY);
 }
 
-void close_application_by_exe(const char* exe_name) {
+bool close_application_by_exe(const char* exe_name) {
     /*
     Close a Windows PE executable file given the executable name.
 
@@ -73,13 +73,15 @@ void close_application_by_exe(const char* exe_name) {
     administrative permissions.
     */
 
+    bool terminated = false;
+
     // Create a snapshot of all running process(es)
     HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     PROCESSENTRY32 pe32;
     pe32.dwSize = sizeof(PROCESSENTRY32);
 
     // Break out if the snapshot failed
-    if (hProcessSnap == INVALID_HANDLE_VALUE) return;
+    if (hProcessSnap == INVALID_HANDLE_VALUE) return false;
 
     // Iterate through the process list and terminate them as desired
     if (Process32First(hProcessSnap, &pe32)) {
@@ -92,9 +94,30 @@ void close_application_by_exe(const char* exe_name) {
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
                 if (hProcess) {
                     TerminateProcess(hProcess, 0);
+
+                    auto wait = [&]() {
+                        DWORD result = WaitForSingleObject(hProcess, TIMEOUT);
+
+                        if (result == WAIT_OBJECT_0) {
+                            terminated = true;
+                            std::cout << "Process " << exe_name << " terminated successfully.";
+                        }
+                        else if (result == WAIT_TIMEOUT) {
+                            std::cerr << "WaitForSingleObject timed out!";
+                        }
+                        else {
+                            std::cerr << "Failed to terminate " << exe_name << "!";
+                        }
+                    };
+
+                    std::thread wait_thread(wait);
+                    wait_thread.join();
+
                     // Destroy the process handle to avoid memory leaks
                     CloseHandle(hProcess);
-                    killed++;
+                }
+                else {
+                    std::cerr << "Failed to open a handle to the process!";
                 }
             }
         } while (Process32Next(hProcessSnap, &pe32));
@@ -102,6 +125,10 @@ void close_application_by_exe(const char* exe_name) {
 
     // Destroy the snapshot to avoid memory leaks
     CloseHandle(hProcessSnap);
+
+    if (terminated) killed++;
+
+    return terminated;
 }
 
 void monitor_executables(const char* folder_path) {
@@ -130,6 +157,7 @@ void monitor_executables(const char* folder_path) {
                         close_application_by_exe(sub_entry.path().filename().string().c_str());
                     }
                 }
+
             }
             else {
                 validate();

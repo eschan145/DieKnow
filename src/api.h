@@ -27,6 +27,9 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 #define DK_API __declspec(dllexport)
 
+#define TIMEOUT 5000
+
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -55,7 +58,7 @@ extern "C"
 
     DK_API void validate();
     DK_API const char* get_folder_path();
-    DK_API void start_monitoring(const char* folder_path);
+    DK_API bool start_monitoring(const char* folder_path);
     DK_API void stop_monitoring();
     DK_API int get_killed_count();
     DK_API bool is_running();
