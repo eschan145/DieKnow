@@ -4,6 +4,8 @@
 import re
 
 def doc(file_path, lib):
+    """Parse a C++ file and parse its documentation."""
+
     with open(file_path, "r", encoding="utf-8") as file:
         content = file.read()
 

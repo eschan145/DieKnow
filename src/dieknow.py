@@ -2,7 +2,12 @@
 """
 
 import ctypes
-from ctypes import wintypes
+try:
+    from ctypes import wintypes
+
+except ImportError:
+    raise OSError("Failed to load Window ctypes! Ensure you are on a Windows "
+                  "platform!")
 
 import os
 import sys
@@ -55,6 +60,8 @@ lib.validate.argtypes = None
 lib.validate.restype = None
 lib.get_folder_path.argtypes = None
 lib.get_folder_path.restype = ctypes.c_char_p
+lib.start_monitoring.argtypes = [ctypes.c_char_p]
+lib.start_monitoring.restype = None
 lib.get_killed_count.restype = ctypes.c_int
 lib.get_executables_in_folder.argtypes = [ctypes.c_char_p]
 lib.get_executables_in_folder.restype = ctypes.c_char_p
