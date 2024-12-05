@@ -74,14 +74,14 @@ class ErrorBuffer : public std::streambuf {
     explicit ErrorBuffer(std::streambuf *original);
     ~ErrorBuffer();
 
-    static void enable_error();
-    static void disable_buffer();
-
   protected:
     int overflow(int c) override;
 
   private:
     std::streambuf *original_buffer;
 }
+
+void enable();
+void disable();
 
 #endif // SYSTEM_H
