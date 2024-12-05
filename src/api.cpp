@@ -50,7 +50,6 @@ DK_API void validate() {
     }
 
     settings.load("./settings.conf");
-    enable();
 }
 
 bool exists(const char* path) {

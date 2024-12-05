@@ -81,7 +81,4 @@ class ErrorBuffer : public std::streambuf {
     std::streambuf *original_buffer;
 }
 
-void enable();
-void disable();
-
 #endif // SYSTEM_H

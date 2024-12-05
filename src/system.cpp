@@ -277,24 +277,8 @@ int ErrorBuffer::overflow(int c) {
         original_buffer->sputc('0');
         original_buffer->sputc('m');
     }
+    return c;
 }
 
-static std::streambuf *original_buffer = nullptr;
-static ErrorBuffer *buffer = nullptr;
-
-void enable() {
-    if (!original_buffer) {
-        original_buffer = std::cerr.rdbuf();
-        buffer = new ErrorBuffer(original_buffer);
-        std::cerr.rdbuf(buffer);
-    }
-}
-
-void disable() {
-    if (original_buffer) {
-        std::cerr.rdbuf(original_buffer);
-        delete buffer;
-        buffer = nullptr;
-        original_buffer = nullptr;
-    }
-}
+static ErrorBuffer buffer(std::cerr.rdbuf());
+static std::streambuf *const original_buffer = std::cerr.rdbuf(&buffer)
