@@ -547,10 +547,14 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         case Widgets::RESTORE_SNAPSHOT: {
             app->is_restoring = !app->is_restoring;
 
+            std::string status = app->is_restoring ? "Restoring snapshots" : "Restore snapshots";
+
             SetWindowText(
                 app->widgets[Widgets::RESTORE_SNAPSHOT],
-                app->is_restoring ? "Restoring snapshots" : "Resotre snapshots"
+                status
             );
+
+            std::cout << GetLastError();
 
             break;
         }
@@ -604,6 +608,14 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
 }
 
 void Application::restore_snapshots() {
+    /*
+    Restore the saved window snapshot.
+    
+    There is no error handling if the snapshot is empty -- it is assumed that
+    the snapshot restoration button will be disabled if the snapshot is empty
+    instead.
+    */
+
     int success = 0;
     int missing = 0;
     int fail = 0;
@@ -634,8 +646,6 @@ void Application::restore_snapshots() {
             << fail << " failed.";
 
     // MessageBox(this->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
-
-    std::cout << "Restoring";
 }
 
 void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
