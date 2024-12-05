@@ -29,7 +29,7 @@ const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 Settings settings;
 
 
-void validate() {
+DK_API void validate() {
     /*
     Check for the validity of the DyKnow installation. If the DyKnow
     installation cannot be found, the application exits.
@@ -143,7 +143,7 @@ void monitor_executables(const char* folder_path) {
     }
 }
 
-const char* get_folder_path() {
+DK_API const char* get_folder_path() {
     /*
     Retrieve the default DyKnow folder path.
 
@@ -153,7 +153,7 @@ const char* get_folder_path() {
     return FOLDER_PATH;
 }
 
-void start_monitoring(const char* folder_path = FOLDER_PATH) {
+DK_API start_monitoring(const char* folder_path = FOLDER_PATH) {
     /*
     Begin monitoring executables.
 
@@ -186,7 +186,7 @@ void start_monitoring(const char* folder_path = FOLDER_PATH) {
     }
 }
 
-void stop_monitoring() {
+DK_API void stop_monitoring() {
     /*
     Stop monitoring executables.
     */
@@ -200,7 +200,7 @@ void stop_monitoring() {
 // Both get_killed_count and is_running must be declared as functions as ctypes
 // does not support retrieving variables.
 
-int get_killed_count() {
+DK_API int get_killed_count() {
     /*
     Retrieve the amount of DyKnow executables killed.
     */
@@ -208,7 +208,7 @@ int get_killed_count() {
     return killed;
 }
 
-bool is_running() {
+DK_API bool is_running() {
     /*
     Check if DieKnow is running or not.
     */
@@ -216,7 +216,7 @@ bool is_running() {
     return running;
 }
 
-const char* get_executables_in_folder(const char* folder_path) {
+DK_API const char* get_executables_in_folder(const char* folder_path) {
     /*
     Retrieve a printable list of executables in a folder.
     */
@@ -243,7 +243,7 @@ const char* get_executables_in_folder(const char* folder_path) {
     return result.c_str();
 }
 
-__declspec(dllexport) int __stdcall bsod() {
+DK_API int __stdcall bsod() {
     /*
     Open the Windows Blue Screen of Death via win32api's `NtRaiseHardError`.
 

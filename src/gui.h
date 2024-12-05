@@ -23,8 +23,6 @@ VERSION: 1.0.1
 #ifndef GUI_H
 #define GUI_H
 
-#include <boost/json.hpp>
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -62,7 +60,7 @@ namespace Widgets {
 
 
 extern "C" {
-    __declspec(dllexport) void create_window();
+    DK_API void create_window();
 }
 
 void tooltip(HWND hwnd, HWND control, const char* text);

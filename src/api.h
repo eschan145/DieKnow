@@ -25,6 +25,8 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #ifndef API_H
 #define API_H
 
+#define DK_API __declspec(dllexport)
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -51,14 +53,14 @@ extern "C"
 
     // __declspec allows it to be exported and used in ctypes
 
-    __declspec(dllexport) void validate();
-    __declspec(dllexport) const char* get_folder_path();
-    __declspec(dllexport) void start_monitoring(const char* folder_path);
-    __declspec(dllexport) void stop_monitoring();
-    __declspec(dllexport) int get_killed_count();
-    __declspec(dllexport) bool is_running();
-    __declspec(dllexport) const char* get_executables_in_folder(const char* folder_path);
-    __declspec(dllexport) int __stdcall dialog(
+    DK_API void validate();
+    DK_API const char* get_folder_path();
+    DK_API void start_monitoring(const char* folder_path);
+    DK_API void stop_monitoring();
+    DK_API int get_killed_count();
+    DK_API bool is_running();
+    DK_API const char* get_executables_in_folder(const char* folder_path);
+    DK_API int __stdcall dialog(
         LPCWSTR message,
         LPCWSTR title,
         UINT type
@@ -66,10 +68,8 @@ extern "C"
     {
         return MessageBoxW(nullptr, message, title, type);
     }
-    __declspec(dllexport) int __stdcall bsod();
+    DK_API int __stdcall bsod();
 }
-
-void validate();
 
 bool exists(const char* path);
 

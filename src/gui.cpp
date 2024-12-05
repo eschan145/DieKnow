@@ -758,7 +758,7 @@ void Application::update_windows(std::vector<Window>& current_windows) {
     }
 }
 
-void create_window() {
+DK_API void create_window() {
     SetUnhandledExceptionFilter(ExceptionHandler);
 
     Application* application = new Application();
