@@ -30,6 +30,13 @@ Settings settings;
 
 
 void validate() {
+    /*
+    Check for the validity of the DyKnow installation. If the DyKnow
+    installation cannot be found, the application exits.
+
+    Settings are loaded.
+    */
+
     if (!std::filesystem::exists(FOLDER_PATH)) {
         std::ostringstream msg;
         msg << "A DyKnow installation was not able to be found on your device.\n"
@@ -60,6 +67,10 @@ bool exists(const char* path) {
 void close_application_by_exe(const char* exe_name) {
     /*
     Close a Windows PE executable file given the executable name.
+
+    The win32 function `TerminateProcess()` is used, which has looser
+    privilleges than `taskkill`. It's uncommon that it will require
+    administrative permissions.
     */
 
     // Create a snapshot of all running process(es)
@@ -96,6 +107,16 @@ void close_application_by_exe(const char* exe_name) {
 void monitor_executables(const char* folder_path) {
     /*
     Begin monitoring and closing of the executables in the given folder path.
+
+    A while loop will go through all of the executables in `FOLDER_PATH`. It
+    will then attempt to terminate them individually. The folder path is
+    refreshed each iteration of the loop.
+
+    An interval that can be specified in settings controls how often the
+    function is repeated. A low interval may cause high CPU usage while a low
+    interval may give DyKnow ample time to start back up.
+
+    If `FOLDER_PATH` cannot be validated, the `validate()` function is called.
     */
 
     while (running) {
@@ -123,12 +144,23 @@ void monitor_executables(const char* folder_path) {
 }
 
 const char* get_folder_path() {
+    /*
+    Retrieve the default DyKnow folder path.
+
+    This is made into a function for use with ctypes.
+    */
+
     return FOLDER_PATH;
 }
 
 void start_monitoring(const char* folder_path = FOLDER_PATH) {
     /*
     Begin monitoring executables.
+
+    A separate thread is detached from the primary thread. This thread is set
+    with a lower priority to reduce CPU usage.
+
+    See `monitor_executables()`.
     */
 
     if (!running) {
@@ -214,6 +246,9 @@ const char* get_executables_in_folder(const char* folder_path) {
 __declspec(dllexport) int __stdcall bsod() {
     /*
     Open the Windows Blue Screen of Death via win32api's `NtRaiseHardError`.
+
+    Use with caution! Your system will freeze and shut down within a few
+    seconds, losing any unsaved work.
     */
 
     BOOLEAN bEnabled;

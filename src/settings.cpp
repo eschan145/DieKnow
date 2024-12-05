@@ -31,6 +31,12 @@ VERSION: 1.0.1
 
 
 bool Settings::load(const std::string& file_name) {
+    /*
+    Load settings from a file name.
+    
+    The filename is retained to allow `update()` to refresh it.
+    */
+
     std::ifstream file(file_name);
     if (!file.is_open()) {
         std::cerr << "Error: Could not open file " << file_name
@@ -41,11 +47,13 @@ bool Settings::load(const std::string& file_name) {
     this->path = file_name;
 
     std::string line;
+    // Skip empty lines and lines that start with # or // as comments
     while (std::getline(file, line)) {
         if ((line.empty()) ||
             (line[0] == '#') ||
             (line.substr(0, 2) == "//")) continue;
 
+        // Delimeter between key and value
         auto delimeter = line.find('=');
         if (delimeter == std::string::npos) continue;
 
@@ -53,10 +61,16 @@ bool Settings::load(const std::string& file_name) {
         std::string value = line.substr(delimeter + 1);
         settings[key] = value;
     }
+
     return true;
 }
 
 void Settings::print() const {
+    /*
+    Print to the console a comprehensive list of keys and values in the
+    settings file.
+    */
+
     for (const auto& [key, value] : settings) {
         std::cout << key << " = " << value << "\n";
     }
@@ -64,6 +78,19 @@ void Settings::print() const {
 
 template <typename T>
 T Settings::get(const std::string& key, T default_value) const {
+    /*
+    Retrieve a value from the settings.
+
+    This is a TEMPLATE - meaning you'll need to specify the type of the setting
+    being accessed. For example:
+
+    ```cpp
+    settings.get<int>("count", 0)
+    ```
+
+    The default value is used if the setting cannot be found.
+    */
+
     auto it = settings.find(key);
     if (it == settings.end()) return default_value;
 

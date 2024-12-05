@@ -217,6 +217,14 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
 }
 
 BOOL CALLBACK enum_snapshot(HWND hwnd, LPARAM lParam) {
+    /*
+    Enumerate through a list of windows to be used as a snapshot.
+
+    The primary difference bteween `enum_windows()` is this uses the window
+    classname and checks if it is visible before pushing back, not if it is a
+    system window or not.
+    */
+
     std::vector<Window>* windows = reinterpret_cast<std::vector<Window>*>(lParam);
 
     char title[256];
@@ -240,6 +248,7 @@ LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo) {
     std::cerr << "Exception Code: " << code << std::endl;
     std::cerr << "Exception Address: " << address << std::endl;
 
+    // Registers
     CONTEXT* context = ExceptionInfo->ContextRecord;
     std::cerr << "RAX: " << context->Rax << std::endl;
     std::cerr << "RBX: " << context->Rbx << std::endl;
