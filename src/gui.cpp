@@ -604,6 +604,10 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
 }
 
 void Application::restore_snapshots() {
+    int success = 0;
+    int missing = 0;
+    int fail = 0;
+
     for (const auto& window : this->snapshot) {
         HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
 
