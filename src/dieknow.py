@@ -7,6 +7,8 @@ from ctypes import wintypes
 import os
 import sys
 
+import doc
+
 
 # Button Options
 MB_OK = 0x00000000
@@ -71,8 +73,11 @@ is_running = lib.is_running
 bsod = lib.bsod
 dialog = lib.dialog
 
+doc.doc(os.path.join(os.path.dirname(__file__), "api.cpp"), lib)
 
 gui_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "gui.dll")
 
 guilib = ctypes.CDLL(gui_dll_path)
 create_window = guilib.create_window
+
+doc.doc(os.path.join(os.path.dirname(__file__), "gui.cpp"), guilib)
