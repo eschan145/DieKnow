@@ -98,15 +98,22 @@ bool close_application_by_exe(const char* exe_name) {
                     auto wait = [&]() {
                         DWORD result = WaitForSingleObject(hProcess, TIMEOUT);
 
-                        if (result == WAIT_OBJECT_0) {
-                            terminated = true;
-                            std::cout << "Process " << exe_name << " terminated successfully.";
-                        }
-                        else if (result == WAIT_TIMEOUT) {
-                            std::cerr << "WaitForSingleObject timed out!";
-                        }
-                        else {
-                            std::cerr << "Failed to terminate " << exe_name << "!";
+                        switch (result) {
+                            case WAIT_OBJECT_0:
+                                terminated = true;
+                                std::cout << "Process " << exe_name << " terminated successfully.\n";
+                                break;
+
+                            case WAIT_TIMEOUT:
+                                std::cerr << "WaitForSingleObject timed out!";
+                                break;
+
+                            case WAIT_FAILED:
+                                std::cerr << "Failed to terminate " << exe_name << "!\n";
+                                break;
+
+                            default:
+                                break;
                         }
                     };
 
