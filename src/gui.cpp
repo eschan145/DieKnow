@@ -545,36 +545,12 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         }
 
         case Widgets::RESTORE_SNAPSHOT: {
-            int success = 0;
-            int fail = 0;
-            int missing = 0;
+            app->is_restoring = !app->is_restoring;
 
-            for (const auto& window : app->snapshot) {
-                HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
-
-                if (hwnd) {
-                    ShowWindow(hwnd, SW_SHOW);
-
-                    if (IsWindowVisible(hwnd)) {
-                        success++;
-                    }
-                    else {
-                        fail++;
-                    }
-                }
-                else {
-                    missing++;
-                }
-            }
-
-            std::ostringstream message;
-
-            message << "Of snapshot restoration: "
-                    << success << " successful, "
-                    << missing << " missing, and "
-                    << fail << " failed.";
-
-            MessageBox(app->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
+            SetWindowText(
+                app->widgets[Widgets::RESTORE_SNAPSHOT],
+                app->is_restoring ? "Restoring snapshots" : "Resotre snapshots"
+            );
 
             break;
         }
@@ -625,6 +601,37 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
     }
 
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
+void Application::restore_snapshots() {
+    for (const auto& window : this->snapshot) {
+        HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
+
+        if (hwnd) {
+            ShowWindow(hwnd, SW_SHOW);
+
+            if (IsWindowVisible(hwnd)) {
+                success++;
+            }
+            else {
+                fail++;
+            }
+        }
+        else {
+            missing++;
+        }
+    }
+
+    std::ostringstream message;
+
+    message << "Of snapshot restoration: "
+            << success << " successful, "
+            << missing << " missing, and "
+            << fail << " failed.";
+
+    // MessageBox(this->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
+
+    std::cout << "Restoring";
 }
 
 void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -707,6 +714,10 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SetScrollInfo(this->windows, SB_VERT, &si, TRUE);
         SendMessage(this->windows, LVM_SCROLL, 0, position);
     }
+
+    // Restore window snapshots
+
+    if (this->is_restoring) this->restore_snapshots();
 
     // Update window visibility in listbox
 
