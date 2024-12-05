@@ -281,4 +281,4 @@ int ErrorBuffer::overflow(int c) {
 }
 
 static ErrorBuffer buffer(std::cerr.rdbuf());
-static std::streambuf *const original_buffer = std::cerr.rdbuf(&buffer)
+static std::streambuf *const original_buffer = std::cerr.rdbuf(&buffer);

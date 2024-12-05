@@ -79,6 +79,6 @@ class ErrorBuffer : public std::streambuf {
 
   private:
     std::streambuf *original_buffer;
-}
+};
 
 #endif // SYSTEM_H
