@@ -550,7 +550,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
             std::string status = app->is_restoring ? "Restoring snapshots" : "Restore snapshots";
 
             SetWindowText(
-                app->widgets[Widgets::RESTORE_SNAPSHOT],
+                app->restore_snapshot,
                 status.c_str()
             );
 
