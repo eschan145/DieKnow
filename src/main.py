@@ -1,8 +1,9 @@
 """DieKnow main interface.
 """
 
-import dieknow
 import faulthandler
+import dieknow
+
 
 faulthandler.enable()
 

@@ -5,12 +5,11 @@ import ctypes
 try:
     from ctypes import wintypes
 
-except ImportError:
+except ImportError as exc:
     raise OSError("Failed to load Window ctypes! Ensure you are on a Windows "
-                  "platform!")
+                  "platform!") from exc
 
 import os
-import sys
 
 import doc
 
@@ -35,21 +34,6 @@ MB_DEFBUTTON1 = 0x00000000
 MB_DEFBUTTON2 = 0x00000100
 MB_DEFBUTTON3 = 0x00000200
 MB_DEFBUTTON4 = 0x00000300
-
-
-if sys.platform == "darwin":
-    os.system('''
-        osascript -e 'display dialog "DieKnow is only compatible with Windows \
-        platforms!" with title "Fatal Error" buttons {{"OK"}} default button \
-        "OK"'
-    ''')
-    sys.exit(1)
-elif sys.platform.startswith("linux"):
-    os.system(
-        'zenity --info --title="Fatal Error" --text="DieKnow is only \
-compatible with Windows platforms!"'
-    )
-    sys.exit(1)
 
 
 lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
