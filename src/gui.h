@@ -85,12 +85,16 @@ public:
     HWND windows;
     HWND restore_snapshot;
 
+    bool is_restoring = false;
+
     Application();
 
     void manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
     // Use `static` to allow it to be called as an event by Windows API
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+    void restore_snapshots();
 
     void update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

@@ -379,6 +379,9 @@ Application::Application() {
         LVS_EX_FULLROWSELECT
     );
 
+    std::string status = running ? "Stop" : "Start";
+    SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
+
     // In ms -- set to 5 ticks per second
     SetTimer(hwnd, 1, settings.get<int>("update", 100), nullptr);
 
@@ -545,36 +548,14 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         }
 
         case Widgets::RESTORE_SNAPSHOT: {
-            int success = 0;
-            int fail = 0;
-            int missing = 0;
+            app->is_restoring = !app->is_restoring;
 
-            for (const auto& window : app->snapshot) {
-                HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
+            std::string status = app->is_restoring ? "Restoring snapshots" : "Restore snapshots";
 
-                if (hwnd) {
-                    ShowWindow(hwnd, SW_SHOW);
-
-                    if (IsWindowVisible(hwnd)) {
-                        success++;
-                    }
-                    else {
-                        fail++;
-                    }
-                }
-                else {
-                    missing++;
-                }
-            }
-
-            std::ostringstream message;
-
-            message << "Of snapshot restoration: "
-                    << success << " successful, "
-                    << missing << " missing, and "
-                    << fail << " failed.";
-
-            MessageBox(app->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
+            SetWindowText(
+                app->restore_snapshot,
+                status.c_str()
+            );
 
             break;
         }
@@ -625,6 +606,47 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
     }
 
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
+void Application::restore_snapshots() {
+    /*
+    Restore the saved window snapshot.
+    
+    There is no error handling if the snapshot is empty -- it is assumed that
+    the snapshot restoration button will be disabled if the snapshot is empty
+    instead.
+    */
+
+    int success = 0;
+    int missing = 0;
+    int fail = 0;
+
+    for (const auto& window : this->snapshot) {
+        HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
+
+        if (hwnd) {
+            ShowWindow(hwnd, SW_SHOW);
+
+            if (IsWindowVisible(hwnd)) {
+                success++;
+            }
+            else {
+                fail++;
+            }
+        }
+        else {
+            missing++;
+        }
+    }
+
+    std::ostringstream message;
+
+    message << "Of snapshot restoration: "
+            << success << " successful, "
+            << missing << " missing, and "
+            << fail << " failed.";
+
+    // MessageBox(this->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
 }
 
 void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -707,6 +729,10 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SetScrollInfo(this->windows, SB_VERT, &si, TRUE);
         SendMessage(this->windows, LVM_SCROLL, 0, position);
     }
+
+    // Restore window snapshots
+
+    if (this->is_restoring) this->restore_snapshots();
 
     // Update window visibility in listbox
 
