@@ -551,7 +551,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
             SetWindowText(
                 app->widgets[Widgets::RESTORE_SNAPSHOT],
-                status
+                status.c_str()
             );
 
             std::cout << GetLastError();
