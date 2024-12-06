@@ -22,6 +22,8 @@ VERSION: 1.0.1
 
 #include "gui.h"
 
+std::unordered_map<HWND, WNDPROC> original_procedures;
+
 
 void tooltip(HWND hwnd, HWND control, const char* text) {
     /*
