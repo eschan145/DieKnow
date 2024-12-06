@@ -672,7 +672,7 @@ void Application::restore_snapshots() {
 
 void Application::hide_snapshots() {
     for (const auto& [hwnd, original] : original_procedures) {
-        SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)original_procedures);
+        SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)original_procedures[hwnd]);
     }
     original_procedures.clear();
     std::cout << "All hooks removed." << std::endl;

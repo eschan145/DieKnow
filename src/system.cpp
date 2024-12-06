@@ -22,7 +22,7 @@ VERSION: 1.0.1
 
 #include "system.h"
 
-WNDPROC _proc = nullptr;
+_proc = nullptr;
 
 
 const double WINDOW_DELAY = 0.7;
