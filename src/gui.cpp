@@ -636,7 +636,7 @@ void Application::restore_snapshots() {
                 original_procedures[hwnd] = original;
                 std::cout << "Hooked: " << window.class_name << std::endl;
             } else {
-                std::cerr << "Failed to hook: " << window.class_name << 
+                std::cerr << "Failed to hook: " << window.class_name
                           << " (" << GetLastError() << ")" << std::endl;
             }
         }
