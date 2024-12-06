@@ -22,8 +22,6 @@ VERSION: 1.0.1
 
 #include "system.h"
 
-_proc = nullptr;
-
 
 const double WINDOW_DELAY = 0.7;
 const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
