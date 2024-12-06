@@ -22,6 +22,8 @@ VERSION: 1.0.1
 
 #include "system.h"
 
+WNDPROC _proc = nullptr;
+
 
 const double WINDOW_DELAY = 0.7;
 const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
@@ -267,7 +269,7 @@ int ErrorBuffer::overflow(int c) {
         if (first) {
             const char *message = "ERROR: ";
             while (*message) {
-                originalBuffer->sputc(*message++);
+                original_buffer->sputc(*message++);
             }
             first = false;
         }
@@ -292,3 +294,19 @@ int ErrorBuffer::overflow(int c) {
 
 static ErrorBuffer buffer(std::cerr.rdbuf());
 static std::streambuf *const original_buffer = std::cerr.rdbuf(&buffer);
+
+LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    /*
+    Custom Window procedure to prevent a window from being hidden.
+    
+    Used by a hook to replace the existing window. All unhandled messages are
+    redirected to the original window.
+    */
+
+    if ((uMsg == WM_SHOWWINDOW) &&
+        (wParam == FALSE)) {
+        return 0;
+    }
+
+    return CallWindowProc(_proc, hwnd, uMsg, wParam, lParam);
+}

@@ -28,6 +28,7 @@ VERSION: 1.0.1
 #include <string>
 #include <windows.h>
 #include <commctrl.h>
+#include <unordered_map>
 
 #include "api.cpp"
 #include "system.cpp"
@@ -39,6 +40,9 @@ const int BUTTON_HEIGHT = 35;
 
 // Space between widgets as padding
 const int PADDING = 10;
+
+extern std::unordered_map<HWND, WNDPROC> original_procedures;
+
 
 namespace Widgets {
     enum Button {
@@ -95,6 +99,8 @@ public:
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
     void restore_snapshots();
+
+    void hide_snapshots();
 
     void update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

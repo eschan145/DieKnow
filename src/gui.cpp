@@ -550,12 +550,19 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         case Widgets::RESTORE_SNAPSHOT: {
             app->is_restoring = !app->is_restoring;
 
-            std::string status = app->is_restoring ? "Restoring snapshots" : "Restore snapshots";
+            std::string status = app->is_restoring ? "Unrestore snapshots" : "Restore snapshots";
 
             SetWindowText(
                 app->restore_snapshot,
                 status.c_str()
             );
+
+            if (app->is_restoring) {
+                app->restore_snapshots();
+            }
+            else {
+                app->hide_snapshots();
+            }
 
             break;
         }
@@ -617,36 +624,58 @@ void Application::restore_snapshots() {
     instead.
     */
 
-    int success = 0;
-    int missing = 0;
-    int fail = 0;
-
     for (const auto& window : this->snapshot) {
         HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
-
+        
         if (hwnd) {
-            ShowWindow(hwnd, SW_SHOW);
+            WNDPROC original = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ShieldWndProc);
 
-            if (IsWindowVisible(hwnd)) {
-                success++;
+            if (original) {
+                original_procedures[hwnd] = original;
+                std::cout << "Hooked: " << window.class_name << std::endl;
+            } else {
+                std::cerr << "Failed to hook: " << window.class_name << std::endl;
             }
-            else {
-                fail++;
-            }
-        }
-        else {
-            missing++;
         }
     }
+    // int success = 0;
+    // int missing = 0;
+    // int fail = 0;
 
-    std::ostringstream message;
+    // for (const auto& window : this->snapshot) {
+    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
 
-    message << "Of snapshot restoration: "
-            << success << " successful, "
-            << missing << " missing, and "
-            << fail << " failed.";
+    //     if (hwnd) {
+    //         ShowWindow(hwnd, SW_SHOW);
+
+    //         if (IsWindowVisible(hwnd)) {
+    //             success++;
+    //         }
+    //         else {
+    //             fail++;
+    //         }
+    //     }
+    //     else {
+    //         missing++;
+    //     }
+    // }
+
+    // std::ostringstream message;
+
+    // message << "Of snapshot restoration: "
+    //         << success << " successful, "
+    //         << missing << " missing, and "
+    //         << fail << " failed.";
 
     // MessageBox(this->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
+}
+
+void Application::hide_snapshots() {
+    for (const auto& [hwnd, original] : original_procedures) {
+        SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)original_procedures);
+    }
+    original_procedures.clear();
+    std::cout << "All hooks removed." << std::endl;
 }
 
 void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -730,9 +759,6 @@ void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SendMessage(this->windows, LVM_SCROLL, 0, position);
     }
 
-    // Restore window snapshots
-
-    if (this->is_restoring) this->restore_snapshots();
 
     // Update window visibility in listbox
 

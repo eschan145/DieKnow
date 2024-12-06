@@ -39,6 +39,8 @@ VERSION: 1.0.1
 extern const double WINDOW_DELAY;
 extern const std::vector<std::string> WINDOW_EXCLUDE_LIST;
 
+WNDPROC _proc;
+
 struct Window {
     HWND hwnd;
     std::string title;
@@ -81,5 +83,7 @@ class ErrorBuffer : public std::streambuf {
     std::streambuf *original_buffer;
     bool first = true;
 };
+
+LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 #endif // SYSTEM_H
