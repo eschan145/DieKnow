@@ -39,7 +39,7 @@ VERSION: 1.0.1
 extern const double WINDOW_DELAY;
 extern const std::vector<std::string> WINDOW_EXCLUDE_LIST;
 
-extern WNDPROC _proc = nullptr;
+extern WNDPROC _proc;
 
 struct Window {
     HWND hwnd;
