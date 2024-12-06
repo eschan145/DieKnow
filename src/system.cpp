@@ -22,6 +22,7 @@ VERSION: 1.0.1
 
 #include "system.h"
 
+std::unordered_map<HWND, WNDPROC> original_procedures;
 WNDPROC _proc = nullptr;
 
 
@@ -308,5 +309,5 @@ LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         return 0;
     }
 
-    return CallWindowProc(_proc, hwnd, uMsg, wParam, lParam);
+    return CallWindowProc(original_procedures[hwnd], hwnd, uMsg, wParam, lParam);
 }

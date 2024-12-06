@@ -22,8 +22,6 @@ VERSION: 1.0.1
 
 #include "gui.h"
 
-std::unordered_map<HWND, WNDPROC> original_procedures;
-
 
 void tooltip(HWND hwnd, HWND control, const char* text) {
     /*
@@ -395,6 +393,8 @@ Application::Application() {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+
+    this->hide_snapshots();
 }
 
 void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -636,7 +636,8 @@ void Application::restore_snapshots() {
                 original_procedures[hwnd] = original;
                 std::cout << "Hooked: " << window.class_name << std::endl;
             } else {
-                std::cerr << "Failed to hook: " << window.class_name << std::endl;
+                std::cerr << "Failed to hook: " << window.class_name << 
+                          << " (" << GetLastError() << ")" << std::endl;
             }
         }
     }
