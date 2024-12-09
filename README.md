@@ -32,7 +32,8 @@ When it is running, you'll see the DyKnow icon dissapear from your taskbar. 💀
 
 ## Installation
 
-NOTE: this application only works on Windows, as it uses the Windows API.
+> [!IMPORTANT]
+> This application only works on a 64-bit Windows, as it uses the Windows API and has been compiled with 64-bit gcc.
 
 ### For Python
 
@@ -117,8 +118,12 @@ I was able to program this bypass not because I'm smart, but because the people 
 
 * [`src`](src/) - Python and C++ source files
    * [`dlls`](src/dlls/) - precompiled C++ source files as shared objects. It's advised not to mess around with these files.
+      * [`api.dll`](src/dlls/api.dll) - compiled DieKnow C++ API
+      * [`gui.dll`](src/dlls/gui.dll) - compiled DieKnow GUI
    * [`api.cpp`](src/api.cpp) - DieKnow functions and C++ API
    * [`gui.cpp`](src/gui.cpp) - GUI application
+   * [`system.cpp`](src/system.cpp) - system interaction and processing
+   * [`settings.cpp`](src/settings.cpp) - settings loader for DieKnow
    * [`dieknow.py`](src/dieknow.py) - DieKnow Python API
    * [`main.py`](src/main.py) - Shell-like interface to DieKnow API
    * [`gui.pyw`](src/gui.pyw) - Python link to C++ GUI
