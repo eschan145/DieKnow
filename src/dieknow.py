@@ -56,3 +56,14 @@ gui = create_window
 directory = get_executables_in_folder
 start = start_monitoring
 stop = stop_monitoring
+
+del (
+    ctypes,
+    doc,
+    gui_dll_path,
+    guilib,
+    lib,
+    lib_dll_path,
+    os,
+    wintypes
+)
