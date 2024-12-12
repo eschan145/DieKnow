@@ -14,6 +14,8 @@ def main():
 
     dieknow.validate()
 
+    print()
+
     print("DieKnow Shell\n=============")
 
     while True:
@@ -27,9 +29,30 @@ def main():
             if match.group(1):
                 attr = getattr(dieknow, match.group(1), None)
                 if attr:
+                    title = "Documentation for the function %s at %s:" % \
+                            (match.group(1), attr)
+                    print(title)
+                    print("=" * len(title), "\n")
                     print(attr.__doc__)
                 else:
                     print("Unknown command!")
+            else:
+                print("Welcome to DieKnow's help utility!\n\nType \"help\" "
+                      "and then a function name below to get started!\n\n"
+                      "Ex. for help on the function \"validate\", type \"help "
+                      "validate\".")
+                attrs = [attr for attr in dir(dieknow) if not attr.startswith("__")]
+                column_width = (len(attrs) + 1) // 2
+                left_column = attrs[:column_width]
+                right_column = attrs[column_width:]
+
+                # Print each column side by side
+                for left, right in zip(
+                    left_column,
+                    right_column + [""] * \
+                        (len(left_column) - len(right_column))):
+                    print(f"{left:<30} {right}")
+
         match user_input:
             case "start":
                 dieknow.start_monitoring(dieknow.folder_path)
@@ -46,7 +69,7 @@ def main():
                 print(f"Executables killed: {killed}")
 
             case "exit":
-                if dieknow.is_running:
+                if dieknow.is_running():
                     dieknow.stop_monitoring()
                 break
 
