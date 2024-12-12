@@ -190,6 +190,7 @@ void monitor_executables(const char* folder_path) {
                         close_application_by_exe(sub_entry.path().filename().string().c_str());
                     }
                 }
+                break;
 
             }
             else {
@@ -289,10 +290,16 @@ DK_API bool is_running() {
 DK_API const char* get_executables_in_folder(const char* folder_path) {
     /*
     Retrieve a printable list of executables in a folder.
+
+    Ensures that the DyKnow installation can exists, and checks with
+    `validate()`.
     */
 
     static std::string result;
     result.clear();
+
+    bool found_dir = false;
+    bool found_subfile = false;
 
     for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
         // If it's a directory, go through its subfiles
@@ -302,23 +309,32 @@ DK_API const char* get_executables_in_folder(const char* folder_path) {
                     (sub_entry.path().extension() == ".exe")) {
                     // Add newline to print out nicely
                     result += sub_entry.path().filename().string() + "\n";
+                    found_subfile = true;
                 }
             }
-        }
-        else {
-            validate();
+            if (found_subfile) {
+                found_dir = true;
+            }
+            break;
         }
     }
+
+    if (!found_dir) validate();
 
     return result.c_str();
 }
 
 DK_API int __stdcall bsod() {
     /*
-    Open the Windows Blue Screen of Death via win32api's `NtRaiseHardError`.
+    Open the Windows Blue Screen of Death via NT API's `NtRaiseHardError`.
 
     Use with caution! Your system will freeze and shut down within a few
     seconds, losing any unsaved work.
+
+    This function NtRaiseHardError is part of the Windows New Technology API
+    kernel and is undocumented. The reason why is to prevent non-system
+    libraries from messing around with low-level settings they aren't supposed
+    to.
     */
 
     BOOLEAN bEnabled;
@@ -332,11 +348,21 @@ DK_API int __stdcall bsod() {
         GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "NtRaiseHardError");
 
     if (!RtlAdjustPrivilege || !NtRaiseHardError) {
+        if (!RtlAdjustPrivilege) {
+            std::cerr << "Failed to load RtlAdjustPrivilege from win32's nt.dll!\n";
+        }
+        if (!NtRaiseHardError) {
+            std::cerr << "Failed to load NtRaiseHardError from win32's nt.dll!\n";
+        }
         return -1;
     }
 
     // Enable shutdown privilege for this process
     RtlAdjustPrivilege(19, TRUE, FALSE, &bEnabled);
+
+    if (bEnabled) {
+        std::cout << "Successfully loaded permissions with RtlAdjustPrivilege.\n";
+    }
 
     // Trigger BSOD
     NtRaiseHardError(STATUS_ASSERTION_FAILURE, 0, 0, nullptr, 6, &uResp);
