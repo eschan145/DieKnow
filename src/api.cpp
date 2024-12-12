@@ -40,7 +40,8 @@ DK_API void validate() {
     bool needs_exit = false;
 
     if (!std::filesystem::exists(FOLDER_PATH)) {
-        needs_exit = true
+        needs_exit = true;
+
         std::ostringstream msg;
         msg << "A DyKnow installation was not able to be found on your device.\n"
             << "Ensure the folder \"" << FOLDER_PATH
@@ -57,11 +58,13 @@ DK_API void validate() {
 
     bool loaded_settings = settings.load("./settings.conf");
 
-    if (loaded_settings)
+    if (loaded_settings) {
         std::cout << "Successfully loaded DieKnow configuration files.\n";
-    else
+    }
+    else {
         std::cout << "Failed to load DieKnow configuration files!\n";
         needs_exit = true;
+    }
 
     if (needs_exit) std::exit(EXIT_FAILURE);
 }
