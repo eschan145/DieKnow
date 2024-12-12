@@ -14,28 +14,6 @@ import os
 import doc
 
 
-# Button Options
-MB_OK = 0x00000000
-MB_OKCANCEL = 0x00000001
-MB_YESNO = 0x00000004
-MB_YESNOCANCEL = 0x00000003
-MB_RETRYCANCEL = 0x00000005
-MB_ABORTRETRYIGNORE = 0x00000002
-
-# Icon Options
-MB_ICONINFORMATION = 0x00000040
-MB_ICONEXCLAMATION = 0x00000030
-MB_ICONWARNING = MB_ICONEXCLAMATION
-MB_ICONERROR = 0x00000010
-MB_ICONQUESTION = 0x00000020
-
-# Default Button Options
-MB_DEFBUTTON1 = 0x00000000
-MB_DEFBUTTON2 = 0x00000100
-MB_DEFBUTTON3 = 0x00000200
-MB_DEFBUTTON4 = 0x00000300
-
-
 lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
 
 lib = ctypes.CDLL(lib_dll_path)
@@ -72,3 +50,7 @@ guilib = ctypes.CDLL(gui_dll_path)
 create_window = guilib.create_window
 
 doc.doc(os.path.join(os.path.dirname(__file__), "gui.cpp"), guilib)
+
+# Aliases
+gui = create_window
+stop = stop_monitoring

@@ -18,48 +18,39 @@ def main():
     while True:
         user_input = input(">>> ").strip().lower()
 
-        if user_input == "start":
-            if not dieknow.is_running():
+        match user_input:
+            case "start":
                 dieknow.start_monitoring(dieknow.folder_path)
-                print("Monitoring started...")
-            else:
-                dieknow.dialog(
-                    "The DieKnow process has already been started!",
-                    "Information",
-                    dieknow.MB_ICONINFORMATION
-                )
 
-        elif user_input == "stop":
-            if not dieknow.is_running():
-                dieknow.dialog(
-                    "The DieKnow process has already been stopped and is not "
-                    "running!",
-                    "Information",
-                    dieknow.MB_ICONINFORMATION
+            case "directory":
+                executables = dieknow.get_executables_in_folder(
+                    dieknow.folder_path
                 )
-            else:
+                print(f"Files in {dieknow.folder_path.decode('utf-8')}:")
+                print(executables.decode())
+
+            case "count":
+                killed = dieknow.get_killed_count()
+                print(f"Executables killed: {killed}")
+
+            case "exit":
                 dieknow.stop_monitoring()
-                print("Monitoring stopped...")
+                break
 
-        elif user_input == "count":
-            killed = dieknow.get_killed_count()
-            print(f"Executables killed: {killed}")
-        elif user_input == "directory":
-            executables = dieknow.get_executables_in_folder(
-                dieknow.folder_path
-            )
-            print(f"Files in {dieknow.folder_path.decode('utf-8')}:")
-            print(executables.decode())
-        elif user_input == "gui":
-            dieknow.create_window()
-        elif user_input == "bsod":
-            print("Opening blue screen of death...")
-            dieknow.bsod()
-        elif user_input == "exit":
-            dieknow.stop_monitoring()
-            break
-        else:
-            print("Invalid input. Available inputs: start, stop, count, directory, exit")
+            case _:
+                func = getattr(dieknow, user_input, None)
+
+                if func:
+                    try:
+                        if callable(func): result = func()
+                        else: result = func
+                        if result:
+                            print(result)
+                        else:
+                            print("Invalid input!")
+                    except (TypeError, AttributeError):
+                        pass
+                else: print("Invalid input!")
 
 
 if __name__ == "__main__":

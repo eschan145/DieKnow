@@ -219,6 +219,9 @@ DK_API void start_monitoring(const char* folder_path = FOLDER_PATH) {
         // Detach thread from main and start it
         thread.detach();
     }
+    else {
+        std::cout << "The DieKnow process has already been started!";
+    }
 }
 
 DK_API void stop_monitoring() {
@@ -229,7 +232,12 @@ DK_API void stop_monitoring() {
     // Although just a variable is set to false, because the DieKnow process is
     // in a separate thread it will finish immediately.
 
-    running = false;
+    if (running) {
+        running = false;
+    }
+    else {
+        std::cout << "The DieKnow process has already been stopped!";
+    }
 }
 
 // Both get_killed_count and is_running must be declared as functions as ctypes
