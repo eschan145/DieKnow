@@ -37,7 +37,10 @@ DK_API void validate() {
     Settings are loaded.
     */
 
+    bool needs_exit = false;
+
     if (!std::filesystem::exists(FOLDER_PATH)) {
+        needs_exit = true
         std::ostringstream msg;
         msg << "A DyKnow installation was not able to be found on your device.\n"
             << "Ensure the folder \"" << FOLDER_PATH
@@ -46,10 +49,21 @@ DK_API void validate() {
             << "You may need to upgarde your DieKnow to a later version.";
 
         MessageBox(nullptr, msg.str().c_str(), "FATAL ERROR", MB_ICONERROR);
-        std::exit(EXIT_FAILURE);
+    }
+    else {
+        std::cout << "Successfully located DyKnow installation at "
+                  << FOLDER_PATH << ".\n";
     }
 
-    settings.load("./settings.conf");
+    bool loaded_settings = settings.load("./settings.conf");
+
+    if (loaded_settings)
+        std::cout << "Successfully loaded DieKnow configuration files.\n";
+    else
+        std::cout << "Failed to load DieKnow configuration files!\n";
+        needs_exit = true;
+
+    if (needs_exit) std::exit(EXIT_FAILURE);
 }
 
 bool exists(const char* path) {
@@ -220,7 +234,7 @@ DK_API void start_monitoring(const char* folder_path = FOLDER_PATH) {
         thread.detach();
     }
     else {
-        std::cout << "The DieKnow process has already been started!";
+        std::cout << "The DieKnow process has already been started!\n";
     }
 }
 
@@ -234,9 +248,10 @@ DK_API void stop_monitoring() {
 
     if (running) {
         running = false;
+        std::cout << "Successfully stopped DieKnow process.\n";
     }
     else {
-        std::cout << "The DieKnow process has already been stopped!";
+        std::cout << "The DieKnow process has already been stopped!\n";
     }
 }
 

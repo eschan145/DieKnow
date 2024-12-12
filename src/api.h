@@ -25,6 +25,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #ifndef API_H
 #define API_H
 
+// Expose functions marked with DK_API for DLLs 
 #define DK_API __declspec(dllexport)
 
 #define TIMEOUT 5000
