@@ -108,8 +108,17 @@ bool close_application_by_exe(const char* exe_name) {
             if (_stricmp(pe32.szExeFile, exe_name) == 0) {
                 // Open a HANDLE to the process. This is a little ambiguous as
                 // it appears we are opening the process.
-                HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
+
+                // Request PROCESS_TERMIANTE right, which allows use to use
+                // TerminateProcess. This may not work if the process is
+                // elevated. Once we can obtain a handle to the process, we
+                // can do anything we want with it under the permissions we
+                // requested; e.g. terminating it.
+                HANDLE hProcess = OpenProcess(
+                    PROCESS_TERMINATE, FALSE,
+                    pe32.th32ProcessID);
                 if (hProcess) {
+                    // Bam, terminated!
                     TerminateProcess(hProcess, 0);
 
                     auto wait = [&]() {
@@ -141,7 +150,7 @@ bool close_application_by_exe(const char* exe_name) {
                     CloseHandle(hProcess);
                 }
                 else {
-                    std::cerr << "Failed to open a handle to the process!";
+                    std::cerr << "Failed to open a handle to the process!\n";
                 }
             }
         } while (Process32Next(hProcessSnap, &pe32));
