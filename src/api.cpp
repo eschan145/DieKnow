@@ -43,7 +43,7 @@ DK_API void validate() {
             << "Ensure the folder \"" << FOLDER_PATH
             << "\" exists and you have the permissions to access it!\n\n"
             << "Additionally, ensure you have one of the supported DyKnow versions. "
-            << "You may need to upgarde your DieKnow to a later version.";
+            << "You may need to upgrade your DieKnow to a later version.";
 
         MessageBox(nullptr, msg.str().c_str(), "FATAL ERROR", MB_ICONERROR);
         std::exit(EXIT_FAILURE);

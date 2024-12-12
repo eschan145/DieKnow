@@ -53,12 +53,12 @@ bool Settings::load(const std::string& file_name) {
             (line[0] == '#') ||
             (line.substr(0, 2) == "//")) continue;
 
-        // Delimeter between key and value
-        auto delimeter = line.find('=');
-        if (delimeter == std::string::npos) continue;
+        // Delimiter between key and value
+        auto delimiter = line.find('=');
+        if (delimiter == std::string::npos) continue;
 
-        std::string key = line.substr(0, delimeter);
-        std::string value = line.substr(delimeter + 1);
+        std::string key = line.substr(0, delimiter);
+        std::string value = line.substr(delimiter + 1);
         settings[key] = value;
     }
 

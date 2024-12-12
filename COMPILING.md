@@ -7,7 +7,7 @@
 You'll need a C++ compiler in order to compile DieKnow's C++ functions. I used [gcc](https://github.com/gcc-mirror/gcc), but MSVC should work as well. The following compilation instructions apply for gcc.
 
 1. Download the [MSYS2 installer](https://github.com/msys2/msys2-installer/releases/download/2024-07-27/msys2-x86_64-20240727.exe)
-2. Open the MSYS2 installer and follow the instructions to install MSYS2. Copy the path that you inputed when asked. You'll need it later.
+2. Open the MSYS2 installer and follow the instructions to install MSYS2. Copy the path that you inputted when asked. You'll need it later.
 3. Once it has finished installing, open up the newly installed app "MSYS2 UCRT64", found by typing the name after pressing the Windows key.
 4. Type the following command to synchronize the MSYS2 package database. The terminal will close, and you'll have to reopen it again.
 
