@@ -2,6 +2,7 @@
 """
 
 import faulthandler
+import re
 import dieknow
 
 
@@ -18,6 +19,17 @@ def main():
     while True:
         user_input = input(">>> ").strip().lower()
 
+        if "help" in user_input:
+            match = re.match(
+                r"\bhelp\b(?:\s+(\w+))?",
+                user_input.strip(),
+                re.IGNORECASE)
+            if match.group(1):
+                attr = getattr(dieknow, match.group(1), None)
+                if attr:
+                    print(attr.__doc__)
+                else:
+                    print("Unknown command!")
         match user_input:
             case "start":
                 dieknow.start_monitoring(dieknow.folder_path)
@@ -34,23 +46,26 @@ def main():
                 print(f"Executables killed: {killed}")
 
             case "exit":
-                dieknow.stop_monitoring()
+                if dieknow.is_running:
+                    dieknow.stop_monitoring()
                 break
 
             case _:
-                func = getattr(dieknow, user_input, None)
+                if not "help" in user_input:
+                    func = getattr(dieknow, user_input, None)
 
-                if func:
-                    try:
-                        if callable(func): result = func()
-                        else: result = func
-                        if result:
-                            print(result)
-                        else:
-                            print("Invalid input!")
-                    except (TypeError, AttributeError):
-                        pass
-                else: print("Invalid input!")
+                    if func:
+                        try:
+                            if callable(func):
+                                result = func()
+                            else: result = func
+                            if result:
+                                print(result)
+                            else:
+                                print("Invalid input!")
+                        except (TypeError, AttributeError):
+                            pass
+                    else: print("Invalid input!")
 
 
 if __name__ == "__main__":

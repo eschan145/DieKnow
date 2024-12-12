@@ -53,4 +53,6 @@ doc.doc(os.path.join(os.path.dirname(__file__), "gui.cpp"), guilib)
 
 # Aliases
 gui = create_window
+directory = get_executables_in_folder
+start = start_monitoring
 stop = stop_monitoring

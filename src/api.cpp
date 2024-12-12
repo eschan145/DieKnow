@@ -109,7 +109,7 @@ bool close_application_by_exe(const char* exe_name) {
                                 break;
 
                             case WAIT_FAILED:
-                                std::cerr << "Failed to terminate " << exe_name << "!\n";
+                                // std::cerr << "Failed to terminate " << exe_name << "!\n";
                                 break;
 
                             default:
