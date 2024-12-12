@@ -100,7 +100,7 @@ public:
 
     void hide_snapshots();
 
-    void update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    inline void update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
     void update_windows(std::vector<Window>& current_windows);
 };

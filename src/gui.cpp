@@ -681,7 +681,7 @@ void Application::hide_snapshots() {
     std::cout << "All hooks removed." << std::endl;
 }
 
-void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+inline void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     /*
     Update display labels and listbox.
 
