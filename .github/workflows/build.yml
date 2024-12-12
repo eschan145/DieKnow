@@ -29,8 +29,8 @@ jobs:
     - name: Compile to .dll
       shell: msys2 {0}
       run: |
-        g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/api.dll src/api.cpp src/settings.cpp -lgdi32
-        g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgdi32 -lcomctl32
+        g++ -O2 -Wall -shared -std=c++20 -static -o src/dlls/api.dll src/api.cpp src/settings.cpp -lgdi32
+        g++ -O2 -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgdi32 -lcomctl32
         ls -l src/dlls/api.dll
         ls -l src/dlls/gui.dll
 
