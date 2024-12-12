@@ -66,7 +66,7 @@ void write(const std::string& filename, int value) {
                 << "Ensure it:" << "\n"
                 << "* Exists," << "\n"
                 << "* Is not in use by another application, and" << "\n"
-                << "* Is avaliable and downloaded to OneDrive." << "\n";
+                << "* Is available and downloaded to OneDrive." << "\n";
             
         MessageBox(nullptr, message.str().c_str(), "Error", MB_ICONERROR);
     }

@@ -11,10 +11,10 @@ For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), 
 Compilation instructions can be found [here](COMPILING.md).
 
 About this:
-* This **DOES NOT** need administrator privelleges, just a Python installation, which is often found in the Software Center.
+* This **DOES NOT** need administrator privileges, just a Python installation, which is often found in the Software Center.
 * It's very compact (just around 600 lines).
 * **DOES NOT** need a C++ compiler.
-* **DOES NOT** need to run an exectuable or a batch file, which is usually blocked by the school via Windows AppLocker.
+* **DOES NOT** need to run an executable or a batch file, which is usually blocked by the school via Windows AppLocker.
 * **DOES NOT** have any external dependencies.
 
 What can DyKnow do:
@@ -28,7 +28,7 @@ What can DyKnow do:
 * Track your keystrokes
 * Make your computer useless
 
-When it is running, you'll see the DyKnow icon dissapear from your taskbar. 💀
+When it is running, you'll see the DyKnow icon disappear from your taskbar. 💀
 
 ## Installation
 
