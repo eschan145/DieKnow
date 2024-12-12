@@ -785,6 +785,8 @@ inline void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             (LPARAM)&end
         );
 
+        int index = start;
+
         SetWindowText(
             widgets[Widgets::INTERVAL],
             std::to_string(settings.get<int>("interval", 0)).c_str()
