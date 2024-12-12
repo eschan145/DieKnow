@@ -769,12 +769,35 @@ inline void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
     settings.update();
 
-    if ((GetFocus() != widgets[Widgets::INTERVAL]) ||
+    if ((GetFocus() != widgets[Widgets::INTERVAL]) &&
         (GetFocus() != widgets[Widgets::INTERVAL_SET])) {
+        // Get cursor position to restore
+
+        // Start and end of selection. If no text is selected it is the cursor
+        // position.
+        DWORD start = 0;
+        DWORD end = 0;
+
+        SendMessage(
+            widgets[Widgets::INTERVAL],
+            EM_GETSEL,
+            (WPARAM)&start,
+            (LPARAM)&end
+        );
+
         SetWindowText(
             widgets[Widgets::INTERVAL],
             std::to_string(settings.get<int>("interval", 0)).c_str()
         );
+
+        // Restore cursor position
+
+        int length = GetWindowTextLength(widgets[Widgets::INTERVAL]);
+
+        if (index < 0) index = 0;
+        if (index > length) index = length;
+
+        SendMessage(widgets[Widgets::INTERVAL], index, index);
     }
 
     std::string message = "Executables terminated: " + std::to_string(get_killed_count());
