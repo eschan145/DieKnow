@@ -799,7 +799,7 @@ inline void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
         if (index < 0) index = 0;
         if (index > length) index = length;
 
-        SendMessage(widgets[Widgets::INTERVAL], index, index);
+        SendMessage(widgets[Widgets::INTERVAL], EM_SETSEL, index, index);
     }
 
     std::string message = "Executables terminated: " + std::to_string(get_killed_count());

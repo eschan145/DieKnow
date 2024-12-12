@@ -148,3 +148,5 @@ g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgd
 #### I'm getting high CPU usage for DieKnow. What can I do?
 
 I'm working to optimize the DieKnow process, and it uses higher CPU than it should. However, it still significantly less than what DieKnow uses.
+
+You can build DieKnow yourself and specify the flag `march=native` in the `g++` command. This asks the compiler to enable optimizations targeted specifically towards your CPU.
