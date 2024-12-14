@@ -2,7 +2,7 @@
 
 A bypass of DyKnow, powered primarily by the Windows win32 API.
 
-DieKnow will significantly improve the performance of your laptop by a large amount, especially on the CPU. However, it will use around 3% of the CPU when running. But this is minimal compared to DyKnow, which uses up to 15% of the CPU consistently, and on an Intel Core i3, there isn't much to spare. It's not lightweight for something to take screenshots of your entire device screen at 4K resolution and at sixty frames per second.
+DieKnow will significantly improve the performance of your laptop by a large amount on your CPU. Ir will use up to 3% CPU, higher than optimal but still much lower than DyKnow's 15%.
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), powered by the Windows win32 API.
 
