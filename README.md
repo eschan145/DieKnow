@@ -2,7 +2,7 @@
 
 A bypass of DyKnow, powered primarily by the Windows win32 API.
 
-DieKnow will significantly improve the performance of your laptop by a large amount on your CPU. Ir will use up to 3% CPU, higher than optimal but still much lower than DyKnow's 15%.
+DieKnow will significantly improve the performance of your laptop by a large amount on your CPU. It will use up to 3% CPU, higher than optimal but still much lower than DyKnow's 15%.
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), powered by the Windows win32 API.
 
