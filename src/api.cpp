@@ -43,15 +43,16 @@ DK_API void validate() {
         needs_exit = true;
 
         std::ostringstream msg;
-        msg << "A DyKnow installation was not able to be found on your device.\n"
+        msg << "A DyKnow installation was not able to be found on your "
+            << "device.\n"
             << "Ensure the folder \"" << FOLDER_PATH
             << "\" exists and you have the permissions to access it!\n\n"
-            << "Additionally, ensure you have one of the supported DyKnow versions. "
+            << "Additionally, ensure you have one of the supported DyKnow "
+            << "versions. "
             << "You may need to upgrade your DieKnow to a later version.";
 
         MessageBox(nullptr, msg.str().c_str(), "FATAL ERROR", MB_ICONERROR);
-    }
-    else {
+    } else {
         std::cout << "Successfully located DyKnow installation at "
                   << FOLDER_PATH << ".\n";
     }
@@ -60,8 +61,7 @@ DK_API void validate() {
 
     if (loaded_settings) {
         std::cout << "Successfully loaded DieKnow configuration files.\n";
-    }
-    else {
+    } else {
         std::cout << "Failed to load DieKnow configuration files!\n";
         needs_exit = true;
     }
@@ -127,7 +127,8 @@ bool close_application_by_exe(const char* exe_name) {
                         switch (result) {
                             case WAIT_OBJECT_0:
                                 terminated = true;
-                                std::cout << "Process " << exe_name << " terminated successfully.\n";
+                                std::cout << "Process " << exe_name
+                                          << " terminated successfully.\n";
                                 break;
 
                             case WAIT_TIMEOUT:
@@ -135,7 +136,6 @@ bool close_application_by_exe(const char* exe_name) {
                                 break;
 
                             case WAIT_FAILED:
-                                // std::cerr << "Failed to terminate " << exe_name << "!\n";
                                 break;
 
                             default:
@@ -148,8 +148,7 @@ bool close_application_by_exe(const char* exe_name) {
 
                     // Destroy the process handle to avoid memory leaks
                     CloseHandle(hProcess);
-                }
-                else {
+                } else {
                     std::cerr << "Failed to open a handle to the process!\n";
                 }
             }
@@ -181,19 +180,22 @@ void monitor_executables(const char* folder_path) {
 
     while (running) {
         // Search recursively through folder_path and terminate all "*.exe"s
-        for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
+        for (const auto& entry :
+             std::filesystem::directory_iterator(folder_path)) {
             // If it's a directory, go through its subfiles
             if (entry.is_directory()) {
-                for (const auto& sub_entry : std::filesystem::directory_iterator(entry.path())) {
+                for (const auto& sub_entry :
+                     std::filesystem::directory_iterator(entry.path())) {
                     if ((sub_entry.is_regular_file()) &&
                         (sub_entry.path().extension() == ".exe")) {
-                        close_application_by_exe(sub_entry.path().filename().string().c_str());
+                        close_application_by_exe(
+                            sub_entry.path().filename().string().c_str()
+                        );
                     }
                 }
                 break;
 
-            }
-            else {
+            } else {
                 validate();
             }
         }
@@ -245,8 +247,7 @@ DK_API void start_monitoring(const char* folder_path = FOLDER_PATH) {
 
         // Detach thread from main and start it
         thread.detach();
-    }
-    else {
+    } else {
         std::cout << "The DieKnow process has already been started!\n";
     }
 }
@@ -262,8 +263,7 @@ DK_API void stop_monitoring() {
     if (running) {
         running = false;
         std::cout << "Successfully stopped DieKnow process.\n";
-    }
-    else {
+    } else {
         std::cout << "The DieKnow process has already been stopped!\n";
     }
 }
@@ -301,10 +301,12 @@ DK_API const char* get_executables_in_folder(const char* folder_path) {
     bool found_dir = false;
     bool found_subfile = false;
 
-    for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
+    for (const auto& entry :
+         std::filesystem::directory_iterator(folder_path)) {
         // If it's a directory, go through its subfiles
         if (entry.is_directory()) {
-            for (const auto& sub_entry : std::filesystem::directory_iterator(entry.path())) {
+            for (const auto& sub_entry :
+                 std::filesystem::directory_iterator(entry.path())) {
                 if ((sub_entry.is_regular_file()) &&
                     (sub_entry.path().extension() == ".exe")) {
                     // Add newline to print out nicely
@@ -341,18 +343,34 @@ DK_API int __stdcall bsod() {
     ULONG uResp;
 
     // Load RtlAdjustPrivilege and NtRaiseHardError functions from ntdll.dll
-    auto RtlAdjustPrivilege = (NTSTATUS(WINAPI*)(ULONG, BOOLEAN, BOOLEAN, PBOOLEAN))
-        GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "RtlAdjustPrivilege");
+    auto RtlAdjustPrivilege = (NTSTATUS(WINAPI*)(
+        ULONG,
+        BOOLEAN,
+        BOOLEAN,
+        PBOOLEAN))GetProcAddress(
+            GetModuleHandleW(L"ntdll.dll"),
+            "RtlAdjustPrivilege"
+    );
 
-    auto NtRaiseHardError = (NTSTATUS(WINAPI*)(NTSTATUS, ULONG, ULONG, PULONG_PTR, ULONG, PULONG))
-        GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "NtRaiseHardError");
+    auto NtRaiseHardError = (NTSTATUS(WINAPI*)(
+        NTSTATUS,
+        ULONG,
+        ULONG,
+        PULONG_PTR,
+        ULONG,
+        PULONG))GetProcAddress(
+            GetModuleHandleW(L"ntdll.dll"),
+            "NtRaiseHardError"
+    );
 
     if (!RtlAdjustPrivilege || !NtRaiseHardError) {
         if (!RtlAdjustPrivilege) {
-            std::cerr << "Failed to load RtlAdjustPrivilege from win32's nt.dll!\n";
+            std::cerr << "Failed to load RtlAdjustPrivilege from win32's "
+                      << "nt.dll!\n";
         }
         if (!NtRaiseHardError) {
-            std::cerr << "Failed to load NtRaiseHardError from win32's nt.dll!\n";
+            std::cerr << "Failed to load NtRaiseHardError from win32's "
+                      << "nt.dll!\n";
         }
         return -1;
     }
@@ -361,7 +379,8 @@ DK_API int __stdcall bsod() {
     RtlAdjustPrivilege(19, TRUE, FALSE, &bEnabled);
 
     if (bEnabled) {
-        std::cout << "Successfully loaded permissions with RtlAdjustPrivilege.\n";
+        std::cout << "Successfully loaded permissions with "
+                  << "RtlAdjustPrivilege.\n";
     }
 
     // Trigger BSOD
