@@ -6,7 +6,7 @@ DieKnow will significantly improve the performance of your laptop by a large amo
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), powered by the Windows win32 API.
 
-![Screenshot of DieKnow GUI](screenshot4.png)
+![Screenshot of DieKnow GUI](screenshots/screenshot4.png)
 
 Compilation instructions can be found [here](COMPILING.md).
 
@@ -40,7 +40,7 @@ When it is running, you'll see the DyKnow icon disappear from your taskbar. 💀
 1. Install Python 3. On most school computers it should be installed by default.
 2. Click on **Releases**, found on the right side panel. If you're feeling brave, you can download the latest development ZIP. Note that this may not be as subject to as much testing as release branches, so downloading it is not recommended.
 
-   ![releases](releases.png)
+   ![releases](screenshots/releases.png)
 
 3. Download the `Complete.zip` file.
 4. Extract the compressed zip.
