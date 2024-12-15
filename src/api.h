@@ -25,11 +25,14 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #ifndef API_H
 #define API_H
 
-// Expose functions marked with DK_API for DLLs 
+// Expose functions marked with DK_API for DLLs
 #define DK_API __declspec(dllexport)
 
 #define TIMEOUT 5000
 
+
+#include <cstdlib>
+#include <fstream>
 
 #include <iostream>
 #include <vector>
@@ -37,8 +40,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <thread>
 #include <filesystem>
 #include <sstream>
-#include <cstdlib>
-#include <fstream>
+
 #include <windows.h>
 #include <winternl.h>
 #include <tlhelp32.h>
@@ -50,8 +52,7 @@ extern const char* FOLDER_PATH;
 extern Settings settings;
 
 
-extern "C"
-{
+extern "C" {
     bool running = false;
     int killed = 0;
 
@@ -68,8 +69,7 @@ extern "C"
         LPCWSTR message,
         LPCWSTR title,
         UINT type
-    )
-    {
+    ) {
         return MessageBoxW(nullptr, message, title, type);
     }
     DK_API int __stdcall bsod();
@@ -81,4 +81,4 @@ bool close_application_by_exe(const char* exe_name);
 
 void monitor_executables(const char* folder_path);
 
-#endif // API_H
+#endif  // API_H
