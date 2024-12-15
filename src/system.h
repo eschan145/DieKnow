@@ -73,18 +73,18 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam);
 LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo);
 
 class ErrorBuffer : public std::streambuf {
-  public:
+ public:
     explicit ErrorBuffer(std::streambuf *original);
     ~ErrorBuffer();
 
-  protected:
+ protected:
     int overflow(int c) override;
 
-  private:
+ private:
     std::streambuf *original_buffer;
     bool first = true;
 };
 
 LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-#endif // SYSTEM_H
+#endif  // SYSTEM_H
