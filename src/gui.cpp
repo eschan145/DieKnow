@@ -499,7 +499,7 @@ void Application::manage_command(
             std::string cpu_name = get_cpu_name();
             std::string gpu_name = get_gpu_name();
             std::string os_info = get_os_info();
-            std::string avaliable_ram = get_available_ram();
+            std::string avaliable_ram = get_avaliable_ram();
 
             std::ostringstream message;
             message << "SYSTEM INFORMATION" << "\n"
