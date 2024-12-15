@@ -15,7 +15,6 @@ def main():
     dieknow.validate()
 
     print()
-
     print("DieKnow Shell\n=============")
 
     while True:

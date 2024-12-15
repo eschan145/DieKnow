@@ -72,11 +72,17 @@ DK_API void validate() {
     if (loaded_settings) {
         std::cout << "Successfully loaded DieKnow configuration files.\n";
     } else {
-        std::cout << "Failed to load DieKnow configuration files!\n";
+        std::cerr << "Failed to load DieKnow configuration files!\n";
         needs_exit = true;
     }
 
-    if (needs_exit) std::exit(EXIT_FAILURE);
+    if (needs_exit) {
+        std::cerr << "FATAL: DyKnow validation failed!\n";
+        std::exit(EXIT_FAILURE);
+    } else {
+        std::cout << "Successfully validated DyKnow installation and file "
+                  << "integrity.\n"
+    }
 }
 
 bool exists(const char* path) {
