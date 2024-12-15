@@ -50,6 +50,7 @@ std::filesystem::path get_directory() {
 std::filesystem::path locate_settings() {
     auto directory = get_directory();
     auto file_path = directory.parent_path() / "settings.conf";
+    std::cout << "Filepath: " << file_path << "\n";
     if (std::filesystem::exists(file_path)) {
         std::cout << "Located settings.conf.\n";
         return file_path;
