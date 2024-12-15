@@ -71,6 +71,7 @@ def main():
             case "exit":
                 if dieknow.is_running():
                     dieknow.stop_monitoring()
+                print("Exiting")
                 break
 
             case _:
@@ -84,11 +85,11 @@ def main():
                             else: result = func
                             if result:
                                 print(result)
-                            else:
-                                print("Invalid input!")
+                            # else:
+                            #     print("Invalid input!")
                         except (TypeError, AttributeError):
                             pass
-                    else: print("Invalid input!")
+                    else: print("Invalid name!")
 
 
 if __name__ == "__main__":

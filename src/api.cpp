@@ -243,6 +243,8 @@ DK_API void start_monitoring(const char* folder_path) {
         std::thread thread(monitor_executables, folder_path);
         HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
 
+        std::cout << "Created std::thread and retrieved HANDLE.\n";
+
         // Reduces CPU usage by prioritizing other applications.
         // Other options:
         // * IDLE - only run when its the only thread
@@ -257,6 +259,7 @@ DK_API void start_monitoring(const char* folder_path) {
 
         // Detach thread from main and start it
         thread.detach();
+        std::cout << "Monitoring started.\n";
     } else {
         std::cout << "The DieKnow process has already been started!\n";
     }
