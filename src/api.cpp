@@ -34,8 +34,8 @@ extern "C" {
     DK_API int __stdcall dialog(
         const char* message,
         const char* title,
-        UINT type = MB_ICONINFORMATION) {
-        return MessageBox(MB_ICONINFORMATION, message, title, type);
+        UINT type) {
+        return MessageBox(nullptr, message, title, type);
     }
 }
 
