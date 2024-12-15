@@ -108,7 +108,7 @@ DieKnow provides an API that is accessible at [`dieknow.py`](src/dieknow.py), wh
 
 DyKnow creates executables dynamically. Once you kill its process using Task Manager or the `taskkill` command, it restarts right back up every few seconds, but with a modified executable name. How it does this is unknown, but it likely uses Task Scheduler. My approach leverages the Windows win32 API, specifically the [`TerminateProcess`](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-terminateprocess) function, to repeatedly close DyKnow.
 
-A `ctypes` precompiled C++ binary is located in [`api.dll`](src/api.dll), which is accessed by [`main.py`](src/main.py) to call the C++ functions. C++ is used as it lowers the CPU usage of DieKnow compared to Python. The DLL file is over 3 MBs because it is statically built (with use of the `-static` g++ option), allowing easy distribution of it and without having to manage all the dependencies, such as `<windows>`.
+A `ctypes` precompiled C++ binary is located in [`api.dll`](src/api.dll), which is accessed by [`main.py`](src/main.py) to call the C++ functions. C++ is used as it lowers the CPU usage of DieKnow compared to Python. The DLL file is over 3 MBs because it is statically built (with use of the `-static` g++ option), allowing easy distribution of it and without having to manage all the dependencies, such as `user32.dll` or `kernel32.dll`.
 
 Using a command such as [`taskkill`](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/taskkill) will result in an error: `Access is Denied`.
 
