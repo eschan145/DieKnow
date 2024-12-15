@@ -30,13 +30,12 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 #define TIMEOUT 5000
 
-
-#include <cstdlib>
-#include <fstream>
-
 #include <windows.h>
 #include <winternl.h>
 #include <tlhelp32.h>
+
+#include <cstdlib>
+#include <fstream>
 
 #include <iostream>
 #include <vector>
