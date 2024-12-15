@@ -50,6 +50,11 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 extern const char* FOLDER_PATH;
 
 
+std::filesystem::path get_directory();
+
+std::filesystem::path locate_settings();
+
+
 extern "C" {
     extern bool running;
     extern int killed;

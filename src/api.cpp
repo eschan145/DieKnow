@@ -27,6 +27,37 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 
+
+std::filesystem::path get_directory() {
+    char path[MAX_PATH];
+    HMODULE hModule = nullptr;
+
+    if (GetModuleHandleExA(
+            GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
+            (LPCSTR)&get_directory,
+            &hModule
+        )) {
+        if (GetModuleFileNameA(hModule, path, MAX_PATH) > 0) {
+            return std::filesystem::path(path).parent_path();
+        }
+        else {
+            std::cerr << "Failed to locate DLL directory!\n";
+        }
+    }
+    std::cerr << "Failed to locate DLL directory!\n";
+}
+
+std::filesystem::path locate_settings() {
+    auto directory = get_directory();
+    auto file_path = directory.parent_path() / "settings.conf";
+    if (std::filesystem::exists(file_path)) {
+        std::cout << "Located settings.conf.\n";
+        return file_path;
+    } else {
+        std::cerr << "Failed to locate settings.conf!\n";
+    }
+}
+
 extern "C" {
     bool running = false;
     int killed = 0;
@@ -67,7 +98,9 @@ DK_API void validate() {
                   << FOLDER_PATH << ".\n";
     }
 
-    bool loaded_settings = settings.load("./settings.conf");
+    auto path = locate_settings();
+
+    bool loaded_settings = settings.load(path.string());
 
     if (loaded_settings) {
         std::cout << "Successfully loaded DieKnow configuration files.\n";
@@ -81,7 +114,7 @@ DK_API void validate() {
         std::exit(EXIT_FAILURE);
     } else {
         std::cout << "Successfully validated DyKnow installation and file "
-                  << "integrity.\n"
+                  << "integrity.\n";
     }
 }
 

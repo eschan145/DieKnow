@@ -39,7 +39,8 @@ bool Settings::load(const std::string& file_name) {
 
     std::ifstream file(file_name);
     if (!file.is_open()) {
-        std::cerr << "Error: Could not open file " << file_name
+        std::cerr << "Error when loading settings: Could not open file "
+                  << file_name
                   << ". Reason: " << std::strerror(errno) << std::endl;
         return false;
     }
