@@ -665,7 +665,7 @@ void Application::restore_snapshots() {
 
     for (const auto& window : this->snapshot) {
         HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
-        
+
         if (hwnd) {
             WNDPROC original = (WNDPROC)SetWindowLongPtr(
                 hwnd,
