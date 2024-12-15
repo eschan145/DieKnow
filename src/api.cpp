@@ -26,7 +26,6 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
-Settings settings;
 
 
 DK_API void validate() {
