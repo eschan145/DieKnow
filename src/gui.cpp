@@ -67,7 +67,7 @@ void write(const std::string& filename, int value) {
                 << "* Exists," << "\n"
                 << "* Is not in use by another application, and" << "\n"
                 << "* Is available and downloaded to OneDrive." << "\n";
-            
+
         MessageBox(nullptr, message.str().c_str(), "Error", MB_ICONERROR);
     }
 }
@@ -349,15 +349,27 @@ Application::Application() {
     widgets.push_back(windows);
 
     tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped.");
-    tooltip(hwnd, taskkill_button, "Terminate the selected executable in the listbox.");
-    tooltip(hwnd, exit_button, "Exit the DieKnow application and terminate all processes.");
+    tooltip(hwnd, taskkill_button,
+        "Terminate the selected executable in the listbox."
+    );
+    tooltip(hwnd, exit_button,
+        "Exit the DieKnow application and terminate all processes."
+    );
     tooltip(hwnd, directory, "Directory of the DyKnow files.");
     tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow.");
-    tooltip(hwnd, interval_set, "Set the interval between ticks for closing DyKnow. Beware - an interval of 0 can saturate a CPU core.");
-    tooltip(hwnd, executables_killed, "Number of DyKnow executables terminated by DieKnow.");
-    tooltip(hwnd, open_explorer, "Open the DyKnow file directory in the Windows Explorer.");
+    tooltip(hwnd, interval_set,
+        "Set the interval between ticks for closing DyKnow. Beware - an "
+        "interval of 0 can saturate a CPU core."
+    );
+    tooltip(hwnd, executables_killed,
+        "Number of DyKnow executables terminated by DieKnow."
+    );
+    tooltip(hwnd, open_explorer,
+        "Open the DyKnow file directory in the Windows Explorer."
+    );
     tooltip(hwnd, display_information, "Show system information.");
-    tooltip(hwnd, take_snapshot, "Take a snapshot of the current windows to restore them later on.");
+    tooltip(hwnd, take_snapshot,
+        "Take a snapshot of the current windows to restore them later on.");
 
     for (HWND widget : widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
@@ -397,33 +409,17 @@ Application::Application() {
     this->hide_snapshots();
 }
 
-void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+void Application::manage_command(
+    Application* app,
+    HWND hwnd,
+    UINT uMsg,
+    WPARAM wParam,
+    LPARAM lParam) {
     /*
     Manage button commands in a switch statement.
 
     This function is called by `WindowProc`.
     */
-
-    // switch ((HWND)lParam) {
-    //     case this->windows: {
-    //         if (HIWORD(wParam) == LBN_DBLCLK) {
-    //             char buffer[256];
-
-    //             int index = SendMessage(this->windows, LB_GETCURSEL, 0, 0);
-    //             int message = SendMessage(this->windows, LB_GETTEXT, index, (LPARAM)buffer);
-
-    //             if (message == LB_ERROR) {
-    //                 MessageBox(this->windows, "Failed to retrieve item text!", "Error", MB_ICONERROR);
-    //             }
-    //             else {
-    //                 HWND window = FindWindow(NULL, buffer);
-
-    //                 if (window) {
-    //                     ShowWindow(window, SW_SHOWNORMAL);
-    //                 }
-    //             }
-    //     }
-    // }
 
     switch (LOWORD(wParam)) {
         case Widgets::RUNNING: {
@@ -445,18 +441,30 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
         case Widgets::TASKKILL: {
             // Check if the listbox has a selected item
-            const char* selected = get_selected(app->widgets[Widgets::DIRECTORY]);
+            const char* selected = get_selected(
+                app->widgets[Widgets::DIRECTORY]
+            );
 
             // If it does, terminate its process
             if (selected && strlen(selected) > 0) {
                 close_application_by_exe(selected);
 
-                std::string message = "Successfully closed " + std::string(selected);
-                MessageBox(hwnd, message.c_str(), "Success", MB_ICONINFORMATION);
-            }
-            else {
+                std::string message = "Successfully closed " +
+                                      std::string(selected);
+                MessageBox(
+                    hwnd,
+                    message.c_str(),
+                    "Success",
+                    MB_ICONINFORMATION
+                );
+            } else {
                 // Display an error if it doesn't
-                MessageBox(hwnd, "Please select an item in the listbox.", "Error", MB_ICONERROR);
+                MessageBox(
+                    hwnd,
+                    "Please select an item in the listbox.",
+                    "Error",
+                    MB_ICONERROR
+                );
             }
             break;
         }
@@ -464,16 +472,20 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         case Widgets::INTERVAL_SET: {
             char buffer[16];
 
-            GetWindowText(app->widgets[Widgets::INTERVAL], buffer, sizeof(buffer));
+            GetWindowText(
+                app->widgets[Widgets::INTERVAL],
+                buffer, sizeof(buffer)
+            );
 
             int value = atoi(buffer);
 
             if (value > 0) {
                 settings.set("interval", std::to_string(value));
 
-                std::string message = "Successfully set interval buffer to " + std::string(buffer);
+                std::string message = "Successfully set interval buffer to "
+                                      + std::string(buffer);
 
-                MessageBox(hwnd, message.c_str(), "Message", MB_ICONINFORMATION);
+                MessageBox(hwnd, message.c_str(), "Info", MB_ICONINFORMATION);
             }
             break;
         }
@@ -497,7 +509,12 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
                     << "Operating system: " << os_info << "\n"
                     << "Free RAM: " << avaliable_ram;
 
-            MessageBox(hwnd, message.str().c_str(), "System Information", MB_OK | MB_ICONINFORMATION);
+            MessageBox(
+                hwnd,
+                message.str().c_str(),
+                "System Information",
+                MB_OK | MB_ICONINFORMATION
+            );
 
             break;
         }
@@ -505,19 +522,32 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         case Widgets::TAKE_SNAPSHOT: {
             std::vector<Window> new_snapshot;
 
-            BOOL window_enumeration = EnumWindows(enum_snapshot, reinterpret_cast<LPARAM>(&new_snapshot));
+            BOOL window_enumeration = EnumWindows(
+                enum_snapshot,
+                reinterpret_cast<LPARAM>(&new_snapshot)
+            );
 
             if (!window_enumeration) {
                 std::ostringstream message;
                 message << "Failed to enumerate through windows."
                         << "Error: " << GetLastError();
 
-                MessageBox(app->hwnd, message.str().c_str(), "Error", MB_ICONERROR);
+                MessageBox(
+                    app->hwnd,
+                    message.str().c_str(),
+                    "Error",
+                    MB_ICONERROR
+                );
                 break;
             }
 
             if (new_snapshot.empty()) {
-                MessageBox(app->hwnd, "Failed to retrieve windows.", "Error", MB_ICONERROR);
+                MessageBox(
+                    app->hwnd,
+                    "Failed to retrieve windows.",
+                    "Error",
+                    MB_ICONERROR
+                );
                 break;
             }
 
@@ -537,12 +567,13 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
                     "SUCCESS",
                     MB_ICONINFORMATION
                 );
-            }
-            else {
+            } else {
                 MessageBox(
                     app->hwnd,
-                    "The new snapshot matches the contents of the previous snapshot. Aborting.",
-                    "Information", MB_ICONINFORMATION
+                    "The new snapshot matches the contents of the previous "
+                    "snapshot. Aborting.",
+                    "Information",
+                    MB_ICONINFORMATION
                 );
             }
 
@@ -552,7 +583,8 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
         case Widgets::RESTORE_SNAPSHOT: {
             app->is_restoring = !app->is_restoring;
 
-            std::string status = app->is_restoring ? "Unrestore snapshots" : "Restore snapshots";
+            std::string status = app->is_restoring ?
+                "Unrestore snapshots" : "Restore snapshots";
 
             SetWindowText(
                 app->restore_snapshot,
@@ -561,8 +593,7 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
 
             if (app->is_restoring) {
                 app->restore_snapshots();
-            }
-            else {
+            } else {
                 app->hide_snapshots();
             }
 
@@ -576,7 +607,11 @@ void Application::manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM 
     }
 }
 
-LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK Application::WindowProc(
+    HWND hwnd,
+    UINT uMsg,
+    WPARAM wParam,
+    LPARAM lParam) {
     /*
     Manage window events.
 
@@ -584,7 +619,9 @@ LRESULT CALLBACK Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LP
     */
 
     // We'll have to use reinterpret_cast as this function is static
-    Application* app = reinterpret_cast<Application*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+    Application* app = reinterpret_cast<Application*>(
+        GetWindowLongPtr(hwnd, GWLP_USERDATA)
+    );
 
     switch (uMsg) {
         case WM_COMMAND:
@@ -630,7 +667,11 @@ void Application::restore_snapshots() {
         HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
         
         if (hwnd) {
-            WNDPROC original = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ShieldWndProc);
+            WNDPROC original = (WNDPROC)SetWindowLongPtr(
+                hwnd,
+                GWLP_WNDPROC,
+                (LONG_PTR)ShieldWndProc
+            );
 
             if (original) {
                 original_procedures[hwnd] = original;
@@ -653,12 +694,10 @@ void Application::restore_snapshots() {
 
     //         if (IsWindowVisible(hwnd)) {
     //             success++;
-    //         }
-    //         else {
+    //         } else {
     //             fail++;
     //         }
-    //     }
-    //     else {
+    //     } else {
     //         missing++;
     //     }
     // }
@@ -670,18 +709,27 @@ void Application::restore_snapshots() {
     //         << missing << " missing, and "
     //         << fail << " failed.";
 
-    // MessageBox(this->hwnd, message.str().c_str(), "Information", MB_ICONINFORMATION);
+    // MessageBox(this->hwnd, message.str().c_str(),
+                  "Information", MB_ICONINFORMATION);
 }
 
 void Application::hide_snapshots() {
     for (const auto& [hwnd, original] : original_procedures) {
-        SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)original_procedures[hwnd]);
+        SetWindowLongPtr(
+            hwnd,
+            GWLP_WNDPROC,
+            (LONG_PTR)original_procedures[hwnd]
+        );
     }
     original_procedures.clear();
     std::cout << "All hooks removed." << std::endl;
 }
 
-inline void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+inline void Application::update(
+    HWND hwnd,
+    UINT uMsg,
+    WPARAM wParam,
+    LPARAM lParam) {
     /*
     Update display labels and listbox.
 
@@ -696,12 +744,17 @@ inline void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
     // Update directory listbox
     std::vector<std::string> current_executables;
 
-    for (const auto& entry : std::filesystem::directory_iterator(FOLDER_PATH)) {
+    for (const auto& entry :
+         std::filesystem::directory_iterator(FOLDER_PATH)) {
         if (entry.is_directory()) {
-            for (const auto& sub_entry : std::filesystem::directory_iterator(entry.path())) {
+            for (const auto& sub_entry :
+                 std::filesystem::directory_iterator(entry.path())) {
                 if ((sub_entry.is_regular_file()) &&
                     (sub_entry.path().extension() == ".exe")) {
-                    current_executables.push_back(sub_entry.path().filename().string());
+                    current_executables.push_back(
+                        sub_entry.path()
+                                 .filename()
+                                 .string());
                 }
             }
         }
@@ -753,7 +806,9 @@ inline void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
         // Restore previous scroll position
 
-        int max_scroll = std::max(0, static_cast<int>(current_windows.size()) - 1);
+        int max_scroll = std::max(
+            0, static_cast<int>(current_windows.size()) - 1
+        );
         position = std::min(position, max_scroll);
 
         si.fMask = SIF_POS;
@@ -802,7 +857,8 @@ inline void Application::update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
         SendMessage(widgets[Widgets::INTERVAL], EM_SETSEL, index, index);
     }
 
-    std::string message = "Executables terminated: " + std::to_string(get_killed_count());
+    std::string message = "Executables terminated: " +
+                          std::to_string(get_killed_count());
     SetWindowText(
         widgets[Widgets::EXECUTABLES_KILLED],
         message.c_str()
@@ -829,8 +885,7 @@ void Application::update_windows(std::vector<Window>& current_windows) {
             if (index >= 0) {
                 if (IsWindowVisible(target)) {
                     ListView_SetCheckState(this->windows, index, TRUE);
-                }
-                else {
+                } else {
                     ListView_SetCheckState(this->windows, index, FALSE);
                 }
             }
