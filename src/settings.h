@@ -41,6 +41,8 @@ class Settings {
     void update();
 };
 
+extern Settings settings;
+
 template <>
 bool Settings::get<bool>(const std::string& key, bool default_value) const;
 
