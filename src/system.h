@@ -33,6 +33,7 @@ VERSION: 1.0.1
 #include <thread>
 #include <streambuf>
 
+#include "api.h"
 #include "settings.h"
 
 
