@@ -51,8 +51,8 @@ extern const char* FOLDER_PATH;
 
 
 extern "C" {
-    bool running = false;
-    int killed = 0;
+    extern bool running;
+    extern int killed;
 
     // __declspec allows it to be exported and used in ctypes
 
@@ -64,12 +64,10 @@ extern "C" {
     DK_API bool is_running();
     DK_API const char* get_executables_in_folder(const char* folder_path);
     DK_API int __stdcall dialog(
-        LPCWSTR message,
-        LPCWSTR title,
-        UINT type
-    ) {
-        return MessageBoxW(nullptr, message, title, type);
-    }
+        const char* message,
+        const char* title,
+        UINT type = MB_ICONINFORMATION
+    );
     DK_API int __stdcall bsod();
 }
 

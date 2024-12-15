@@ -27,6 +27,17 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 
+extern "C" {
+    bool running = false;
+    int killed = 0;
+
+    DK_API int __stdcall dialog(
+        const char* message,
+        const char* title,
+        UINT type) {
+        return MessageBox(nullptr, message, title, type);
+    }
+}
 
 DK_API void validate() {
     /*
