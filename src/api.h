@@ -51,8 +51,8 @@ extern const char* FOLDER_PATH;
 
 
 extern "C" {
-    extern bool running = false;
-    extern int killed = 0;
+    extern bool running;
+    extern int killed;
 
     // __declspec allows it to be exported and used in ctypes
 
