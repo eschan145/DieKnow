@@ -34,16 +34,16 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <cstdlib>
 #include <fstream>
 
+#include <windows.h>
+#include <winternl.h>
+#include <tlhelp32.h>
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <thread>
 #include <filesystem>
 #include <sstream>
-
-#include <windows.h>
-#include <winternl.h>
-#include <tlhelp32.h>
 
 #include "settings.h"
 
