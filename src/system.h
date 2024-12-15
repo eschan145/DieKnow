@@ -70,6 +70,8 @@ void toggle_internet();
 
 BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam);
 
+BOOL CALLBACK enum_snapshot(HWND hwnd, LPARAM lParam);
+
 LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo);
 
 class ErrorBuffer : public std::streambuf {
