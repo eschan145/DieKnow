@@ -30,7 +30,7 @@ class Settings {
     std::unordered_map<std::string, std::string> settings;
     std::string path;
 
-public:
+ public:
     bool load(const std::string& file_name);
 
     template <typename T>
@@ -44,4 +44,4 @@ public:
 template <>
 bool Settings::get<bool>(const std::string& key, bool default_value) const;
 
-#endif // SETTINGS_H
+#endif  // SETTINGS_H
