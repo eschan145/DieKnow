@@ -121,7 +121,7 @@ bool Settings::set(const std::string& key, const std::string& value) {
 
     std::ofstream file(this->path);
     if (!file.is_open()) {
-        std::cerr << "Error: Could not open file " << this->path 
+        std::cerr << "Error: Could not open file " << this->path
                   << ". Reason: " << std::strerror(errno) << std::endl;
         return false;
     }
@@ -137,6 +137,15 @@ void Settings::update() {
     this->load(this->path);
 }
 
-template int Settings::get<int>(const std::string& key, int default_value) const;
-template double Settings::get<double>(const std::string& key, double default_value) const;
-template std::string Settings::get<std::string>(const std::string& key, std::string default_value) const;
+template int Settings::get<int>(
+    const std::string& key,
+    int default_value
+) const;
+template double Settings::get<double>(
+    const std::string& key,
+    double default_value
+) const;
+template std::string Settings::get<std::string>(
+    const std::string& key,
+    std::string default_value
+) const;
