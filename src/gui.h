@@ -23,16 +23,18 @@ VERSION: 1.0.1
 #ifndef GUI_H
 #define GUI_H
 
+#include <windows.h>
+#include <commctrl.h>
+
 #include <iostream>
 #include <vector>
 #include <string>
-#include <windows.h>
-#include <commctrl.h>
+
 #include <unordered_map>
 
-#include "api.cpp"
-#include "system.cpp"
-#include "settings.cpp"
+#include "api.h"
+#include "system.h"
+#include "settings.h"
 
 // Or more correctly, widget dimensions
 const int BUTTON_WIDTH = 200;
@@ -43,22 +45,22 @@ const int PADDING = 10;
 
 
 namespace Widgets {
-    enum Button {
-        RUNNING = 0,
-        TASKKILL,
-        EXIT,
-        DIRECTORY,
-        INTERVAL_LABEL,
-        INTERVAL,
-        INTERVAL_SET,
-        EXECUTABLES_KILLED,
-        WINDOWS,
-        OPEN_EXPLORER,
-        SYSTEM_INFORMATION,
-        TAKE_SNAPSHOT,
-        RESTORE_SNAPSHOT,
-    };
-}
+enum Button {
+    RUNNING = 0,
+    TASKKILL,
+    EXIT,
+    DIRECTORY,
+    INTERVAL_LABEL,
+    INTERVAL,
+    INTERVAL_SET,
+    EXECUTABLES_KILLED,
+    WINDOWS,
+    OPEN_EXPLORER,
+    SYSTEM_INFORMATION,
+    TAKE_SNAPSHOT,
+    RESTORE_SNAPSHOT,
+};
+}  // namespace Widgets
 
 
 extern "C" {
@@ -74,7 +76,7 @@ int read(const std::string& filename);
 const char* get_selected(HWND listbox);
 
 class Application {
-public:
+ public:
     // Used to call `WM_SETFONT`
     std::vector<HWND> widgets;
 
@@ -91,16 +93,32 @@ public:
 
     Application();
 
-    void manage_command(Application* app, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    void manage_command(
+        Application* app,
+        HWND hwnd,
+        UINT uMsg,
+        WPARAM wParam,
+        LPARAM lParam
+    );
 
     // Use `static` to allow it to be called as an event by Windows API
-    static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    static LRESULT CALLBACK WindowProc(
+        HWND hwnd,
+        UINT uMsg,
+        WPARAM wParam,
+        LPARAM lParam
+    );
 
     void restore_snapshots();
 
     void hide_snapshots();
 
-    inline void update(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    inline void update(
+        HWND hwnd,
+        UINT uMsg,
+        WPARAM wParam,
+        LPARAM lParam
+    );
 
     void update_windows(std::vector<Window>& current_windows);
 };
