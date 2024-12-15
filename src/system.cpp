@@ -130,7 +130,9 @@ std::string get_os_info() {
     SYSTEM_INFO si;
     GetNativeSystemInfo(&si);
     // Get architecture
-    std::string arch = (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64) ? "64-bit" : "32-bit";
+    std::string arch = (
+        si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64
+    ) ? "64-bit" : "32-bit";
 
     OSVERSIONINFOEXA osvi;
     ZeroMemory(&osvi, sizeof(OSVERSIONINFOEXA));
@@ -197,12 +199,13 @@ void toggle_internet() {
 
     std::this_thread::sleep_for(std::chrono::duration<double>(WINDOW_DELAY));
 
-    push(0x20); // Space
-    push(0x1B); // Escape
+    push(0x20);  // Space
+    push(0x1B);  // Escape
 }
 
 BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
-    std::vector<Window>* windows = reinterpret_cast<std::vector<Window>*>(lParam);
+    std::vector<Window>* windows =
+        reinterpret_cast<std::vector<Window>*>(lParam);
 
     char title[256];
     char class_name[256];
@@ -228,7 +231,8 @@ BOOL CALLBACK enum_snapshot(HWND hwnd, LPARAM lParam) {
     system window or not.
     */
 
-    std::vector<Window>* windows = reinterpret_cast<std::vector<Window>*>(lParam);
+    std::vector<Window>* windows =
+        reinterpret_cast<std::vector<Window>*>(lParam);
 
     char title[256];
     char class_name[256];
@@ -261,7 +265,8 @@ LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo) {
     return EXCEPTION_EXECUTE_HANDLER;
 }
 
-ErrorBuffer::ErrorBuffer(std::streambuf *original) : original_buffer(original) {}
+ErrorBuffer::ErrorBuffer(std::streambuf *original) :
+    original_buffer(original) {}
 
 ErrorBuffer::~ErrorBuffer() {}
 
@@ -309,5 +314,11 @@ LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         return 0;
     }
 
-    return CallWindowProc(original_procedures[hwnd], hwnd, uMsg, wParam, lParam);
+    return CallWindowProc(
+        original_procedures[hwnd],
+        hwnd,
+        uMsg,
+        wParam,
+        lParam
+    );
 }
