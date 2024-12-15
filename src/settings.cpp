@@ -149,3 +149,5 @@ template std::string Settings::get<std::string>(
     const std::string& key,
     std::string default_value
 ) const;
+
+Settings settings;
