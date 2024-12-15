@@ -49,13 +49,13 @@ std::filesystem::path get_directory() {
 
 std::filesystem::path locate_settings() {
     auto directory = get_directory();
-    auto file_path = directory.parent_path() / "settings.conf";
-    std::cout << "Filepath: " << file_path << "\n";
+    auto file_path = directory.parent_path().parent_path() / "settings.conf";
     if (std::filesystem::exists(file_path)) {
         std::cout << "Located settings.conf.\n";
         return file_path;
     } else {
         std::cerr << "Failed to locate settings.conf!\n";
+        std::cerr << "It should be located at " << file_path << ".\n";
     }
 }
 
