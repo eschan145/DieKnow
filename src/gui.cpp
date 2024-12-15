@@ -710,7 +710,7 @@ void Application::restore_snapshots() {
     //         << fail << " failed.";
 
     // MessageBox(this->hwnd, message.str().c_str(),
-                  "Information", MB_ICONINFORMATION);
+                  // "Information", MB_ICONINFORMATION);
 }
 
 void Application::hide_snapshots() {
