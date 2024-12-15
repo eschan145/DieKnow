@@ -58,7 +58,7 @@ std::string get_gpu_name();
 
 std::string get_os_info();
 
-std::string get_avaliable_ram();
+std::string get_available_ram();
 
 void press(BYTE key);
 
