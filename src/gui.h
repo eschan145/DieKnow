@@ -123,4 +123,4 @@ class Application {
     void update_windows(std::vector<Window>& current_windows);
 };
 
-#endif // GUI_H
+#endif  // GUI_H
