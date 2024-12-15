@@ -59,7 +59,7 @@ extern "C" {
 
     DK_API void validate();
     DK_API const char* get_folder_path();
-    DK_API void start_monitoring(const char* folder_path);
+    DK_API void start_monitoring(const char* folder_path = FOLDER_PATH);
     DK_API void stop_monitoring();
     DK_API int get_killed_count();
     DK_API bool is_running();
