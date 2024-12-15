@@ -48,7 +48,6 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 
 extern const char* FOLDER_PATH;
-extern Settings settings;
 
 
 extern "C" {
