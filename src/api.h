@@ -65,8 +65,8 @@ extern "C" {
     DK_API const char* get_folder_path();
     DK_API void start_monitoring(const char* folder_path = FOLDER_PATH);
     DK_API void stop_monitoring();
-    DK_API void monitor_executables(const char* folder_path = FOLDER_PATH);
-    DK_API int close_application_by_exe(const char* exe_name);
+    DK_API int monitor_executables(const char* folder_path = FOLDER_PATH);
+    DK_API bool close_application_by_exe(const char* exe_name);
     DK_API int get_killed_count();
     DK_API bool is_running();
     DK_API const char* get_executables_in_folder(const char* folder_path);
