@@ -39,8 +39,7 @@ std::filesystem::path get_directory() {
         )) {
         if (GetModuleFileNameA(hModule, path, MAX_PATH) > 0) {
             return std::filesystem::path(path).parent_path();
-        }
-        else {
+        } else {
             std::cerr << "Failed to locate DLL directory!\n";
         }
     }
