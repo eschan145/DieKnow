@@ -93,7 +93,12 @@ T Settings::get(const std::string& key, T default_value) const {
     */
 
     auto it = settings.find(key);
-    if (it == settings.end()) return default_value;
+    if (it == settings.end()) {
+        std::cerr << "Invalid type or value of key for " << key << "! "
+                  << "The default value " << default_value
+                  << " will be used instead.";
+        return default_value;
+    }
 
     std::istringstream ss(it->second);
     T value;
