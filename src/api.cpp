@@ -344,8 +344,8 @@ DK_API const char* get_executables_in_folder(const char* folder_path) {
     /*
     Retrieve a printable list of executables in a folder.
 
-    Ensures that the DyKnow installation can exists, and checks with
-    `validate()`.
+    Ensures that the DyKnow installation can exist, and checks with
+    `validate()` if it doesn't.
     */
 
     static std::string result;
