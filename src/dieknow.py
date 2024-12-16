@@ -10,9 +10,13 @@ except ImportError as exc:
                   "platform!") from exc
 
 import os
+import sys
 
 import doc
 
+md = False
+if "-docs" in sys.argv:
+    md = True
 
 lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
 
@@ -42,14 +46,12 @@ is_running = lib.is_running
 bsod = lib.bsod
 dialog = lib.dialog
 
-doc.doc(os.path.join(os.path.dirname(__file__), "api.cpp"), lib)
+doc.doc(os.path.join(os.path.dirname(__file__), "api.cpp"), lib, markdown=md)
 
 gui_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "gui.dll")
 
 guilib = ctypes.CDLL(gui_dll_path)
 create_window = guilib.create_window
-
-doc.doc(os.path.join(os.path.dirname(__file__), "gui.cpp"), guilib)
 
 # Aliases
 gui = create_window

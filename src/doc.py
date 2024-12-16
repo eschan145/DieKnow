@@ -1,9 +1,10 @@
 """Documentation parser from C++ code into Python.
 """
 
+import os
 import re
 
-def doc(file_path, lib):
+def doc(file_path, lib=None, markdown=False):
     """Parse a C++ file and parse its documentation."""
 
     with open(file_path, "r", encoding="utf-8") as file:
@@ -38,9 +39,22 @@ def doc(file_path, lib):
                     prev_line_empty = False
 
             formatted_docstring = " ".join(stripped_lines).strip().replace("  ", "\n\n")
-            formatted_docstring += "\n\nSignature: " + signature;
+            if markdown:
+                formatted_docstring += "\n\n**Signature**: `" + signature + "`"
+            else:
+                formatted_docstring += "\n\nSignature: " + signature
 
             docstrings.append((name, formatted_docstring))
+
+    if markdown:
+        base_name = os.path.splitext(os.path.basename(file_path))[0]
+        project_root = os.path.dirname(os.path.dirname(file_path))
+        output_markdown = os.path.join(project_root, "docs", f"{base_name}.md")
+
+        with open(output_markdown, "w", encoding="utf-8") as md_file:
+            md_file.write(f"# Documentation for `{base_name}.cpp`\n\n")
+            for (name, docstring) in docstrings:
+                md_file.write(f"### *function* `{name}()`\n\n{docstring}\n\n")
 
     for (name, docstring) in docstrings:
         if hasattr(lib, name):
