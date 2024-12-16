@@ -130,7 +130,7 @@ bool exists(const char* path) {
     return (ftyp & FILE_ATTRIBUTE_DIRECTORY);
 }
 
-bool close_application_by_exe(const char* exe_name) {
+DK_API bool close_application_by_exe(const char* exe_name) {
     /*
     Close a Windows PE executable file given the executable name.
 
@@ -212,7 +212,7 @@ bool close_application_by_exe(const char* exe_name) {
     return terminated;
 }
 
-void monitor_executables(const char* folder_path) {
+DK_API int monitor_executables(const char* folder_path) {
     /*
     Begin monitoring and closing of the executables in the given folder path.
 
@@ -225,7 +225,16 @@ void monitor_executables(const char* folder_path) {
     interval may give DyKnow ample time to start back up.
 
     If `FOLDER_PATH` cannot be validated, the `validate()` function is called.
+
+    This function returns the amount of executables it terminated in this pass.
+
+    > [!IMPORTANT]
+    > It is best to call this in an independent thread, such as
+    > `start_monitoring()` as this will run continuously until the variable
+    > `running` is set to `false`.
     */
+
+    int count = 0;
 
     while (running) {
         // Search recursively through folder_path and terminate all "*.exe"s
@@ -237,9 +246,11 @@ void monitor_executables(const char* folder_path) {
                      std::filesystem::directory_iterator(entry.path())) {
                     if ((sub_entry.is_regular_file()) &&
                         (sub_entry.path().extension() == ".exe")) {
-                        close_application_by_exe(
+                        bool result = close_application_by_exe(
                             sub_entry.path().filename().string().c_str()
                         );
+                        if (result)
+                            count++;
                     }
                 }
                 break;
@@ -254,6 +265,7 @@ void monitor_executables(const char* folder_path) {
         // Minimize CPU usage
         std::this_thread::sleep_for(std::chrono::seconds(interval));
     }
+    return count;
 }
 
 DK_API const char* get_folder_path() {
