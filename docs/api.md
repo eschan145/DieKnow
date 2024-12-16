@@ -8,6 +8,30 @@ Settings are loaded.
 
 **Signature**: `void`
 
+### *function* `close_application_by_exe()`
+
+Close a Windows PE executable file given the executable name.
+
+The win32 function `TerminateProcess()` is used, which has looser privilleges than `taskkill`. It's uncommon that it will require administrative permissions.
+
+**Signature**: `bool`
+
+### *function* `monitor_executables()`
+
+Begin monitoring and closing of the executables in the given folder path.
+
+A while loop will go through all of the executables in `FOLDER_PATH`. It will then attempt to terminate them individually. The folder path is refreshed each iteration of the loop.
+
+An interval that can be specified in settings controls how often the function is repeated. A low interval may cause high CPU usage while a low interval may give DyKnow ample time to start back up.
+
+If `FOLDER_PATH` cannot be validated, the `validate()` function is called.
+
+This function returns the amount of executables it terminated in this pass.
+
+> [!IMPORTANT] > It is best to call this in an independent thread, such as > `start_monitoring()` as this will run continuously until the variable > `running` is set to `false`.
+
+**Signature**: `int`
+
 ### *function* `get_folder_path()`
 
 Retrieve the default DyKnow folder path.
