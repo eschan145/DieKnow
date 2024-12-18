@@ -386,7 +386,7 @@ DK_API InternetFlags is_connected() {
     */
 
     DWORD flags;
-    bool result = InternetGetCollectedState(&flags, 0);
+    bool result = InternetGetConnectedState(&flags, 0);
 
     if (result) {
         if (flags & INTERNET_CONNECTION_MODEM)
@@ -486,7 +486,7 @@ DK_API int __stdcall bsod() {
             std::cerr << "Failed to load NtRaiseHardError from win32's "
                       << "nt.dll!\n";
         }
-        std::cerr << "Failed to open Windows BSOD!"\n;
+        std::cerr << "Failed to open Windows BSOD!\n";
         return -1;
     }
 
