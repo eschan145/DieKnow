@@ -58,8 +58,8 @@ enum Widget {
     OPEN_EXPLORER,
     SYSTEM_INFORMATION,
     TAKE_SNAPSHOT,
-    RESTORE_SNAPSHOT,
-}
+    RESTORE_SNAPSHOT
+};
 }  // namespace Widgets
 
 
