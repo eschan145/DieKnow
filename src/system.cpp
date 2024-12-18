@@ -80,6 +80,10 @@ bool Window::operator==(const Window& other) const {
 }
 
 bool is_valid(const char* title) {
+    /*
+    Check if a window name is valid and not in the WINDOW_EXCLUDE_LIST.
+    */
+
     std::string caption(title);
 
     for (const auto& word : WINDOW_EXCLUDE_LIST) {
@@ -213,8 +217,8 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     GetWindowText(hwnd, title, sizeof(title));
     GetClassNameA(hwnd, class_name, sizeof(class_name));
 
-    if (title[0]) {
-        if (is_valid(title)) {
+    if (title[0] &&
+        is_valid(title)) {
             windows->push_back({hwnd, title, class_name});
         }
     }

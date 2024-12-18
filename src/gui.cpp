@@ -394,13 +394,14 @@ Application::Application() {
     std::string status = running ? "Stop" : "Start";
     SetWindowText(this->widgets[Widgets::RUNNING], status.c_str());
 
-    // In ms -- set to 5 ticks per second
+    // In ms -- set update rate to 10 ticks per second
     SetTimer(hwnd, 1, settings.get<int>("update", 100), nullptr);
 
     ShowWindow(hwnd, SW_SHOW);
     UpdateWindow(hwnd);
 
     MSG msg = {};
+    // Needed to call WndProc system messages
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
@@ -571,7 +572,7 @@ void Application::manage_command(
                 MessageBox(
                     app->hwnd,
                     "The new snapshot matches the contents of the previous "
-                    "snapshot. Aborting.",
+                    "snapshot. No changes were made.",
                     "Information",
                     MB_ICONINFORMATION
                 );
@@ -847,10 +848,12 @@ inline void Application::update(
             std::to_string(settings.get<int>("interval", 0)).c_str()
         );
 
-        // Restore cursor position
+        // Restore cursor position. Without this the cursor position would
+        // reset back when cleared
 
         int length = GetWindowTextLength(widgets[Widgets::INTERVAL]);
 
+        // Clamp index to the current text length
         if (index < 0) index = 0;
         if (index > length) index = length;
 
@@ -866,6 +869,10 @@ inline void Application::update(
 }
 
 void Application::update_windows(std::vector<Window>& current_windows) {
+    /*
+    Toggle visibility of windows based on the listbox.
+    */
+
     for (size_t i = 0; i < current_windows.size(); ++i) {
         const auto& window = current_windows[i];
         HWND target = FindWindow(NULL, window.title.c_str());
@@ -894,6 +901,13 @@ void Application::update_windows(std::vector<Window>& current_windows) {
 }
 
 DK_API void create_window() {
+    /*
+    Create the DieKnow GUI process.
+    
+    Unlike the command line process this does not start in an indepent thread!
+    So ensure that you can close it easily after it finishes.
+    */
+
     SetUnhandledExceptionFilter(ExceptionHandler);
 
     Application* application = new Application();

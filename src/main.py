@@ -25,7 +25,7 @@ def main():
                 r"\bhelp\b(?:\s+(\w+))?",
                 user_input.strip(),
                 re.IGNORECASE)
-            if match.group(1):
+            if match and match.group(1):
                 attr = getattr(dieknow, match.group(1), None)
                 if attr:
                     title = "Documentation for the function %s at %s:" % \

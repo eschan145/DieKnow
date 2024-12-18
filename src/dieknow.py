@@ -70,6 +70,8 @@ del (
     guilib,
     lib,
     lib_dll_path,
+    md,
     os,
+    sys,
     wintypes
 )

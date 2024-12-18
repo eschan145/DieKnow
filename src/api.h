@@ -31,6 +31,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #define TIMEOUT 5000
 
 #include <windows.h>
+#include <wininet.h>
 #include <winternl.h>
 #include <tlhelp32.h>
 
@@ -46,6 +47,8 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 #include "settings.h"
 
+#pragma comment(lib, "wininet.lib")
+
 
 extern const char* FOLDER_PATH;
 
@@ -53,6 +56,14 @@ extern const char* FOLDER_PATH;
 std::filesystem::path get_directory();
 
 std::filesystem::path locate_settings();
+
+
+enum class InternetFlags {
+    CONNECT_MODEM,
+    CONNECT_LAN,
+    CONNECT_PROXY,
+    CONNECT_NONE
+};
 
 
 extern "C" {
@@ -69,6 +80,7 @@ extern "C" {
     DK_API bool close_application_by_exe(const char* exe_name);
     DK_API int get_killed_count();
     DK_API bool is_running();
+    DK_API InternetFlags is_connected();
     DK_API const char* get_executables_in_folder(const char* folder_path);
     DK_API int __stdcall dialog(
         const char* message,

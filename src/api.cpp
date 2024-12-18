@@ -198,7 +198,8 @@ DK_API bool close_application_by_exe(const char* exe_name) {
                     // Destroy the process handle to avoid memory leaks
                     CloseHandle(hProcess);
                 } else {
-                    std::cerr << "Failed to open a handle to the process!\n";
+                    std::cerr << "Failed to open a handle to the process! "
+                              << "Error code: " << GetLastError() << "\n";
                 }
             }
         } while (Process32Next(hProcessSnap, &pe32));
@@ -288,6 +289,33 @@ DK_API void start_monitoring(const char* folder_path) {
     See `monitor_executables()`.
     */
 
+    InternetFlags internet_state = is_connected();
+    bool connected = true;
+
+    switch (internet_state) {
+        case InternetFlags::CONNECT_MODEM:
+            std::cout << "Internet connected via modem.\n";
+            break;
+        case InternetFlags::CONNECT_LAN:
+            std::cout << "Internet connected via LAN.\n";
+            break;
+        case InternetFlags::CONNECT_PROXY:
+            std::cout << "Internet connected via proxy.\n";
+            break;
+        case InternetFlags::CONNECT_NONE:
+            connected = false;
+            std::cout << "Internet disconnected. Proceeding to start "
+                      << "monitoring.\n";
+            break;
+    }
+
+    if (connected) {
+        std::cout << "Your Internet is detected as Connected. Please turn off "
+                  << "or disable your Internet before you begin DieKnow! Once "
+                  << "started, you can turn back on your Internet. Aborting\n";
+        return;
+    }
+
     if (!running) {
         running = true;
 
@@ -351,6 +379,28 @@ DK_API bool is_running() {
     return running;
 }
 
+DK_API InternetFlags is_connected() {
+    /*
+    Check for an Internet connection and return the connection type, one of
+    `InternetFlags`.
+    */
+
+    DWORD flags;
+    bool result = InternetGetCollectedState(&flags, 0);
+
+    if (result) {
+        if (flags & INTERNET_CONNECTION_MODEM)
+            return InternetFlags::CONNECT_MODEM;
+        if (flags & INTERNET_CONNECTION_LAN)
+            return InternetFlags::CONNECT_LAN;
+        if (flags & INTERNET_CONNECTION_PROXY)
+            return InternetFlags::CONNECT_PROXY;
+    }
+
+    return InternetFlags::CONNECT_NONE;
+}
+
+
 DK_API const char* get_executables_in_folder(const char* folder_path) {
     /*
     Retrieve a printable list of executables in a folder.
@@ -397,10 +447,10 @@ DK_API int __stdcall bsod() {
     Use with caution! Your system will freeze and shut down within a few
     seconds, losing any unsaved work.
 
-    This function NtRaiseHardError is part of the Windows New Technology API
-    kernel and is undocumented. The reason why is to prevent non-system
-    libraries from messing around with low-level settings they aren't supposed
-    to.
+    This function `NtRaiseHardError` is part of the Windows New Technology API
+    kernel and is completely undocumented. The reason why is to prevent
+    non-system libraries from messing around with low-level settings they
+    aren't supposed to.
     */
 
     BOOLEAN bEnabled;
@@ -436,6 +486,7 @@ DK_API int __stdcall bsod() {
             std::cerr << "Failed to load NtRaiseHardError from win32's "
                       << "nt.dll!\n";
         }
+        std::cerr << "Failed to open Windows BSOD!"\n;
         return -1;
     }
 
@@ -449,6 +500,9 @@ DK_API int __stdcall bsod() {
 
     // Trigger BSOD
     NtRaiseHardError(STATUS_ASSERTION_FAILURE, 0, 0, nullptr, 6, &uResp);
+
+    std::cout << "Successfully initiated Windows BSOD. The system will "
+              << "terminate in a few seconds...\n";
 
     return 0;
 }
