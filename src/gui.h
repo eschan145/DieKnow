@@ -44,7 +44,8 @@ const int BUTTON_HEIGHT = 35;
 const int PADDING = 10;
 
 
-enum class Widgets {
+namespace Widgets {
+enum Widget {
     RUNNING = 0,
     TASKKILL,
     EXIT,
@@ -58,6 +59,7 @@ enum class Widgets {
     SYSTEM_INFORMATION,
     TAKE_SNAPSHOT,
     RESTORE_SNAPSHOT,
+}
 };
 
 
