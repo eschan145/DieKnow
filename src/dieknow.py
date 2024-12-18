@@ -61,13 +61,14 @@ gui = create_window
 directory = get_executables_in_folder
 start = start_monitoring
 stop = stop_monitoring
-running = is_running
+status = is_running
 
 del (
     ctypes,
     doc,
     gui_dll_path,
     guilib,
+    is_running,
     lib,
     lib_dll_path,
     md,

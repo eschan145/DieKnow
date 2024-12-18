@@ -68,7 +68,7 @@ def main():
                 print(f"Executables killed: {killed}")
 
             case "exit":
-                if dieknow.is_running():
+                if dieknow.status():
                     dieknow.stop_monitoring()
                 print("Exiting")
                 break
@@ -81,9 +81,9 @@ def main():
                         try:
                             if callable(func):
                                 result = func()
-                            else: result = func
-                            if result:
-                                print(result)
+                            else:
+                                result = func
+                            if result != None: print(result)
                             # else:
                             #     print("Invalid input!")
                         except (TypeError, AttributeError):
