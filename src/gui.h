@@ -60,7 +60,7 @@ enum Widget {
     TAKE_SNAPSHOT,
     RESTORE_SNAPSHOT,
 }
-};
+}  // namespace Widgets
 
 
 extern "C" {
