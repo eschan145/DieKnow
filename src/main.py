@@ -83,12 +83,12 @@ def main():
                                 result = func()
                             else:
                                 result = func
-                            if result != None: print(result)
-                            # else:
-                            #     print("Invalid input!")
+                            if result is not None:
+                                print(result)
                         except (TypeError, AttributeError):
                             pass
-                    else: print("Invalid name!")
+                    else:
+                        print("Invalid name!")
 
 
 if __name__ == "__main__":
