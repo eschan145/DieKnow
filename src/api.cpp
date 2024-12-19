@@ -336,8 +336,11 @@ DK_API void start_monitoring(const char* folder_path) {
 
         SetThreadPriority(handle, THREAD_PRIORITY_BELOW_NORMAL);
 
+        std::cout << "SetThreadPriority: THREAD_PRIORITY_BELOW_NORMAL\n";
+
         // Detach thread from main and start it
         thread.detach();
+        std::cout << "Detatched thread\n";
         std::cout << "Monitoring started.\n";
     } else {
         std::cout << "The DieKnow process has already been started!\n";
