@@ -289,34 +289,34 @@ DK_API void start_monitoring(const char* folder_path) {
     See `monitor_executables()`.
     */
 
-    InternetFlags internet_state = is_connected();
-    bool connected = true;
-
-    switch (internet_state) {
-        case InternetFlags::CONNECT_MODEM:
-            std::cout << "Internet connected via modem.\n";
-            break;
-        case InternetFlags::CONNECT_LAN:
-            std::cout << "Internet connected via LAN.\n";
-            break;
-        case InternetFlags::CONNECT_PROXY:
-            std::cout << "Internet connected via proxy.\n";
-            break;
-        case InternetFlags::CONNECT_NONE:
-            connected = false;
-            std::cout << "Internet disconnected. Proceeding to start "
-                      << "monitoring.\n";
-            break;
-    }
-
-    if (connected) {
-        std::cout << "Your Internet is detected as Connected. Please turn off "
-                  << "or disable your Internet before you begin DieKnow! Once "
-                  << "started, you can turn back on your Internet. Aborting\n";
-        return;
-    }
-
     if (!running) {
+        InternetFlags internet_state = is_connected();
+        bool connected = true;
+
+        switch (internet_state) {
+            case InternetFlags::CONNECT_MODEM:
+                std::cout << "Internet connected via modem.\n";
+                break;
+            case InternetFlags::CONNECT_LAN:
+                std::cout << "Internet connected via LAN.\n";
+                break;
+            case InternetFlags::CONNECT_PROXY:
+                std::cout << "Internet connected via proxy.\n";
+                break;
+            case InternetFlags::CONNECT_NONE:
+                connected = false;
+                std::cout << "Internet disconnected. Proceeding to start "
+                          << "monitoring.\n";
+                break;
+        }
+
+        if (connected) {
+            std::cout << "Your Internet is detected as Connected. Please turn off "
+                      << "or disable your Internet before you begin DieKnow! Once "
+                      << "started, you can turn back on your Internet. Aborting\n";
+            return;
+        }
+
         running = true;
 
         std::thread thread(monitor_executables, folder_path);
