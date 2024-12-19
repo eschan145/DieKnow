@@ -6,7 +6,18 @@ DieKnow will significantly improve the performance of your laptop by a large amo
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), powered by the Windows win32 API.
 
-![Screenshot of DieKnow GUI](screenshots/screenshot4.png)
+# Desktop Applications
+
+<table border="0">
+ <tr>
+    <td><b style="font-size:30px">DieKnow Shell</b></td>
+    <td><b style="font-size:30px">DieKnow GUI</b></td>
+ </tr>
+ <tr>
+    <td><img src="https://github.com/user-attachments/assets/5b02591e-28fd-450e-89fd-8b3fcf540f42" alt="Screenshot of DieKnow Shell"></td>
+    <td><img src="screenshots/screenshot4.png" alt="Screenshot of DieKnow GUI"></td>
+ </tr>
+</table>
 
 Compilation instructions can be found [here](COMPILING.md).
 
@@ -16,6 +27,7 @@ About this:
 * **DOES NOT** need a C++ compiler.
 * **DOES NOT** need to run an executable or a batch file, which is usually blocked by the school via Windows AppLocker.
 * **DOES NOT** have any external dependencies.
+* Written in robust C++ code for maximum performance.
 
 What can DyKnow do:
 
