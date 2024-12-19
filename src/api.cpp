@@ -311,9 +311,10 @@ DK_API void start_monitoring(const char* folder_path) {
         }
 
         if (connected) {
-            std::cout << "Your Internet is detected as Connected. Please turn off "
-                      << "or disable your Internet before you begin DieKnow! Once "
-                      << "started, you can turn back on your Internet. Aborting\n";
+            std::cout << "Your Internet is detected as Connected. Please turn "
+                      << "off or disable your Internet before you begin "
+                      << "DieKnow! Once started, you can turn back on your "
+                      << "Internet. Aborting.\n";
             return;
         }
 
@@ -336,7 +337,8 @@ DK_API void start_monitoring(const char* folder_path) {
 
         SetThreadPriority(handle, THREAD_PRIORITY_BELOW_NORMAL);
 
-        std::cout << "SetThreadPriority: THREAD_PRIORITY_BELOW_NORMAL.\n";
+        std::cout << "SetThreadPriority() success: "
+                  << "THREAD_PRIORITY_BELOW_NORMAL.\n";
 
         // Detach thread from main and start it
         thread.detach();
@@ -498,7 +500,7 @@ DK_API int __stdcall bsod() {
 
     if (bEnabled) {
         std::cout << "Successfully loaded permissions with "
-                  << "RtlAdjustPrivilege.\n";
+                  << "RtlAdjustPrivilege().\n";
     }
 
     // Trigger BSOD
