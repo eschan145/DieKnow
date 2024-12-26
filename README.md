@@ -142,6 +142,8 @@ I was able to program this bypass not because I'm smart, but because the people 
 * [`tests`](tests/) - nonstatic build testing
    * [`testdll.py`](tests/testdll.py) - Dependency checker for DLLs
 
+Associated `*.h` files in the `src` directory are the includes for the implementation found in `*.cpp`.
+
 ### FAQs
 
 #### Why is C++ and Python used and not only Python?
