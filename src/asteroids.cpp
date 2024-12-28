@@ -128,6 +128,23 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
     );
 
     switch (uMsg) {
+        case WM_ERASEBKGND: {
+            HDC hdc = (HDC)wParam;
+            RECT rect;
+            GetClientRect(hwnd, &rect);
+            HBRUSH hBrush = CreateSolidBrush(RGB(169, 169, 169));
+            FillRect(hdc, &rect, hBrush);
+            DeleteObject(hBrush);
+            return 1;
+        }
+
+        case WM_PAINT: {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hwnd, &ps);
+            EndPaint(hwnd, &ps);
+            break;
+        }
+
         case WM_WINDOWPOSCHANGING: {
             WINDOWPOS* position = reinterpret_cast<WINDOWPOS*>(lParam);
             position->x = asteroids->position.x;
