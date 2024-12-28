@@ -147,6 +147,7 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
         case WM_TRAYICON: {
             if (LOWORD(lParam) == WM_LBUTTONDOWN) {
                 ShowWindow(asteroids->hwnd, SW_SHOW);
+                SetForegroundWindow(asteroids->hwnd);
             }
 
             if (LOWORD(lParam) == WM_RBUTTONDOWN) {
