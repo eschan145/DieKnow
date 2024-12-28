@@ -25,6 +25,7 @@ VERSION: 2.0.1
 #include <tchar.h>
 
 #define WM_TRAYICON 64
+#define ID_TRAY_EXIT 65
 
 extern NOTIFYICONDATA nid;
 
