@@ -92,32 +92,35 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
         GetWindowLongPtr(hwnd, GWLP_USERDATA)
     );
 
-    if (uMsg == WM_TRAYICON) {
-        switch (lParam) {
-            case WM_LBUTTONUP:
-                MessageBox(hwnd, "DyKnow", "DyKnow", MB_OK);
-                break;
-
-            case WM_RBUTTONUP:
-                asteroids->create_menu();
-                break;
-
-            case WM_COMMAND: {
-                if (LOWORD(wParam) == ID_TRAY_EXIT) {
-                    std::cout << "Exiting...\n";
-                    Shell_NotifyIcon(NIM_DELETE, &nid);
-                    PostQuitMessage(0);
+    switch (uMsg) {
+        case WM_TRAYICON: {
+            if (LOWORD(lParam) == WM_LBUTTONDOWN) {
+                if (uMsg == WM_TRAYICON) {
+                    MessageBox(hwnd, "DyKnow", "DyKnow", MB_OK);
                 }
-                break;
             }
 
-            case WM_DESTROY: {
+            if (LOWORD(lParam) == WM_RBUTTONDOWN) {
+                asteroids->create_menu();
+            }
+            break;
+        }
+
+        case WM_COMMAND: {
+            if (LOWORD(wParam) == ID_TRAY_EXIT) {
                 std::cout << "Exiting...\n";
                 Shell_NotifyIcon(NIM_DELETE, &nid);
                 PostQuitMessage(0);
-
-                break;
             }
+            break;
+        }
+
+        case WM_DESTROY: {
+            std::cout << "Exiting...\n";
+            Shell_NotifyIcon(NIM_DELETE, &nid);
+            PostQuitMessage(0);
+
+            break;
         }
     }
 
