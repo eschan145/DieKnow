@@ -111,12 +111,9 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
                 Shell_NotifyIcon(NIM_DELETE, &nid);
                 PostQuitMessage(0);
                 break;
-
-            default:
-                return DefWindowProc(asteroids->hwnd, uMsg, wParam, lParam);
         }
     }
-    return 0;
+    return DefWindowProc(asteroids->hwnd, uMsg, wParam, lParam);
 }
 
 void Asteroids::add() {
