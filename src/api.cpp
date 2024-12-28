@@ -345,7 +345,7 @@ DK_API void start_monitoring(const char* folder_path) {
         std::cout << "Detatched monitoring thread.\n";
         std::cout << "Monitoring started.\n";
 
-        std::thread asteroids_thread(create, running);
+        std::thread asteroids_thread(create, std::ref(running));
         asteroids_thread.detach();
     } else {
         std::cout << "The DieKnow process has already been started!\n";
