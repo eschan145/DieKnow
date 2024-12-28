@@ -149,14 +149,14 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
 
             Rect rectangle;
             rectangle.width = client_rect.right - client_rect.left
-                - 2 * Asteroids::padding;
+                - 2 * Asteroids::DK_PADDING;
             rectangle.height = client_rect.bottom - client_rect.top
-                - 2 * Asteroids::padding;
+                - 2 * Asteroids::DK_PADDING;
 
             rectangle.x = client_rect.left +
-                Asteroids::padding;  // Actually the left
+                Asteroids::DK_PADDING;  // Actually the left
             rectangle.y = client_rect.top +
-                Asteroids::padding;  // Actually the top
+                Asteroids::DK_PADDING;  // Actually the top
 
             HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
 
