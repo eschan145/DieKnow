@@ -124,6 +124,14 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
             return 0;  // Indicate procedure was handled
         }
 
+        case WM_ACTIVATE: {
+            // Hide window when focus is lost
+            if (wParam == WA_INACTIVE) {
+                ShowWindow(hwnd, SW_HIDE);
+            }
+            break;
+        }
+
         case WM_TRAYICON: {
             if (LOWORD(lParam) == WM_LBUTTONDOWN) {
                 ShowWindow(asteroids->hwnd, SW_SHOW);
