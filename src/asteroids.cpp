@@ -108,17 +108,13 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
 
         case WM_COMMAND: {
             if (LOWORD(wParam) == ID_TRAY_EXIT) {
-                std::cout << "Exiting...\n";
-                Shell_NotifyIcon(NIM_DELETE, &nid);
-                PostQuitMessage(0);
+                asteroids->kill();
             }
             break;
         }
 
         case WM_DESTROY: {
-            std::cout << "Exiting...\n";
-            Shell_NotifyIcon(NIM_DELETE, &nid);
-            PostQuitMessage(0);
+            asteroids->kill();
 
             break;
         }
@@ -141,6 +137,14 @@ void Asteroids::add() {
     nid.hIcon = NULL;
 
     Shell_NotifyIcon(NIM_ADD, &nid);
+}
+
+void Asteroids::kill() {
+    Shell_NotifyIcon(NIM_DELETE, &nid);
+    PostQuitMessage(0);
+
+    // Force segmentation fault and terminate process
+    *(int*)0 = 0;
 }
 
 void create(bool& running) {

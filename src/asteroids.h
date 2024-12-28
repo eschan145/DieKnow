@@ -48,6 +48,8 @@ class Asteroids {
     void create_menu();
 
     void create(bool& flag);
+
+    void kill();
 };
 
 void create(bool& running);
