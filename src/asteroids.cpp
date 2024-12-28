@@ -24,29 +24,10 @@ VERSION: 2.0.1
 
 NOTIFYICONDATA nid;
 
-void create_menu() {
-    HMENU hMenu = CreatePopupMenu();
-    POINT pt;
-
-    AppendMenu(hMenu, MF_STRING, ID_TRAY_EXIT, "Exit");
-    GetCursorPos(&pt);
-    SetForegroundWindow(hwnd);
-    TrackPopupMenu(
-        hMenu,
-        TPM_BOTTOMALIGN |
-        TPM_LEFTALIGN,
-        pt.x, pt.y,
-        0, hwnd,
-        NULL
-    );
-    DestroyMenu(hMenu);
-}
-
-void create(bool& flag) {
+void Asteroids::create(bool& flag) {
     const char CLASS_NAME[] = "DyKnow";
 
     HINSTANCE hInstance = GetModuleHandle(NULL);
-    HWND hwnd;
     MSG msg;
 
     WNDCLASS wc = {0};
@@ -55,7 +36,7 @@ void create(bool& flag) {
     wc.lpszClassName = CLASS_NAME;
     RegisterClass(&wc);
 
-    hwnd = CreateWindow(
+    this->hwnd = CreateWindow(
         wc.lpszClassName,
         "DyKnow",
         WS_OVERLAPPEDWINDOW,
@@ -69,7 +50,7 @@ void create(bool& flag) {
         NULL
     );
 
-    add(hwnd);
+    this->add();
 
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
@@ -81,19 +62,42 @@ void create(bool& flag) {
     }
 }
 
-LRESULT CALLBACK TrayWindowProc(
+void Asteroids::create_menu() {
+    HMENU hMenu = CreatePopupMenu();
+    POINT pt;
+
+    AppendMenu(hMenu, MF_STRING, ID_TRAY_EXIT, "Exit");
+    GetCursorPos(&pt);
+    SetForegroundWindow(this->hwnd);
+    TrackPopupMenu(
+        hMenu,
+        TPM_BOTTOMALIGN |
+        TPM_LEFTALIGN,
+        pt.x, pt.y,
+        0, hwnd,
+        NULL
+    );
+    DestroyMenu(hMenu);
+}
+
+static LRESULT CALLBACK Asteroids::TrayWindowProc(
     HWND hwnd,
     UINT uMsg,
     WPARAM wParam,
     LPARAM lParam) {
+    // We'll have to use reinterpret_cast as this function is static
+    Asteroids* app = reinterpret_cast<Asteroids*>(
+        GetWindowLongPtr(hwnd, GWLP_USERDATA)
+    );
+
     if (uMsg == WM_TRAYICON) {
         switch (lParam) {
             case WM_LBUTTONUP:
-                MessageBox(hwnd, "DyKnow", "DyKnow", MB_OK);
+                MessageBox(asteroids->hwnd, "DyKnow", "DyKnow", MB_OK);
                 break;
 
             case WM_RBUTTONUP:
-                create_menu();
+                asteroids->create_menu();
                 break;
 
             case WM_COMMAND:
@@ -109,21 +113,28 @@ LRESULT CALLBACK TrayWindowProc(
                 break;
 
             default:
-                return DefWindowProc(hwnd, uMsg, wParam, lParam);
+                return DefWindowProc(application->hwnd, uMsg, wParam, lParam);
         }
     }
     return 0;
 }
 
-void add(HWND hwnd) {
+void Asteroids::add() {
     ZeroMemory(&nid, sizeof(nid));
     nid.cbSize = sizeof(nid);
     nid.uID = 1;
     nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
-    nid.hWnd = hwnd;
+    nid.hWnd = this->hwnd;
     nid.uCallbackMessage = WM_TRAYICON;
     lstrcpy(nid.szTip, "DyKnow");
     nid.hIcon = NULL;
 
     Shell_NotifyIcon(NIM_ADD, &nid);
+}
+
+void create(bool& running) {
+    Asteroids* asteroids = new Asteroids();
+    asteroids->create(running);
+
+    delete asteroids;
 }

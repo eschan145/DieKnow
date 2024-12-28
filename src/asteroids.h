@@ -29,15 +29,20 @@ VERSION: 2.0.1
 
 extern NOTIFYICONDATA nid;
 
-LRESULT CALLBACK TrayWindowProc(
-    HWND hwnd,
-    UINT uMsg,
-    WPARAM wParam,
-    LPARAM lParam
-);
+class Asteroids {
+ public:
+    HWND hwnd;
 
-void add(HWND hwnd);
+    LRESULT CALLBACK TrayWindowProc(
+        HWND hwnd,
+        UINT uMsg,
+        WPARAM wParam,
+        LPARAM lParam
+    );
 
-void create_menu();
+    void add();
 
-void create(bool& flag);
+    void create_menu();
+
+    void create(bool& flag);
+};
