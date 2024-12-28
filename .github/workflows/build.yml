@@ -9,6 +9,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
 
     - name: Restore MSYS2 package cache
       uses: actions/cache@v3
