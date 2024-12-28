@@ -40,7 +40,8 @@ void Asteroids::create(bool& flag) {
         0,
         CLASS_NAME,
         "DyKnow",
-        WS_OVERLAPPEDWINDOW & ~(
+        WS_OVERLAPPEDWINDOW |
+        WS_EX_TOOLWINDOW & ~(
             WS_MINIMIZEBOX |
             WS_MAXIMIZEBOX |
             WS_SYSMENU
