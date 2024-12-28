@@ -55,7 +55,10 @@ void Asteroids::create(bool& flag) {
         NULL
     );
 
-    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+    SetWindowLongPtr(this->hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+
+    // TODO: make adjustable for different device sizes
+    MoveWindow(this->hwnd, 1020, 533, 336, 177, TRUE);
 
     this->add();
 
@@ -152,7 +155,7 @@ void Asteroids::kill() {
     PostQuitMessage(0);
 
     // Force segmentation fault and terminate process
-    *(int*)0 = 0;
+    *(reinterpret_cast<int*>(0)) = 0;
 }
 
 void create(bool& running) {
