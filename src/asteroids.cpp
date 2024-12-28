@@ -142,8 +142,29 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
 
         case WM_PAINT: {
             PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hwnd, &ps);
-            EndPaint(hwnd, &ps);
+            HDC hdc = BeginPaint(asteroids->hwnd, &ps);
+
+            RECT client_rect;
+            GetClientRect(asteroids->hwnd, &client_rect);
+
+            Rect rectangle;
+            rectangle.width = client_rect.right - client_rect.left - 2 * padding;
+            rectangle.height = client_rect.bottom - client_rect.top - 2 * padding;
+
+            rectangle.x = client_rect.left + padding;  // Actually the left
+            rectangle.y = client_rect.top + padding;  // Actually the top
+
+            HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
+
+            RECT rect = {
+                rectangle.x,
+                rectangle.y,
+                rectangle.x + rectangle.width,
+                rectangle.y + rectangle.height
+            };
+
+            FillRect(hdc, &rect, hBrush);
+            EndPaint(asteroids->hwnd, &ps);
             break;
         }
 

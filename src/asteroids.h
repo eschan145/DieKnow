@@ -41,6 +41,8 @@ struct Rect {
 
 class Asteroids {
  public:
+    const static int DK_PADDING = 20;
+
     bool is_ready = false;
     Rect rect;
     HWND hwnd;
