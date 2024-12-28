@@ -52,9 +52,11 @@ void Asteroids::create(bool& flag) {
         NULL
     );
 
-    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+    std::cout << "GetLastError(): " << GetLastError();
 
     std::cout << "Successfully created asteroids HWND.\n";
+
+    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
     this->add();
 
@@ -122,7 +124,9 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
         }
     }
     std::cout << "Processsed main loop\n";
-    return DefWindowProc(asteroids->hwnd, uMsg, wParam, lParam);
+    auto result = DefWindowProc(asteroids->hwnd, uMsg, wParam, lParam);
+    std::cout << "Porcessed Default Windows Procedure\n";
+    return result;
 }
 
 void Asteroids::add() {
