@@ -50,6 +50,8 @@ void Asteroids::create(bool& flag) {
         NULL
     );
 
+    std::cout << "Successfully create asteroids HWND.\n";
+
     this->add();
 
     while (GetMessage(&msg, NULL, 0, 0)) {
@@ -63,6 +65,7 @@ void Asteroids::create(bool& flag) {
 }
 
 void Asteroids::create_menu() {
+    std::cout << "Creating menu.\n";
     HMENU hMenu = CreatePopupMenu();
     POINT pt;
 
@@ -78,6 +81,7 @@ void Asteroids::create_menu() {
         NULL
     );
     DestroyMenu(hMenu);
+    std::cout << "Created menu.\n";
 }
 
 LRESULT CALLBACK Asteroids::TrayWindowProc(
@@ -85,10 +89,12 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
     UINT uMsg,
     WPARAM wParam,
     LPARAM lParam) {
+    std::cout << "Casting.\n";
     // We'll have to use reinterpret_cast as this function is static
     Asteroids* asteroids = reinterpret_cast<Asteroids*>(
         GetWindowLongPtr(hwnd, GWLP_USERDATA)
     );
+    std::cout << "Casted!\n";
 
     if (uMsg == WM_TRAYICON) {
         switch (lParam) {
