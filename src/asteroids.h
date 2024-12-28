@@ -33,7 +33,7 @@ class Asteroids {
  public:
     HWND hwnd;
 
-    LRESULT CALLBACK TrayWindowProc(
+    static LRESULT CALLBACK TrayWindowProc(
         HWND hwnd,
         UINT uMsg,
         WPARAM wParam,

@@ -80,13 +80,13 @@ void Asteroids::create_menu() {
     DestroyMenu(hMenu);
 }
 
-static LRESULT CALLBACK Asteroids::TrayWindowProc(
+LRESULT CALLBACK Asteroids::TrayWindowProc(
     HWND hwnd,
     UINT uMsg,
     WPARAM wParam,
     LPARAM lParam) {
     // We'll have to use reinterpret_cast as this function is static
-    Asteroids* app = reinterpret_cast<Asteroids*>(
+    Asteroids* asteroids = reinterpret_cast<Asteroids*>(
         GetWindowLongPtr(hwnd, GWLP_USERDATA)
     );
 
@@ -113,7 +113,7 @@ static LRESULT CALLBACK Asteroids::TrayWindowProc(
                 break;
 
             default:
-                return DefWindowProc(application->hwnd, uMsg, wParam, lParam);
+                return DefWindowProc(asteroids->hwnd, uMsg, wParam, lParam);
         }
     }
     return 0;
