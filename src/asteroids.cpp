@@ -126,9 +126,7 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
 
         case WM_TRAYICON: {
             if (LOWORD(lParam) == WM_LBUTTONDOWN) {
-                if (uMsg == WM_TRAYICON) {
-                    MessageBox(hwnd, "DyKnow", "DyKnow", MB_OK);
-                }
+                ShowWindow(asteroids->hwnd, SW_SHOW);
             }
 
             if (LOWORD(lParam) == WM_RBUTTONDOWN) {

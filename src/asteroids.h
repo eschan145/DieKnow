@@ -40,7 +40,7 @@ struct Vector {
 class Asteroids {
  public:
     bool is_ready = false;
-    Position position;
+    Vector position;
     HWND hwnd;
 
     static LRESULT CALLBACK TrayWindowProc(
