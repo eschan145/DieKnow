@@ -103,7 +103,7 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
     if (uMsg == WM_TRAYICON) {
         switch (lParam) {
             case WM_LBUTTONUP:
-                MessageBox(asteroids->hwnd, "DyKnow", "DyKnow", MB_OK);
+                MessageBox(hwnd, "DyKnow", "DyKnow", MB_OK);
                 break;
 
             case WM_RBUTTONUP:
@@ -124,8 +124,8 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
         }
     }
     std::cout << "Processsed main loop\n";
-    auto result = DefWindowProc(asteroids->hwnd, uMsg, wParam, lParam);
-    std::cout << "Porcessed Default Windows Procedure\n";
+    auto result = DefWindowProc(hwnd, uMsg, wParam, lParam);
+    std::cout << "Processed Default Windows Procedure\n";
     return result;
 }
 
