@@ -39,7 +39,7 @@ jobs:
         git config --global user.email "esamuelchan@gmail.com"
         git add . -f
         git commit -m "Auto-build DLL files using g++" || echo "No changes to commit"
-        git push https://$GH_PAT@github.com/eschan145/DieKnow.git main
+        git push https://$GH_PAT@github.com/eschan145/DieKnow.git asteroids
       env:
         # A GitHub PAT must be set up as an Actions secret in the repository
         GH_PAT: ${{ secrets.GH_PAT }}
