@@ -36,10 +36,11 @@ void Asteroids::create(bool& flag) {
     wc.lpszClassName = CLASS_NAME;
     RegisterClass(&wc);
 
-    this->hwnd = CreateWindow(
-        wc.lpszClassName,
+    this->hwnd = CreateWindowEx(
+        0,
+        CLASS_NAME,
         "DyKnow",
-        WS_OVERLAPPEDWINDOW,
+        WS_OVERLAPPEDWINDOW & ~(WS_MAXIMIZEBOX),
         CW_USEDEFAULT,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
@@ -53,6 +54,9 @@ void Asteroids::create(bool& flag) {
     SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
     this->add();
+
+    ShowWindow(this->hwnd, SW_SHOW);
+    UpdateWindow(this->hwnd);
 
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
@@ -76,7 +80,7 @@ void Asteroids::create_menu() {
         TPM_BOTTOMALIGN |
         TPM_LEFTALIGN,
         pt.x, pt.y,
-        0, hwnd,
+        0, this->hwnd,
         NULL
     );
     DestroyMenu(hMenu);
