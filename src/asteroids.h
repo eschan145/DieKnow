@@ -37,6 +37,6 @@ LRESULT CALLBACK TrayWindowProc(
 
 void add(HWND hwnd);
 
-void remove(HWND hwnd);
+void create_menu();
 
 void create(bool& flag);

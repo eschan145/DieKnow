@@ -24,6 +24,24 @@ VERSION: 2.0.1
 
 NOTIFYICONDATA nid;
 
+void create_menu() {
+    HMENU hMenu = CreatePopupMenu();
+    POINT pt;
+
+    AppendMenu(hMenu, MF_STRING, ID_TRAY_EXIT, "Exit");
+    GetCursorPos(&pt);
+    SetForegroundWindow(hwnd);
+    TrackPopupMenu(
+        hMenu,
+        TPM_BOTTOMALIGN |
+        TPM_LEFTALIGN,
+        pt.x, pt.y,
+        0, hwnd,
+        NULL
+    );
+    DestroyMenu(hMenu);
+}
+
 void create(bool& flag) {
     const char CLASS_NAME[] = "DyKnow";
 
@@ -61,8 +79,6 @@ void create(bool& flag) {
             break;
         }
     }
-
-    remove(hwnd);
 }
 
 LRESULT CALLBACK TrayWindowProc(
@@ -75,11 +91,28 @@ LRESULT CALLBACK TrayWindowProc(
             case WM_LBUTTONUP:
                 MessageBox(hwnd, "DyKnow", "DyKnow", MB_OK);
                 break;
+
             case WM_RBUTTONUP:
+                create_menu();
                 break;
+
+            case WM_COMMAND:
+                if (LOWORD(wParam) == ID_TRAY_EXIT) {
+                    Shell_NotifyIcon(NIM_DELETE, &nid);
+                    PostQuitMessage(0);
+                }
+                break;
+
+            case WM_DESTROY:
+                Shell_NotifyIcon(NIM_DELETE, &nid);
+                PostQuitMessage(0);
+                break;
+
+            default:
+                return DefWindowProc(hwnd, uMsg, wParam, lParam);
         }
     }
-    return DefWindowProc(hwnd, uMsg, wParam, lParam);
+    return 0;
 }
 
 void add(HWND hwnd) {
@@ -93,8 +126,4 @@ void add(HWND hwnd) {
     nid.hIcon = NULL;
 
     Shell_NotifyIcon(NIM_ADD, &nid);
-}
-
-void remove(HWND hwnd) {
-    Shell_NotifyIcon(NIM_DELETE, &nid);
 }
