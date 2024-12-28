@@ -45,6 +45,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <filesystem>
 #include <sstream>
 
+#include "asteroids.h"
 #include "settings.h"
 
 #pragma comment(lib, "wininet.lib")
