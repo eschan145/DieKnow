@@ -32,15 +32,17 @@ VERSION: 2.0.1
 
 extern NOTIFYICONDATA nid;
 
-struct Vector {
+struct Rect {
     float x;
     float y;
+    float width;
+    float height;
 };
 
 class Asteroids {
  public:
     bool is_ready = false;
-    Vector position;
+    Rect rect;
     HWND hwnd;
 
     static LRESULT CALLBACK TrayWindowProc(
