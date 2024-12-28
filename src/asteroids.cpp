@@ -134,7 +134,7 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
             HDC hdc = (HDC)wParam;
             RECT rect;
             GetClientRect(hwnd, &rect);
-            HBRUSH hBrush = CreateSolidBrush(RGB(169, 169, 169));
+            HBRUSH hBrush = CreateSolidBrush(RGB(240, 240, 240));
             FillRect(hdc, &rect, hBrush);
             DeleteObject(hBrush);
             return 1;
