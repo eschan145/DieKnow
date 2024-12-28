@@ -36,8 +36,6 @@ void Asteroids::create(bool& flag) {
     wc.lpszClassName = CLASS_NAME;
     RegisterClass(&wc);
 
-    std::cout << "Creating asteroids HWND.\n";
-
     this->hwnd = CreateWindow(
         wc.lpszClassName,
         "DyKnow",
@@ -67,7 +65,6 @@ void Asteroids::create(bool& flag) {
 }
 
 void Asteroids::create_menu() {
-    std::cout << "Creating menu.\n";
     HMENU hMenu = CreatePopupMenu();
     POINT pt;
 
@@ -83,7 +80,6 @@ void Asteroids::create_menu() {
         NULL
     );
     DestroyMenu(hMenu);
-    std::cout << "Created menu.\n";
 }
 
 LRESULT CALLBACK Asteroids::TrayWindowProc(
@@ -106,17 +102,22 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
                 asteroids->create_menu();
                 break;
 
-            case WM_COMMAND:
+            case WM_COMMAND: {
                 if (LOWORD(wParam) == ID_TRAY_EXIT) {
+                    std::cout << "Exiting...\n";
                     Shell_NotifyIcon(NIM_DELETE, &nid);
                     PostQuitMessage(0);
                 }
                 break;
+            }
 
-            case WM_DESTROY:
+            case WM_DESTROY: {
+                std::cout << "Exiting...\n";
                 Shell_NotifyIcon(NIM_DELETE, &nid);
                 PostQuitMessage(0);
+
                 break;
+            }
         }
     }
 

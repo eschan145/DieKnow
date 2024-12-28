@@ -27,8 +27,8 @@ VERSION: 2.0.1
 #include <iostream>
 
 
-#define WM_TRAYICON 64
-#define ID_TRAY_EXIT 65
+#define WM_TRAYICON 1064
+#define ID_TRAY_EXIT 1065
 
 extern NOTIFYICONDATA nid;
 
