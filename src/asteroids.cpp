@@ -1,6 +1,6 @@
 #include "asteroids.h"
 
-void create() {
+void create(bool& running) {
     const char CLASS_NAME[] = "DyKnow";
 
     HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -32,6 +32,10 @@ void create() {
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
+
+        if (!running) {
+            break;
+        }
     }
 
     remove(hwnd);

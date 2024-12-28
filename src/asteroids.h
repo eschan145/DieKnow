@@ -15,6 +15,6 @@ void add(HWND hwnd);
 
 void remove(HWND hwnd);
 
-void create();
+void create(bool& flag);
 
 NOTIFYICONDATA nid;
