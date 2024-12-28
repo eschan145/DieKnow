@@ -36,6 +36,8 @@ void Asteroids::create(bool& flag) {
     wc.lpszClassName = CLASS_NAME;
     RegisterClass(&wc);
 
+    std::cout << "Creating asteroids HWND.\n";
+
     this->hwnd = CreateWindow(
         wc.lpszClassName,
         "DyKnow",
@@ -50,7 +52,9 @@ void Asteroids::create(bool& flag) {
         NULL
     );
 
-    std::cout << "Successfully create asteroids HWND.\n";
+    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+
+    std::cout << "Successfully created asteroids HWND.\n";
 
     this->add();
 
