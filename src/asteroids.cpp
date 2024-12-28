@@ -94,5 +94,5 @@ void add(HWND hwnd) {
 }
 
 void remove(HWND hwnd) {
-    Shell_NotifyIcon(NIM_DELETE, &nid);
+    Shell_NotifyIcon(NIM_DELETE, &anid);
 }
