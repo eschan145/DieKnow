@@ -24,6 +24,9 @@ VERSION: 2.0.1
 #include <shellapi.h>
 #include <tchar.h>
 
+#include <iostream>
+
+
 #define WM_TRAYICON 64
 #define ID_TRAY_EXIT 65
 
