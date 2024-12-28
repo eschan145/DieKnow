@@ -39,7 +39,7 @@ void Asteroids::create(bool& flag) {
     this->hwnd = CreateWindowEx(
         WS_EX_TOOLWINDOW,
         CLASS_NAME,
-        "DyKnow",
+        "Do you understand?",
         WS_OVERLAPPEDWINDOW & ~(
             WS_MINIMIZEBOX |
             WS_MAXIMIZEBOX |
