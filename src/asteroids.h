@@ -40,4 +40,3 @@ void add(HWND hwnd);
 void remove(HWND hwnd);
 
 void create(bool& flag);
-

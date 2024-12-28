@@ -22,6 +22,8 @@ VERSION: 2.0.1
 
 #include "asteroids.h"
 
+NOTIFYICONDATA nid;
+
 void create(bool& running) {
     const char CLASS_NAME[] = "DyKnow";
 
