@@ -55,9 +55,12 @@ void Asteroids::create(bool& flag) {
         NULL
     );
 
-    SetWindowLongPtr(this->hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+    SetWindowLongPtr(
+        this->hwnd, GWLP_USERDATA,
+        reinterpret_cast<LONG_PTR>(this)
+    );
 
-    // TODO: make adjustable for different device sizes
+    // TODO(eschan145): make adjustable for different device sizes
     MoveWindow(this->hwnd, 1020, 533, 336, 177, TRUE);
 
     this->add();
