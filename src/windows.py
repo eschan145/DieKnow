@@ -48,7 +48,6 @@ def get_window_info(title):
         print(f"Executable Path: {process.exe()}")
     except ImportError:
         print("Did not find psutil... skipping process details.")
-        pass
 
     text = win32gui.GetWindowText(hwnd)
     print(f"Window Text: {text}")
@@ -56,9 +55,8 @@ def get_window_info(title):
     print()
     print("Child windows")
     print("=============")
-    child_windows = []
 
-    def enum_child_windows_callback(hwnd, lParam):
+    def enum_child_windows_callback(hwnd):
         """Enumerate through child windows and retreive information."""
         class_name = win32gui.GetClassName(hwnd)
         window_text = win32gui.GetWindowText(hwnd)
