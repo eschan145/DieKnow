@@ -47,4 +47,4 @@ class Asteroids {
     void create(bool& flag);
 };
 
-void create();
+void create(bool& running);
