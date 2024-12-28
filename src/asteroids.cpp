@@ -151,7 +151,7 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
             rectangle.width = client_rect.right - client_rect.left
                 - 2 * Asteroids::DK_PADDING;
             rectangle.height = client_rect.bottom - client_rect.top
-                - 2 * Asteroids::DK_PADDING;
+                - Asteroids::DK_PADDING - Asteroids::DK_BOTTOM_PADDING;
 
             rectangle.x = client_rect.left +
                 Asteroids::DK_PADDING;  // Actually the left
