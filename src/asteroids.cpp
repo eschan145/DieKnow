@@ -59,6 +59,18 @@ void Asteroids::create(bool& flag) {
         this->hwnd, GWLP_USERDATA,
         reinterpret_cast<LONG_PTR>(this)
     );
+    SetWindowLong(
+        this->hwnd, GWL_STYLE,
+        GetWindowLong(this->hwnd, GWL_STYLE) &
+        ~WS_THICKFRAME
+    );
+    SetWindowPos(
+        this->hwnd, NULL,
+        0, 0, 0, 0,
+        SWP_NOMOVE | SWP_NOSIZE |
+        SWP_NOZORDER | SWP_FRAMECHANGED
+    );
+
 
     this->position = {1020, 533};
 
