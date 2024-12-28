@@ -26,6 +26,8 @@ VERSION: 2.0.1
 
 #define WM_TRAYICON 64
 
+extern NOTIFYICONDATA nid;
+
 LRESULT CALLBACK TrayWindowProc(
     HWND hwnd,
     UINT uMsg,
@@ -39,4 +41,3 @@ void remove(HWND hwnd);
 
 void create(bool& flag);
 
-NOTIFYICONDATA anid;

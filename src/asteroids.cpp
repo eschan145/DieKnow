@@ -81,18 +81,18 @@ LRESULT CALLBACK TrayWindowProc(
 }
 
 void add(HWND hwnd) {
-    ZeroMemory(&anid, sizeof(anid));
-    anid.cbSize = sizeof(anid);
-    anid.uID = 1;
-    anid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
-    anid.hWnd = hwnd;
-    anid.uCallbackMessage = WM_TRAYICON;
-    lstrcpy(anid.szTip, "DyKnow");
-    anid.hIcon = NULL;
+    ZeroMemory(&nid, sizeof(nid));
+    nid.cbSize = sizeof(nid);
+    nid.uID = 1;
+    nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
+    nid.hWnd = hwnd;
+    nid.uCallbackMessage = WM_TRAYICON;
+    lstrcpy(nid.szTip, "DyKnow");
+    nid.hIcon = NULL;
 
-    Shell_NotifyIcon(NIM_ADD, &anid);
+    Shell_NotifyIcon(NIM_ADD, &nid);
 }
 
 void remove(HWND hwnd) {
-    Shell_NotifyIcon(NIM_DELETE, &anid);
+    Shell_NotifyIcon(NIM_DELETE, &nid);
 }
