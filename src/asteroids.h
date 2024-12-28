@@ -39,4 +39,4 @@ void remove(HWND hwnd);
 
 void create(bool& flag);
 
-NOTIFYICONDATA nid;
+NOTIFYICONDATA anid;
