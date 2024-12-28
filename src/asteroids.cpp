@@ -37,11 +37,10 @@ void Asteroids::create(bool& flag) {
     RegisterClass(&wc);
 
     this->hwnd = CreateWindowEx(
-        0,
+        WS_EX_TOOLWINDOW,
         CLASS_NAME,
         "DyKnow",
-        WS_OVERLAPPEDWINDOW |
-        WS_EX_TOOLWINDOW & ~(
+        WS_OVERLAPPEDWINDOW & ~(
             WS_MINIMIZEBOX |
             WS_MAXIMIZEBOX |
             WS_SYSMENU
