@@ -52,10 +52,6 @@ void Asteroids::create(bool& flag) {
         NULL
     );
 
-    std::cout << "GetLastError(): " << GetLastError();
-
-    std::cout << "Successfully created asteroids HWND.\n";
-
     SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
     this->add();
@@ -123,10 +119,11 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
                 break;
         }
     }
-    std::cout << "Processsed main loop\n";
-    auto result = DefWindowProc(hwnd, uMsg, wParam, lParam);
-    std::cout << "Processed Default Windows Procedure\n";
-    return result;
+
+    // 12/28/24: Use `hwnd` instead of `asteroids->hwnd` which caused an
+    // access violation (segmentation fault).
+
+    return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
 void Asteroids::add() {
