@@ -24,7 +24,7 @@ VERSION: 2.0.1
 
 NOTIFYICONDATA nid;
 
-void create(bool& running) {
+void create(bool& flag) {
     const char CLASS_NAME[] = "DyKnow";
 
     HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -57,7 +57,7 @@ void create(bool& running) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
 
-        if (!running) {
+        if (!flag) {
             break;
         }
     }
