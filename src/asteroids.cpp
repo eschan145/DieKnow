@@ -60,8 +60,17 @@ void Asteroids::create(bool& flag) {
         reinterpret_cast<LONG_PTR>(this)
     );
 
+    this->position = {1020, 533};
+
     // TODO(eschan145): make adjustable for different device sizes
-    MoveWindow(this->hwnd, 1020, 533, 336, 177, TRUE);
+    MoveWindow(
+        this->hwnd,
+        this->position.x,
+        this->position.y,
+        336, 177, TRUE
+    );
+
+    this->is_ready = true;
 
     this->add();
 
@@ -107,6 +116,14 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
     );
 
     switch (uMsg) {
+        case WM_WINDOWPOSCHANGING: {
+            WINDOWPOS* position = reinterpret_cast<WINDOWPOS*>(lParam);
+            position->x = asteroids->position.x;
+            position->y = asteroids->position.y;
+
+            return 0;  // Indicate procedure was handled
+        }
+
         case WM_TRAYICON: {
             if (LOWORD(lParam) == WM_LBUTTONDOWN) {
                 if (uMsg == WM_TRAYICON) {
