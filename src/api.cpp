@@ -315,7 +315,7 @@ DK_API void start_monitoring(const char* folder_path) {
                       << "off or disable your Internet before you begin "
                       << "DieKnow! Once started, you can turn back on your "
                       << "Internet. Aborting.\n";
-            return;
+            // return;
         }
 
         running = true;
