@@ -8,7 +8,7 @@ void create() {
     MSG msg;
 
     WNDCLASS wc = {0};
-    wc.lpfnWndProc = WindowProc;
+    wc.lpfnWndProc = TrayWindowProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = CLASS_NAME;
     RegisterClass(&wc);
@@ -35,11 +35,13 @@ void create() {
     }
 
     remove(hwnd);
-
-    return 0;
 }
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK TrayWindowProc(
+    HWND hwnd,
+    UINT uMsg,
+    WPARAM wParam,
+    LPARAM lParam) {
     if (uMsg == WM_TRAYICON) {
         switch (lParam) {
             case WM_LBUTTONUP:
@@ -59,7 +61,7 @@ void add(HWND hwnd) {
     nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
     nid.hWnd = hwnd;
     nid.uCallbackMessage = WM_TRAYICON;
-    lstrcpy(nid.szTip, "DyKnow"));
+    lstrcpy(nid.szTip, "DyKnow");
     nid.hIcon = NULL;
 
     Shell_NotifyIcon(NIM_ADD, &nid);
