@@ -29,6 +29,7 @@ VERSION: 2.0.1
 
 #define WM_TRAYICON 1064
 #define ID_TRAY_EXIT 1065
+#define ID_HELP 1066
 
 extern NOTIFYICONDATA nid;
 

@@ -36,6 +36,23 @@ void Asteroids::create(bool& flag) {
     wc.lpszClassName = CLASS_NAME;
     RegisterClass(&wc);
 
+    HFONT main_font = CreateFont(
+        18,
+        0,
+        0,
+        0,
+        FW_NORMAL,
+        FALSE,
+        FALSE,
+        FALSE,
+        DEFAULT_CHARSET,
+        OUT_DEFAULT_PRECIS,
+        CLIP_DEFAULT_PRECIS,
+        DEFAULT_QUALITY,
+        DEFAULT_PITCH | FF_SWISS,
+        "Segoe UI"
+    );
+
     this->hwnd = CreateWindowEx(
         WS_EX_TOOLWINDOW,
         CLASS_NAME,
@@ -52,6 +69,17 @@ void Asteroids::create(bool& flag) {
         NULL,
         NULL,
         hInstance,
+        NULL
+    );
+
+    HWND help_button = CreateWindow(
+        "STATIC",
+        "Something not working?",
+        WS_VISIBLE | WS_CHILD,
+        60, 10, 50, 20,
+        this->hwnd,
+        (HMENU)ID_HELP,
+        wc.hInstance,
         NULL
     );
 
@@ -87,6 +115,8 @@ void Asteroids::create(bool& flag) {
     this->is_ready = true;
 
     this->add();
+
+    SendMessage(help_button, WM_SETFONT, (WPARAM)main_font, TRUE);
 
     ShowWindow(this->hwnd, SW_SHOW);
     UpdateWindow(this->hwnd);
