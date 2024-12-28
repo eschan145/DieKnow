@@ -8,6 +8,8 @@ try:
 except ImportError as exc:
     raise OSError("Failed to load Window ctypes! Ensure you are on a Windows "
                   "platform!") from exc
+import faulthandler
+import signal
 
 import os
 import sys

@@ -89,12 +89,10 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
     UINT uMsg,
     WPARAM wParam,
     LPARAM lParam) {
-    std::cout << "Casting.\n";
     // We'll have to use reinterpret_cast as this function is static
     Asteroids* asteroids = reinterpret_cast<Asteroids*>(
         GetWindowLongPtr(hwnd, GWLP_USERDATA)
     );
-    std::cout << "Casted!\n";
 
     if (uMsg == WM_TRAYICON) {
         switch (lParam) {
@@ -119,6 +117,7 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
                 break;
         }
     }
+    std::cout << "Processsed main loop\n";
     return DefWindowProc(asteroids->hwnd, uMsg, wParam, lParam);
 }
 
