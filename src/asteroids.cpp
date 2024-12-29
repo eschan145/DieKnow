@@ -25,6 +25,8 @@ VERSION: 2.0.1
 NOTIFYICONDATA nid;
 
 void Asteroids::create(bool& flag) {
+    this->rect = {1020, 533, 336, 177};
+
     const char CLASS_NAME[] = "DyKnow";
 
     HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -76,7 +78,7 @@ void Asteroids::create(bool& flag) {
         "STATIC",
         "Something not working?",
         WS_VISIBLE | WS_CHILD,
-        161, 10, 200, 18,
+        161, this->height - 9, this->rect.width, 18,
         this->hwnd,
         (HMENU)ID_HELP,
         wc.hInstance,
@@ -98,9 +100,6 @@ void Asteroids::create(bool& flag) {
         SWP_NOMOVE | SWP_NOSIZE |
         SWP_NOZORDER | SWP_FRAMECHANGED
     );
-
-
-    this->rect = {1020, 533, 336, 177};
 
     // TODO(eschan145): make adjustable for different device sizes
     MoveWindow(
