@@ -76,7 +76,7 @@ void Asteroids::create(bool& flag) {
         "STATIC",
         "Something not working?",
         WS_VISIBLE | WS_CHILD,
-        60, 10, 50, 20,
+        161, 10, 200, 18,
         this->hwnd,
         (HMENU)ID_HELP,
         wc.hInstance,
