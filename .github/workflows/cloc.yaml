@@ -1,0 +1,25 @@
+name: Count Lines of Code
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  cloc:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Count lines of code
+      uses: djdefi/cloc-action@main
+      with:
+        options: --exclude-lang=md,yaml --md --report-file=cloc.md
+
+    - name: Upload cloc report as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: cloc-report
+        path: cloc.md
