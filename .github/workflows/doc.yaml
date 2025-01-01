@@ -15,5 +15,5 @@ jobs:
       - name: Build docs
         shell: cmd
         run: |
-          py dieknow.py -docs
+          py src/dieknow.py -docs
           echo "Generated documentation"
