@@ -21,6 +21,12 @@ jobs:
         ls -l src/dlls/api.dll
         ls -l src/dlls/gui.dll
 
+    - name: Build docs
+      shell: cmd
+      run: |
+        py src/dieknow.py -docs
+        echo "Generated documentation"     
+
     - name: Commit and push .dll file
       run: |
         git config --global user.name "Ethan Chan"
