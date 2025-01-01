@@ -68,6 +68,12 @@ Check if DieKnow is running or not.
 
 **Signature**: `bool`
 
+### *function* `is_connected()`
+
+Check for an Internet connection and return the connection type, one of `InternetFlags`.
+
+**Signature**: `InternetFlags`
+
 ### *function* `get_executables_in_folder()`
 
 Retrieve a printable list of executables in a folder.
@@ -82,7 +88,7 @@ Open the Windows Blue Screen of Death via NT API's `NtRaiseHardError`.
 
 Use with caution! Your system will freeze and shut down within a few seconds, losing any unsaved work.
 
-This function NtRaiseHardError is part of the Windows New Technology API kernel and is undocumented. The reason why is to prevent non-system libraries from messing around with low-level settings they aren't supposed to.
+This function `NtRaiseHardError` is part of the Windows New Technology API kernel and is completely undocumented. The reason why is to prevent non-system libraries from messing around with low-level settings they aren't supposed to.
 
 **Signature**: `int __stdcall`
 
