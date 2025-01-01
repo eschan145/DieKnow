@@ -12,24 +12,10 @@ jobs:
       with:
         fetch-depth: 1
 
-    - name: Restore MSYS2 package cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          C:\msys64\var\cache\pacman\pkg
-          C:\msys64\var\lib\pacman\sync
-        key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('dlls/api.dll') }}
-
-    - name: Set up MSYS2
-      uses: msys2/setup-msys2@v2
-      with:
-        update: true
-        install: |
-          mingw-w64-x86_64-gcc
-
-    - name: Compile to .dll
+    - name: Compile and build source files
       shell: msys2 {0}
       run: |
+        g++ --version
         g++ -O2 -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -lgdi32 -lwininet
         g++ -O2 -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -lgdi32 -lwininet -lcomctl32
         ls -l src/dlls/api.dll
