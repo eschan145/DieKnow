@@ -13,7 +13,7 @@ jobs:
         fetch-depth: 1
 
     - name: Compile and build source files
-      shell: msys2 {0}
+      shell: cmd
       run: |
         g++ --version
         g++ -O2 -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -lgdi32 -lwininet
