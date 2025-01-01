@@ -658,7 +658,7 @@ LRESULT CALLBACK Application::WindowProc(
 void Application::restore_snapshots() {
     /*
     Restore the saved window snapshot.
-    
+
     There is no error handling if the snapshot is empty -- it is assumed that
     the snapshot restoration button will be disabled if the snapshot is empty
     instead.
@@ -903,7 +903,7 @@ void Application::update_windows(std::vector<Window>& current_windows) {
 DK_API void create_window() {
     /*
     Create the DieKnow GUI process.
-    
+
     Unlike the command line process this does not start in an indepent thread!
     So ensure that you can close it easily after it finishes.
     */
