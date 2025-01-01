@@ -53,6 +53,7 @@ def doc(file_path, lib=None, markdown=False):
 
         with open(output_markdown, "w", encoding="utf-8") as md_file:
             md_file.write(f"# Documentation for `{base_name}.cpp`\n\n")
+            md_file.write("This documentation is automatically generated each push to GitHub.")
             for (name, docstring) in docstrings:
                 md_file.write(f"### *function* `{name}()`\n\n{docstring}\n\n")
 
