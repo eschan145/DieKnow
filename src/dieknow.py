@@ -20,11 +20,12 @@ if "-docs" in sys.argv:
     md = True
 
 lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
+gui_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "gui.dll")
 
 try:
     lib = ctypes.CDLL(lib_dll_path)
     guilib = ctypes.CDLL(gui_dll_path)
-except ctypes.WinError as exc:
+except OSError as exc:
     raise OSError("Failed to load DLL libraries! Ensure that the library is "
                   "not corrupted, it uses the same architecture (x64) as your "
                   "machine (as well as its dependencies) and is not missing "
@@ -65,9 +66,6 @@ bsod = lib.bsod
 dialog = lib.dialog
 
 doc.doc(os.path.join(os.path.dirname(__file__), "api.cpp"), lib, markdown=md)
-
-gui_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "gui.dll")
-
 
 try:
     create_window = guilib.create_window
