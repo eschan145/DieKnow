@@ -6,7 +6,7 @@ try:
     from ctypes import wintypes
 
 except ImportError as exc:
-    raise OSError("Failed to load Window ctypes! Ensure you are on a Windows "
+    raise OSError("Failed to load Windows ctypes! Ensure you are on a Windows "
                   "platform!") from exc
 
 import os
