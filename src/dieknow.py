@@ -48,8 +48,9 @@ try:
     lib.dialog.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.UINT]
     lib.dialog.restype = ctypes.c_int
 except AttributeError as exc:
-    raise OSError(f"Function '{str(exc).split("'")[1]}' name or ordinal "
-                  " missing!") from exc
+    parts = str(exc).split("'")
+    function_name = parts[1] if len(parts) > 1 else "unknown"
+    raise OSError(f"Function '{function_name}' name or ordinal missing!") from exc
 
 validate = lib.validate
 folder_path = lib.get_folder_path()
@@ -71,8 +72,9 @@ gui_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "gui.dll")
 try:
     create_window = guilib.create_window
 except AttributeError as exc:
-    raise OSError(f"Function '{str(exc).split("'")[1]}' name or ordinal "
-                  " missing!") from exc
+    parts = str(exc).split("'")
+    function_name = parts[1] if len(parts) > 1 else "unknown"
+    raise OSError(f"Function '{function_name}' name or ordinal missing!") from exc
 
 # Aliases
 gui = create_window
