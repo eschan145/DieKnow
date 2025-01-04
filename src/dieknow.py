@@ -16,26 +16,40 @@ import doc
 
 md = False
 if "-docs" in sys.argv:
+    print("Documentation generation enabled")
     md = True
 
 lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
 
-lib = ctypes.CDLL(lib_dll_path)
+try:
+    lib = ctypes.CDLL(lib_dll_path)
+    guilib = ctypes.CDLL(gui_dll_path)
+except ctypes.WinError as exc:
+    raise OSError("Failed to load DLL libraries! Ensure that the library is "
+                  "not corrupted, it uses the same architecture (x64) as your "
+                  "machine (as well as its dependencies) and is not missing "
+                  "dependencies if dynamically linked! Refer to "
+                  "https://learn.microsoft.com/en-us/windows/win32/debug/"
+                  "system-error-codes--0-499- for more information") from exc
 
-lib.validate.argtypes = None
-lib.validate.restype = None
-lib.get_folder_path.argtypes = None
-lib.get_folder_path.restype = ctypes.c_char_p
-lib.start_monitoring.argtypes = [ctypes.c_char_p]
-lib.start_monitoring.restype = None
-lib.close_application_by_exe.restype = ctypes.c_bool
-lib.get_killed_count.restype = ctypes.c_int
-lib.get_executables_in_folder.argtypes = [ctypes.c_char_p]
-lib.get_executables_in_folder.restype = ctypes.c_char_p
-lib.is_running.restype = ctypes.c_bool
-lib.bsod.restype = ctypes.c_int
-lib.dialog.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.UINT]
-lib.dialog.restype = ctypes.c_int
+try:
+    lib.validate.argtypes = None
+    lib.validate.restype = None
+    lib.get_folder_path.argtypes = None
+    lib.get_folder_path.restype = ctypes.c_char_p
+    lib.start_monitoring.argtypes = [ctypes.c_char_p]
+    lib.start_monitoring.restype = None
+    lib.close_application_by_exe.restype = ctypes.c_bool
+    lib.get_killed_count.restype = ctypes.c_int
+    lib.get_executables_in_folder.argtypes = [ctypes.c_char_p]
+    lib.get_executables_in_folder.restype = ctypes.c_char_p
+    lib.is_running.restype = ctypes.c_bool
+    lib.bsod.restype = ctypes.c_int
+    lib.dialog.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.UINT]
+    lib.dialog.restype = ctypes.c_int
+except AttributeError as exc:
+    raise OSError(f"Function '{str(exc).split("'")[1]}' name or ordinal "
+                  " missing!") from exc
 
 validate = lib.validate
 folder_path = lib.get_folder_path()
@@ -53,8 +67,12 @@ doc.doc(os.path.join(os.path.dirname(__file__), "api.cpp"), lib, markdown=md)
 
 gui_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "gui.dll")
 
-guilib = ctypes.CDLL(gui_dll_path)
-create_window = guilib.create_window
+
+try:
+    create_window = guilib.create_window
+except AttributeError as exc:
+    raise OSError(f"Function '{str(exc).split("'")[1]}' name or ordinal "
+                  " missing!") from exc
 
 # Aliases
 gui = create_window
