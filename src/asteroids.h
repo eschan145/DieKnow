@@ -34,10 +34,10 @@ VERSION: 2.0.1
 extern NOTIFYICONDATA nid;
 
 struct Rect {
-    float x;
-    float y;
-    float width;
-    float height;
+    int x;
+    int y;
+    int width;
+    int height;
 };
 
 class Asteroids {
