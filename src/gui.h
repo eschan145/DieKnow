@@ -23,6 +23,8 @@ VERSION: 1.0.1
 #ifndef GUI_H
 #define GUI_H
 
+#define NOMINMAX
+
 #include <windows.h>
 #include <commctrl.h>
 
