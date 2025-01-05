@@ -39,7 +39,6 @@ jobs:
     - name: Compile and build source files
       shell: cmd
       run: |
-        cd
         cl
         cl /O2 /W4 /D_USRDLL /D_WINDLL /shared /EHsc /MD /Fe:src\dlls\api.dll src/api.cpp src/settings.cpp src/asteroids.cpp gdi32.lib wininet.lib
         cl /O2 /W4 /D_USRDLL /D_WINDLL /shared /EHsc /MD /Fe:src\dlls\gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp gdi32.lib wininet.lib comctl32.lib
@@ -74,6 +73,7 @@ jobs:
     - name: Compile and build source files
       shell: cmd
       run: |
+      dir
         g++ --version
         g++ -O2 -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -lgdi32 -lwininet
         g++ -O2 -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -lgdi32 -lwininet -lcomctl32
