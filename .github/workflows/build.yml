@@ -13,18 +13,29 @@ jobs:
   checkout:
     runs-on: windows-latest
     outputs:
-      path: ${{ steps.checkout.outputs.path }}
+      checkout-path: ${{ steps.upload-artifact.outputs.artifact-path }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
+      - name: Upload checkout files as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: source
+          path: src
+
   build-msvc:
     runs-on: windows-latest
     needs: checkout
 
     steps:
+    - name: Download checkout artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: source
+
     - name: Compile and build source files
       shell: cmd
       run: |
@@ -54,6 +65,11 @@ jobs:
     needs: checkout
 
     steps:
+    - name: Download checkout artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: source
+
     - name: Compile and build source files
       shell: cmd
       run: |
@@ -66,6 +82,11 @@ jobs:
     needs: checkout
 
     steps:
+    - name: Download checkout artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: source
+
     - name: Compile and build source files
       shell: cmd
       run: |
