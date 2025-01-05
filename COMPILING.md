@@ -4,7 +4,11 @@
 
 ## 1) Installing gcc
 
-You'll need a C++ compiler in order to compile DieKnow's C++ functions. I used [gcc](https://github.com/gcc-mirror/gcc), but MSVC should work as well. The following compilation instructions apply for gcc.
+You'll need a C++ compiler that supports C++20 in order to compile DieKnow's C++ functions. DieKnow has been developed on Microsoft Visual Studio using the `gcc` compiler, but it can be developed on Visual Studio Code or any text editor with the following compilers:
+
+* Microsoft Visual Studio C++ (MSVC)
+* GNU Compiler Collection (gcc)
+* Clang
 
 1. Download the [MSYS2 installer](https://github.com/msys2/msys2-installer/releases/download/2024-07-27/msys2-x86_64-20240727.exe)
 2. Open the MSYS2 installer and follow the instructions to install MSYS2. Copy the path that you inputted when asked. You'll need it later.
