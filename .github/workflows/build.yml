@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'src/**/*.cpp'
+      - '.github/workflows/*.yml'
   pull_request:
     paths:
       - 'src/**/*.cpp'
