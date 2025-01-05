@@ -190,10 +190,10 @@ LRESULT CALLBACK Asteroids::TrayWindowProc(
             HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
 
             RECT rect = {
-                rectangle.x,
-                rectangle.y,
-                rectangle.x + rectangle.width,
-                rectangle.y + rectangle.height
+                static_cast<LONG>(rectangle.x),
+                static_cast<LONG>(rectangle.y),
+                static_cast<LONG>(rectangle.x + rectangle.width),
+                static_cast<LONG>(rectangle.y + rectangle.height)
             };
 
             FillRect(hdc, &rect, hBrush);
