@@ -5,7 +5,7 @@ import os
 import re
 
 def doc(file_path, lib=None, markdown=False):
-    """Parse a C++ file and parse its documentation."""
+    """Parse a C++ file and generate its documentation."""
 
     with open(file_path, "r", encoding="utf-8") as file:
         content = file.read()
@@ -53,7 +53,7 @@ def doc(file_path, lib=None, markdown=False):
 
         with open(output_markdown, "w", encoding="utf-8") as md_file:
             md_file.write(f"# Documentation for `{base_name}.cpp`\n\n")
-            md_file.write("This documentation is automatically generated each push to GitHub.")
+            md_file.write("This documentation is automatically generated each push to GitHub.\n\n")
             for (name, docstring) in docstrings:
                 md_file.write(f"### *function* `{name}()`\n\n{docstring}\n\n")
 
