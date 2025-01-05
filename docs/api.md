@@ -1,6 +1,8 @@
 # Documentation for `api.cpp`
 
-This documentation is automatically generated each push to GitHub.### *function* `validate()`
+This documentation is automatically generated each push to GitHub.
+
+### *function* `validate()`
 
 Check for the validity of the DyKnow installation. If the DyKnow installation cannot be found, the application exits.
 
