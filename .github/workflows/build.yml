@@ -47,23 +47,6 @@ jobs:
         cl /std:c++20 /O2 /W4 /LD /EHsc /DLL /MT /Fe:src\dlls\api.dll src/api.cpp src/settings.cpp src/asteroids.cpp /link user32.lib shell32.lib gdi32.lib wininet.lib
         cl /std:c++20 /O2 /W4 /LD /EHsc /DLL /MT /Fe:src\dlls\gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp /link advapi32.lib user32.lib shell32.lib gdi32.lib wininet.lib comctl32.lib
 
-    - name: Build docs
-      shell: cmd
-      run: |
-        py src/dieknow.py -docs
-        echo "Generated documentation"     
-
-    - name: Commit and push .dll files
-      run: |
-        git config --global user.name "Ethan Chan"
-        git config --global user.email "esamuelchan@gmail.com"
-        git add . -f
-        git commit -m "Auto-build DLL files using g++" || echo "No changes to commit"
-        git push https://$GH_PAT@github.com/eschan145/DieKnow.git main
-      env:
-        # A GitHub PAT must be set up as an Actions secret in the repository
-        GH_PAT: ${{ secrets.GH_PAT }}
-
   build-gcc:
     runs-on: windows-latest
     needs: checkout
@@ -81,6 +64,17 @@ jobs:
         g++ --version
         g++ -O2 -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -lgdi32 -lwininet
         g++ -O2 -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -lgdi32 -lwininet -lcomctl32
+
+    - name: Commit and push .dll files
+      run: |
+        git config --global user.name "Ethan Chan"
+        git config --global user.email "esamuelchan@gmail.com"
+        git add . -f
+        git commit -m "Auto-build DLL files using g++" || echo "No changes to commit"
+        git push https://$GH_PAT@github.com/eschan145/DieKnow.git main
+      env:
+        # A GitHub PAT must be set up as an Actions secret in the repository
+        GH_PAT: ${{ secrets.GH_PAT }}
 
   build-clang:
     runs-on: windows-latest
