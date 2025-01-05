@@ -31,10 +31,10 @@ jobs:
     needs: checkout
 
     steps:
-    - name: Download checkout artifact
-      uses: actions/download-artifact@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
       with:
-        name: source
+        fetch-depth: 1
 
     - name: Compile and build source files
       shell: cmd
@@ -65,10 +65,10 @@ jobs:
     needs: checkout
 
     steps:
-    - name: Download checkout artifact
-      uses: actions/download-artifact@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
       with:
-        name: source
+        fetch-depth: 1
 
     - name: Compile and build source files
       shell: cmd
@@ -82,10 +82,10 @@ jobs:
     needs: checkout
 
     steps:
-    - name: Download checkout artifact
-      uses: actions/download-artifact@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
       with:
-        name: source
+        fetch-depth: 1
 
     - name: Compile and build source files
       shell: cmd
