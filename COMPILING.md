@@ -48,6 +48,8 @@ You'll need a C++ compiler that supports C++20 in order to compile DieKnow's C++
    g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgdi32 -lcomctl32
    ```
 
+Note that if you use another compiler such as MSVC or CL, you will need to link additional libraries such as `user32` or `shell32` or even `advapi32`.
+
 Several options are used:
 
 * `-Ofast` compiles into the FASTEST DLL as it possibly can.
