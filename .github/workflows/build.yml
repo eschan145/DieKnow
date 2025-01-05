@@ -97,7 +97,7 @@ jobs:
       run: |
         clang++ --version
         clang++ -O2 -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -luser32 -lshell32 -lgdi32 -lwininet
-        clang++ -O2 -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -lgdi32 -lwininet -lcomctl32
+        clang++ -O2 -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -luser32 -lshell32 -ladvapi32 -lgdi32 -lwininet -lcomctl32
 
   list-files:
     needs: [build-msvc, build-gcc, build-clang]
