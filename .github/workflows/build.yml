@@ -12,6 +12,8 @@ on:
 jobs:
   checkout:
     runs-on: windows-latest
+    outputs:
+      path: ${{ steps.checkout.outputs.path }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
