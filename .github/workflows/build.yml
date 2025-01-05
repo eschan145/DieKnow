@@ -37,6 +37,11 @@ jobs:
       with:
         fetch-depth: 1
 
+    - name: Set up MSVC environment
+      shell: cmd
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+    
     - name: Compile and build source files
       shell: cmd
       run: |
