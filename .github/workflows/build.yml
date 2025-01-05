@@ -106,6 +106,7 @@ jobs:
       - name: Build docs
         shell: cmd
         run: |
+          git pull --force
           py src/dieknow.py -docs
           echo "Generated documentation"
 
