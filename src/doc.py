@@ -27,18 +27,28 @@ def doc(file_path, lib=None, markdown=False):
             lines = docstring.split("\n")
             stripped_lines = []
             prev_line_empty = False
+            in_callout = False
 
             for line in lines:
                 stripped_line = line.lstrip()
-                if stripped_line == "":
+                if stripped_line.startswith(">"):
+                    if not in_callout:
+                        stripped_lines.append("\n")
+                        in_callout = True
+                    stripped_lines.append(stripped_line)
+                elif stripped_line == "":
                     if not prev_line_empty:
                         stripped_lines.append("")
                         prev_line_empty = True
                 else:
-                    stripped_lines.append(stripped_line)
+                    if in_callout:
+                        stripped_lines.append(stripped_line)
+                        in_callout = False
+                    else:
+                        stripped_lines.append(stripped_line)
                     prev_line_empty = False
 
-            formatted_docstring = " ".join(stripped_lines).strip().replace("  ", "\n\n")
+            formatted_docstring = "\n".join(stripped_lines).strip().replace("  ", "\n\n")
             if markdown:
                 formatted_docstring += "\n\n**Signature**: `" + signature + "`"
             else:
