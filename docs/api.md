@@ -30,7 +30,13 @@ If `FOLDER_PATH` cannot be validated, the `validate()` function is called.
 
 This function returns the amount of executables it terminated in this pass.
 
-> [!IMPORTANT] > It is best to call this in an independent thread, such as > `start_monitoring()` as this will run continuously until the variable > `running` is set to `false`.
+> [!IMPORTANT]
+
+> It is best to call this in an independent thread, such as
+
+> `start_monitoring()` as this will run continuously until the variable
+
+> `running` is set to `false`.
 
 **Signature**: `int`
 
