@@ -392,7 +392,7 @@ Application::Application() {
     );
 
     std::string status = running ? "Stop" : "Start";
-    SetWindowText(this->widgets[Widgets::RUNNING], status.c_str());
+    SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
 
     // In ms -- set update rate to 10 ticks per second
     SetTimer(hwnd, 1, settings.get<int>("update", 100), nullptr);
