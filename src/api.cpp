@@ -43,7 +43,7 @@ std::filesystem::path get_directory() {
             std::cerr << "Failed to locate DLL directory!\n";
         }
     }
-    std::cerr << "Failed to locate DLL directory!\n";
+    return {};
 }
 
 std::filesystem::path locate_settings() {
