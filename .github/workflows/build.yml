@@ -93,12 +93,27 @@ jobs:
         clang++ -O2 -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -luser32 -lshell32 -lgdi32 -lwininet
         clang++ -O2 -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -luser32 -lshell32 -ladvapi32 -lgdi32 -lwininet -lcomctl32
 
-  list-files:
+  build-documentation:
     needs: [build-msvc, build-gcc, build-clang]
     runs-on: windows-latest
 
     steps:
-      - name: Verify DLLs are built
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Build docs
+        shell: cmd
+        run: |
+          py src/dieknow.py -docs
+          echo "Generated documentation"
+
+  verify-libraries:
+    needs: [build-msvc, build-gcc, build-clang]
+    runs-on: windows-latest
+
+    steps:
+      - name: Use ls to check DLLs
         shell: cmd
         run: |
           ls -l src/dlls/api.dll
