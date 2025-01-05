@@ -44,8 +44,8 @@ jobs:
       shell: cmd
       run: |
         cl
-        cl /std:c++20 /O2 /W4 /LD /EHsc /MD /Fe:src\dlls\api.dll src/api.cpp src/settings.cpp src/asteroids.cpp gdi32.lib wininet.lib
-        cl /std:c++20 /O2 /W4 /LS /EHsc /MD /Fe:src\dlls\gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp gdi32.lib wininet.lib comctl32.lib
+        cl /std:c++20 /O2 /W4 /LD /EHsc /MD /Fe:src\dlls\api.dll src/api.cpp src/settings.cpp src/asteroids.cpp /link gdi32.lib wininet.lib
+        cl /std:c++20 /O2 /W4 /LD /EHsc /MD /Fe:src\dlls\gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp /link gdi32.lib wininet.lib comctl32.lib
 
     - name: Build docs
       shell: cmd
