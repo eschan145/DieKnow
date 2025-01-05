@@ -1,4 +1,4 @@
-Write-Host "DieKnow - win32 x86_64"
+Write-Host "DieKnow - win32.x86_64"
 Write-Host "There is ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law."
 
 $architecture = if ([System.IntPtr]::Size -eq 8) { "64-bit" } else { "32-bit" }
@@ -14,6 +14,7 @@ $py = Get-Command py -ErrorAction SilentlyContinue
 
 if (-not $python -and -not $py) {
     Write-Host "FATAL: Python is not installed or not in PATH system environment variable!"
+    Write-Host "Please install it from https://www.python.org/downloads/ or from your organization's Software Center."
     $global:LASTEXITCODE = 1
     return
 }
