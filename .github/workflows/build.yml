@@ -9,7 +9,7 @@ on:
       - 'src/**/*.cpp'
 
 jobs:
-  build:
+  build-gcc:
     runs-on: windows-latest
 
     steps:
@@ -53,3 +53,21 @@ jobs:
         key: msys2-pkgs-${{ runner.os }}-${{ hashFiles('src/api.cpp') }}
         restore-keys: |
           msys2-pkgs-${{ runner.os }}-
+
+  build-clang:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+
+    - name: Compile and build source files
+      shell: cmd
+      run: |
+        clang++ --version
+        clang++ -O2 -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -lgdi32 -lwininet
+        clang++ -O2 -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -lgdi32 -lwininet -lcomctl32
+        ls -l src/dlls/api.dll
+        ls -l src/dlls/gui.dll
