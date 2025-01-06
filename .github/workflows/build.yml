@@ -39,7 +39,7 @@ jobs:
 
     - name: Enable Developer Command Prompt
       uses: ilammy/msvc-dev-cmd@v1.13.0
-    
+
     - name: Compile and build source files
       shell: cmd
       run: |
