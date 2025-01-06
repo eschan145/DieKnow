@@ -117,7 +117,7 @@ const char* get_selected(HWND listbox) {
 }
 
 Application::Application() {
-    dk::validate();
+    dieknow::validate();
 
     // Used for help popup balloon
     InitCommonControls();
@@ -172,7 +172,7 @@ Application::Application() {
     // Resize the window
     MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
 
-    std::string status = dk::is_running() ? "Stop" : "Start";
+    std::string status = dieknow::is_running() ? "Stop" : "Start";
 
     HWND running_button = CreateWindow(
         "BUTTON",
@@ -430,18 +430,18 @@ void Application::manage_command(
 
     switch (LOWORD(wParam)) {
         case Widgets::RUNNING: {
-            if (dk::running) {
+            if (dieknow::running) {
                 toggle_internet();
-                dk::stop_monitoring();
+                dieknow::stop_monitoring();
                 toggle_internet();
             } else {
                 SetFocus(NULL);
                 toggle_internet();
-                dk::start_monitoring();
+                dieknow::start_monitoring();
                 toggle_internet();
             }
 
-            std::string status = dk::running ? "Stop" : "Start";
+            std::string status = dieknow::running ? "Stop" : "Start";
             SetWindowText(app->widgets[Widgets::RUNNING], status.c_str());
             break;
         }
@@ -454,7 +454,7 @@ void Application::manage_command(
 
             // If it does, terminate its process
             if (selected && strlen(selected) > 0) {
-                dk::close_application_by_exe(selected);
+                dieknow::close_application_by_exe(selected);
 
                 std::string message = "Successfully closed " +
                                       std::string(selected);
@@ -867,7 +867,7 @@ inline void Application::update(
     }
 
     std::string message = "Executables terminated: " +
-                          std::to_string(dk::get_killed_count());
+                          std::to_string(dieknow::get_killed_count());
     SetWindowText(
         widgets[Widgets::EXECUTABLES_KILLED],
         message.c_str()

@@ -59,7 +59,7 @@ std::filesystem::path locate_settings() {
     }
 }
 
-namespace dk {
+namespace dieknow {
 
 extern "C" {
     bool running = false;
@@ -518,4 +518,4 @@ DK_API int __stdcall bsod() {
     return 0;
 }
 
-}  // namespace dk
+}  // namespace dieknow
