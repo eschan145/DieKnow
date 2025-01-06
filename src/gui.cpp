@@ -742,7 +742,7 @@ inline void Application::update(
 
     * Update restore snapshot focus state
     * Update listbox if files have been changed
-    * Update interval text based on `interval.txt`
+    * Update interval text based on settings configuration
     * Update label displaying executables terminated
     */
 
@@ -761,7 +761,8 @@ inline void Application::update(
                     current_executables.push_back(
                         sub_entry.path()
                                  .filename()
-                                 .string());
+                                 .string()
+                    );
                 }
             }
         }

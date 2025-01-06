@@ -39,15 +39,15 @@ do {
     switch ($choice) {
         "1" {
             & $py src/main.py
-            break
+            $choice = "4"
         }
         "2" {
             & $py src/gui.pyw
-            break
+            $choice = "4"
         }
         "3" {
             & $py src/dieknow.py -docs
-            break
+            $choice = "4"
         }
         "4" {
             break
