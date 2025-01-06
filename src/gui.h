@@ -84,8 +84,8 @@ class Application {
 
     // Used to determine whether or not to refresh the listbox
     std::vector<std::string> previous_executables;
-    std::vector<Window> previous_windows;
-    std::vector<Window> snapshot;
+    std::vector<System::Window> previous_windows;
+    std::vector<System::Window> snapshot;
 
     HWND hwnd;
     HWND windows;
@@ -122,7 +122,7 @@ class Application {
         LPARAM lParam
     );
 
-    void update_windows(std::vector<Window>& current_windows);
+    void update_windows(std::vector<System::Window>& current_windows);
 };
 
 #endif  // GUI_H

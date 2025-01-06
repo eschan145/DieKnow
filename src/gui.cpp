@@ -431,14 +431,14 @@ void Application::manage_command(
     switch (LOWORD(wParam)) {
         case Widgets::RUNNING: {
             if (dieknow::running) {
-                toggle_internet();
+                System::toggle_internet();
                 dieknow::stop_monitoring();
-                toggle_internet();
+                System::toggle_internet();
             } else {
                 SetFocus(NULL);
-                toggle_internet();
+                System::toggle_internet();
                 dieknow::start_monitoring();
-                toggle_internet();
+                System::toggle_internet();
             }
 
             std::string status = dieknow::running ? "Stop" : "Start";
@@ -503,10 +503,10 @@ void Application::manage_command(
         }
 
         case Widgets::SYSTEM_INFORMATION: {
-            std::string cpu_name = get_cpu_name();
-            std::string gpu_name = get_gpu_name();
-            std::string os_info = get_os_info();
-            std::string available_ram = get_available_ram();
+            std::string cpu_name = System::get_cpu_name();
+            std::string gpu_name = System::get_gpu_name();
+            std::string os_info = System::get_os_info();
+            std::string available_ram = System::get_available_ram();
 
             std::ostringstream message;
             message << "SYSTEM INFORMATION" << "\n"
@@ -527,10 +527,10 @@ void Application::manage_command(
         }
 
         case Widgets::TAKE_SNAPSHOT: {
-            std::vector<Window> new_snapshot;
+            std::vector<System::Window> new_snapshot;
 
             BOOL window_enumeration = EnumWindows(
-                enum_snapshot,
+                System::enum_snapshot,
                 reinterpret_cast<LPARAM>(&new_snapshot)
             );
 
@@ -677,11 +677,11 @@ void Application::restore_snapshots() {
             WNDPROC original = (WNDPROC)SetWindowLongPtr(
                 hwnd,
                 GWLP_WNDPROC,
-                (LONG_PTR)ShieldWndProc
+                (LONG_PTR)System::ShieldWndProc
             );
 
             if (original) {
-                original_procedures[hwnd] = original;
+                System::original_procedures[hwnd] = original;
                 std::cout << "Hooked: " << window.class_name << std::endl;
             } else {
                 std::cerr << "Failed to hook: " << window.class_name
@@ -782,9 +782,9 @@ inline void Application::update(
 
     // Update window shower listbox
 
-    std::vector<Window> current_windows;
+    std::vector<System::Window> current_windows;
 
-    EnumWindows(enum_windows, reinterpret_cast<LPARAM>(&current_windows));
+    EnumWindows(System::enum_windows, reinterpret_cast<LPARAM>(&current_windows));
 
     // this->update_windows(current_windows);
 
