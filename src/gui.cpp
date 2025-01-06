@@ -165,7 +165,7 @@ Application::Application() {
     // Resize the window
     MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
 
-    std::string status = running ? "Stop" : "Start";
+    std::string status = running ? "Start" : "Stop";
 
     HWND running_button = CreateWindow(
         "BUTTON",
