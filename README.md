@@ -56,7 +56,7 @@ When it is running, you'll see the DyKnow icon disappear from your taskbar. 💀
 
 3. Download the `Complete.zip` file.
 4. Extract the compressed zip.
-5. Double-click on the [`run.ps1`](run.ps1) file in the extracted folder.
+5. Double-click on the [`DieKnow.lnk`](DieKnow.lnk) shortcut file in the extracted folder.
 6. Enjoy :)
 
 ## Commands
