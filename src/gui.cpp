@@ -146,15 +146,22 @@ Application::Application() {
         CLIP_DEFAULT_PRECIS,
         DEFAULT_QUALITY,
         DEFAULT_PITCH | FF_SWISS,
-        "Segoe UI");
+        "Segoe UI"
+    );
 
     hwnd = CreateWindowEx(
         0,
         CLASS_NAME,
         "DieKnow",
         WS_OVERLAPPEDWINDOW & ~(WS_MAXIMIZEBOX),
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-        NULL, NULL, wc.hInstance, NULL);
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        NULL, NULL,
+        wc.hInstance,
+        NULL
+    );
 
     if (hwnd == NULL) {
         return;
@@ -165,7 +172,7 @@ Application::Application() {
     // Resize the window
     MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
 
-    std::string status = is_running() ? "Start" : "Stop";
+    std::string status = is_running() ? "Stop" : "Start";
 
     HWND running_button = CreateWindow(
         "BUTTON",
