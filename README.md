@@ -23,10 +23,11 @@ Compilation instructions can be found [here](COMPILING.md).
 
 About this:
 * This **DOES NOT** need administrator privileges, just a Python installation, which is often found in the Software Center.
-* It's very compact (just around 600 lines).
+* Lightweight and compact
+* Easy-to-use
 * **DOES NOT** need a C++ compiler.
 * **DOES NOT** need to run an executable or a batch file, which is usually blocked by the school via Windows AppLocker.
-* **DOES NOT** have any external dependencies.
+* **DOES NOT** have any external dependencies, besides the C++ standard library and the Windows API, which are preinstalled.
 * Written in robust C++ code for maximum performance.
 
 What can DyKnow do:
@@ -62,8 +63,6 @@ When it is running, you'll see the DyKnow icon disappear from your taskbar. 💀
 ## Commands
 
 ### Quickstart
-
-Double-click the [`main.py`](src/main.py) and type `start` to start the monitoring and closing of DyKnow. If a shell is too complicated for you, you can use the GUI application in [`gui.pyw`](src/gui.pyw) by double-clicking it. Ensure Python is installed.
 
 If you want to allow DyKnow to start up once the computer is logged on, you can perform the following steps:
 
