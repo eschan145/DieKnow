@@ -115,6 +115,7 @@ jobs:
           git config --global user.name "Ethan Chan"
           git config --global user.email "esamuelchan@gmail.com"
           git add . -f
+          git rm --cached *.pyc
           git commit -m "Automated documentation update" || echo "No changes to commit"
           git push https://$GH_PAT@github.com/eschan145/DieKnow.git main
         env:
