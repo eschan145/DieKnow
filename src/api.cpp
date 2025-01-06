@@ -59,6 +59,8 @@ std::filesystem::path locate_settings() {
     }
 }
 
+namespace dk {
+
 extern "C" {
     bool running = false;
     int killed = 0;
@@ -515,3 +517,5 @@ DK_API int __stdcall bsod() {
 
     return 0;
 }
+
+}  // namespace dk

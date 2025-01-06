@@ -66,6 +66,7 @@ enum class InternetFlags {
     CONNECT_NONE
 };
 
+namespace dk {
 
 extern "C" {
     extern bool running;
@@ -90,6 +91,8 @@ extern "C" {
     );
     DK_API int __stdcall bsod();
 }
+
+}  // namespace dk
 
 bool exists(const char* path);
 
