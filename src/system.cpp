@@ -22,6 +22,8 @@ VERSION: 1.0.1
 
 #include "system.h"
 
+namespace System {
+
 std::unordered_map<HWND, WNDPROC> original_procedures;
 WNDPROC _proc = nullptr;
 
@@ -73,7 +75,7 @@ const std::vector<std::string> WINDOW_EXCLUDE_LIST = {
     "Realtek Jack Windows"
 };
 
-bool Window::operator==(const Window& other) const {
+bool Window::operator==(const System::Window& other) const {
     return (title == other.title) &&
            (class_name == other.class_name) &&
            (hwnd == other.hwnd);
@@ -86,7 +88,7 @@ bool is_valid(const char* title) {
 
     std::string caption(title);
 
-    for (const auto& word : WINDOW_EXCLUDE_LIST) {
+    for (const auto& word : System::WINDOW_EXCLUDE_LIST) {
         if (caption.find(word) != std::string::npos) {
             return false;
         }
@@ -180,14 +182,14 @@ inline void push(BYTE key) {
     Shortcut to push and release keys.
     */
 
-    press(key);
-    release(key);
+    System::press(key);
+    System::release(key);
 }
 
 void toggle_internet() {
     /*
     Toggle internet by the following keypresses:
-    
+
     1. Press Windows-A
     2. Press Space
     3. Press Windows-A
@@ -196,20 +198,20 @@ void toggle_internet() {
 
     if (!settings.get<bool>("internet_toggler", false)) return;
 
-    press(0x5B);
-    press(0x41);
-    release(0x41);
-    release(0x5b);
+    System::press(0x5B);
+    System::press(0x41);
+    System::release(0x41);
+    System::release(0x5b);
 
     std::this_thread::sleep_for(std::chrono::duration<double>(WINDOW_DELAY));
 
-    push(0x20);  // Space
-    push(0x1B);  // Escape
+    System::push(0x20);  // Space
+    System::push(0x1B);  // Escape
 }
 
 BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
-    std::vector<Window>* windows =
-        reinterpret_cast<std::vector<Window>*>(lParam);
+    std::vector<System::Window>* windows =
+        reinterpret_cast<std::vector<System::Window>*>(lParam);
 
     char title[256];
     char class_name[256];
@@ -233,8 +235,8 @@ BOOL CALLBACK enum_snapshot(HWND hwnd, LPARAM lParam) {
     system window or not.
     */
 
-    std::vector<Window>* windows =
-        reinterpret_cast<std::vector<Window>*>(lParam);
+    std::vector<System::Window>* windows =
+        reinterpret_cast<std::vector<System::Window>*>(lParam);
 
     char title[256];
     char class_name[256];
@@ -306,7 +308,7 @@ static std::streambuf *const original_buffer = std::cerr.rdbuf(&buffer);
 LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     /*
     Custom Window procedure to prevent a window from being hidden.
-    
+
     Used by a hook to replace the existing window. All unhandled messages are
     redirected to the original window.
     */
@@ -324,3 +326,5 @@ LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         lParam
     );
 }
+
+}  // namespace System

@@ -36,6 +36,8 @@ VERSION: 1.0.1
 #include "settings.h"
 
 
+namespace System {
+
 extern const double WINDOW_DELAY;
 extern const std::vector<std::string> WINDOW_EXCLUDE_LIST;
 
@@ -47,7 +49,7 @@ struct Window {
     std::string title;
     std::string class_name;
 
-    bool operator==(const Window& other) const;
+    bool operator==(const System::Window& other) const;
 };
 
 bool is_valid(const char* title);
@@ -88,5 +90,7 @@ class ErrorBuffer : public std::streambuf {
 };
 
 LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+}  // namespace System
 
 #endif  // SYSTEM_H
