@@ -165,9 +165,11 @@ Application::Application() {
     // Resize the window
     MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
 
+    std::string status = running ? "Stop" : "Start";
+
     HWND running_button = CreateWindow(
         "BUTTON",
-        "Start",
+        status.c_str(),
         WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
         PADDING,
         PADDING,
@@ -390,9 +392,6 @@ Application::Application() {
         LVS_EX_GRIDLINES |
         LVS_EX_FULLROWSELECT
     );
-
-    std::string status = running ? "Stop" : "Start";
-    SetWindowText(running_button, status.c_str());
 
     // In ms -- set update rate to 10 ticks per second
     SetTimer(hwnd, 1, settings.get<int>("update", 100), nullptr);
