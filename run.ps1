@@ -1,7 +1,8 @@
 Write-Host "DieKnow - build win32.x86_64"
 Write-Host "==========================================================================="
 Write-Host "This is free software; see the source for copying conditions."
-Write-Host "There is ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law."
+Write-Host "There is ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law; "
+Write-Host "not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
 
 $architecture = if ([System.IntPtr]::Size -eq 8) { "64-bit" } else { "32-bit" }
 
