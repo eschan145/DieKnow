@@ -270,7 +270,7 @@ LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo) {
 }
 
 ErrorBuffer::ErrorBuffer(std::streambuf *original) :
-    original_buffer(original) {}
+original_buffer(original) {}
 
 ErrorBuffer::~ErrorBuffer() {}
 

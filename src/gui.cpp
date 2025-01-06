@@ -721,14 +721,14 @@ void Application::restore_snapshots() {
 }
 
 void Application::hide_snapshots() {
-    for (const auto& [hwnd, original] : original_procedures) {
+    for (const auto& [hwnd, original] : System::original_procedures) {
         SetWindowLongPtr(
             hwnd,
             GWLP_WNDPROC,
-            (LONG_PTR)original_procedures[hwnd]
+            (LONG_PTR)System::original_procedures[hwnd]
         );
     }
-    original_procedures.clear();
+    System::original_procedures.clear();
     std::cout << "All hooks removed." << std::endl;
 }
 
@@ -784,7 +784,10 @@ inline void Application::update(
 
     std::vector<System::Window> current_windows;
 
-    EnumWindows(System::enum_windows, reinterpret_cast<LPARAM>(&current_windows));
+    EnumWindows(
+        System::enum_windows,
+        reinterpret_cast<LPARAM>(&current_windows)
+    );
 
     // this->update_windows(current_windows);
 
