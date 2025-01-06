@@ -874,7 +874,7 @@ inline void Application::update(
     );
 }
 
-void Application::update_windows(std::vector<Window>& current_windows) {
+void Application::update_windows(std::vector<System::Window>& current_windows) {
     /*
     Toggle visibility of windows based on the listbox.
     */
@@ -914,7 +914,7 @@ DK_API void create_window() {
     So ensure that you can close it easily after it finishes.
     */
 
-    SetUnhandledExceptionFilter(ExceptionHandler);
+    SetUnhandledExceptionFilter(System::ExceptionHandler);
 
     Application* application = new Application();
 
