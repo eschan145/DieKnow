@@ -316,10 +316,16 @@ DK_API void start_monitoring(const char* folder_path) {
                 break;
         }
 
+        // We have to do this or the DyKnow web platform will have an error
+        // message of "Student thumbnail disconnected", which could prompt a
+        // log to be sent. If we ensure Internet is turned off before, it will
+        // only display "Student offline", which is very common and unlikely to
+        // draw suspicion.
+
         if (connected) {
             std::cerr << "Please turn off or disable your Internet before you "
                       << "begin DieKnow! Once started, you can turn back on "
-                      << "your Internet. Aborting.\n";
+                      << "your Internet. Aborting monitoring.\n";
             return;
         }
 

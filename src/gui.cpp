@@ -912,6 +912,8 @@ inline void Application::update(
         widgets[Widgets::EXECUTABLES_KILLED],
         message.c_str()
     );
+
+    InvalidateRect(this->hwnd, nullptr, TRUE);
 }
 
 void Application::update_windows(std::vector<System::Window>& current_windows) {
