@@ -653,7 +653,7 @@ LRESULT CALLBACK Application::WindowProc(
             break;
 
         case WM_CTLCOLORSTATIC: {
-            if (!(LOWORD(wParam) == app->status))
+            if (!(LOWORD(wParam) == app->state))
                 break;
 
             HDC hdc_static = (HDC)wParam;
@@ -778,7 +778,7 @@ inline void Application::update(
 
     std::string state_message = "DyKnow state: " +
         dieknow::is_monitoring() ? "True" : "False";
-    SetWindowText(this->status, state_message.c_str());
+    SetWindowText(this->state, state_message.c_str());
 
     EnableWindow(this->restore_snapshot, !this->snapshot.empty());
 
