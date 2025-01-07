@@ -780,6 +780,8 @@ inline void Application::update(
         dieknow::is_monitoring() ? "True" : "False";
     SetWindowText(this->state, state_message.c_str());
 
+    std::cout << GetLastError();
+
     EnableWindow(this->restore_snapshot, !this->snapshot.empty());
 
     // Update directory listbox
