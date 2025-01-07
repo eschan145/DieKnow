@@ -653,7 +653,7 @@ LRESULT CALLBACK Application::WindowProc(
             break;
 
         case WM_CTLCOLORSTATIC: {
-            if (!(LOWORD(wParam) == this->status))
+            if (!(LOWORD(wParam) == app->status))
                 break;
 
             HDC hdc_static = (HDC)wParam;
