@@ -60,8 +60,8 @@ std::filesystem::path locate_settings();
 
 
 enum class InternetFlags {
-    CONNECT_MODEM,
-    CONNECT_LAN,
+    CONNECT_LAN,  // Almost always true unless proxy is used
+    CONNECT_MODEM,  // Budget Internet
     CONNECT_PROXY,
     CONNECT_NONE
 };

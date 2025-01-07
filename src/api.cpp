@@ -250,7 +250,7 @@ DK_API int monitor_executables(const char* folder_path) {
                      std::filesystem::directory_iterator(entry.path())) {
                     if ((sub_entry.is_regular_file()) &&
                         (sub_entry.path().extension() == ".exe")) {
-                        bool result = close_application_by_exe(
+                        bool result = dieknow::close_application_by_exe(
                             sub_entry.path().filename().string().c_str()
                         );
                         if (result)
@@ -293,18 +293,18 @@ DK_API void start_monitoring(const char* folder_path) {
     */
 
     if (!running) {
-        InternetFlags internet_state = is_connected();
+        InternetFlags internet_state = dieknow::is_connected();
         bool connected = true;
 
         switch (internet_state) {
             case InternetFlags::CONNECT_MODEM:
-                std::cout << "Internet connected via modem.\n";
+                std::cout << "Internet connected via modem. ";
                 break;
             case InternetFlags::CONNECT_LAN:
-                std::cout << "Internet connected via LAN.\n";
+                std::cout << "Internet connected via LAN. ";
                 break;
             case InternetFlags::CONNECT_PROXY:
-                std::cout << "Internet connected via proxy.\n";
+                std::cout << "Internet connected via proxy. ";
                 break;
             case InternetFlags::CONNECT_NONE:
                 connected = false;
@@ -314,16 +314,15 @@ DK_API void start_monitoring(const char* folder_path) {
         }
 
         if (connected) {
-            std::cout << "Your Internet is detected as Connected. Please turn "
-                      << "off or disable your Internet before you begin "
-                      << "DieKnow! Once started, you can turn back on your "
-                      << "Internet. Aborting.\n";
+            std::cout << "Please turn off or disable your Internet before you "
+                      << "begin DieKnow! Once started, you can turn back on "
+                      << "your Internet. Aborting.\n";
             return;
         }
 
         running = true;
 
-        std::thread thread(monitor_executables, folder_path);
+        std::thread thread(dieknow::monitor_executables, folder_path);
         HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
 
         std::cout << "Created monitoring std::thread and retrieved HANDLE.\n";
@@ -400,12 +399,15 @@ DK_API InternetFlags is_connected() {
     bool result = InternetGetConnectedState(&flags, 0);
 
     if (result) {
-        if (flags & INTERNET_CONNECTION_MODEM)
-            return InternetFlags::CONNECT_MODEM;
-        if (flags & INTERNET_CONNECTION_LAN)
+        if (flags & INTERNET_CONNECTION_LAN) [[likely]] {
             return InternetFlags::CONNECT_LAN;
-        if (flags & INTERNET_CONNECTION_PROXY)
+        }
+        if (flags & INTERNET_CONNECTION_MODEM) [[unlikely]] {
+            return InternetFlags::CONNECT_MODEM;
+        }
+        if (flags & INTERNET_CONNECTION_PROXY) [[unlikely]] {
             return InternetFlags::CONNECT_PROXY;
+        }
     }
 
     return InternetFlags::CONNECT_NONE;
