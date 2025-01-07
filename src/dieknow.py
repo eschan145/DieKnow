@@ -14,6 +14,9 @@ import sys
 
 import doc
 
+RED = "\033[91m"
+RESET = "\033[0m"
+
 md = False
 if "-docs" in sys.argv:
     print("Documentation generation enabled")
@@ -26,12 +29,17 @@ try:
     lib = ctypes.CDLL(lib_dll_path)
     guilib = ctypes.CDLL(gui_dll_path)
 except OSError as exc:
-    raise OSError("Failed to load DLL libraries! Ensure that the library is "
-                  "not corrupted, it uses the same architecture (x64) as your "
-                  "machine (as well as its dependencies) and is not missing "
-                  "dependencies if dynamically linked! Refer to "
-                  "https://learn.microsoft.com/en-us/windows/win32/debug/"
-                  "system-error-codes--0-499- for more information") from exc
+    error_message = (
+        "OSError: "
+        "Failed to load DLL libraries! Ensure that the library is "
+        "not corrupted, it uses the same architecture (x64) as your "
+        "machine (as well as its dependencies) and is not missing "
+        "dependencies if dynamically linked!\n\nRefer to "
+        "https://learn.microsoft.com/en-us/windows/win32/debug/"
+        "system-error-codes--0-499- for more information"
+    )
+    sys.stderr.write(f"{RED}{error_message}{RESET}\n")
+    raise OSError from exc
 
 try:
     lib.validate.argtypes = None
@@ -95,6 +103,8 @@ del (
     lib,
     lib_dll_path,
     md,
+    RED,
+    RESET,
     os,
     sys,
     wintypes

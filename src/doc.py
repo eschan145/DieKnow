@@ -4,6 +4,7 @@
 import os
 import re
 
+
 def doc(file_path, lib=None, markdown=False):
     """Parse a C++ file and generate its documentation."""
 
