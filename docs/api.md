@@ -83,6 +83,13 @@ Check if DieKnow is running or not.
 
 **Signature**: `bool`
 
+### *function* `is_monitoring()`
+
+Check if DyKnow is currently running or not using `FindWindow()` with the
+class name.
+
+**Signature**: `bool`
+
 ### *function* `is_connected()`
 
 Check for an Internet connection and return the connection type, one of
