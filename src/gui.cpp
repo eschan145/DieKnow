@@ -116,6 +116,9 @@ const char* get_selected(HWND listbox) {
     return text;
 }
 
+COLORREF Application::GREEN = RGB(0, 255, 0);
+COLORREF Application::RED = RGB(255, 0, 0);
+
 Application::Application() {
     dieknow::validate();
 
@@ -397,9 +400,6 @@ Application::Application() {
     for (HWND widget : widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
     }
-
-    COLORREF Application::GREEN = RGB(0, 255, 0);
-    COLORREF Application::RED = RGB(255, 0, 0);
 
     LVCOLUMN lv_title = {0};
 
