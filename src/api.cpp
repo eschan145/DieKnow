@@ -398,9 +398,7 @@ DK_API bool is_monitoring() {
         nullptr
     );
 
-    if (window)
-        return true;
-    return false;
+    return (window != nullptr);
 }
 
 DK_API InternetFlags is_connected() {
