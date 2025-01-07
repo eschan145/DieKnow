@@ -776,8 +776,9 @@ inline void Application::update(
     * Update label displaying executables terminated
     */
 
-    std::string state_message = "DyKnow state: " +
+    std::string state_message = std::string("DyKnow state: ") +
         (dieknow::is_monitoring() ? "True" : "False");
+
     std::cout << state_message << "\n";
     SetWindowText(this->state, state_message.c_str());
 
