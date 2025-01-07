@@ -653,16 +653,16 @@ LRESULT CALLBACK Application::WindowProc(
             break;
 
         case WM_CTLCOLORSTATIC: {
-            if (!(HWND)(wParam) == app->state))
-                break;
+            if ((HWND)lParam == app->state) {
+                HDC hdc_static = (HDC)wParam;
+                COLORREF color = dieknow::is_monitoring() ?
+                    Application::RED : Application::GREEN;
 
-            HDC hdc_static = (HDC)wParam;
-            COLORREF color = dieknow::is_monitoring() ?
-                Application::RED : Application::GREEN;
-
-            SetTextColor(hdc_static, color);
-            SetBkMode(hdc_static, TRANSPARENT);
-            return (LRESULT)GetStockObject(NULL_BRUSH);
+                SetTextColor(hdc_static, color);
+                SetBkMode(hdc_static, TRANSPARENT);
+                return (LRESULT)GetStockObject(NULL_BRUSH);
+            }
+            break;
         }
 
         case WM_CHAR: {
