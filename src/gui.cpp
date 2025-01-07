@@ -265,6 +265,19 @@ Application::Application() {
         wc.hInstance,
         NULL
     );
+    this->state = CreateWindow(
+        "STATIC",
+        "DyKnow state: ",
+        WS_VISIBLE | WS_CHILD,
+        PADDING,
+        (BUTTON_HEIGHT * 3) + (PADDING * 5),
+        BUTTON_WIDTH,
+        18,
+        hwnd,
+        (HMENU)Widgets::STATE,
+        wc.hInstance,
+        NULL
+    );
     HWND executables_killed = CreateWindow(
         "STATIC",
         "Executables terminated:",
@@ -350,6 +363,7 @@ Application::Application() {
     widgets.push_back(interval_label);
     widgets.push_back(interval_edit);
     widgets.push_back(interval_set);
+    widgets.push_back(this->state);
     widgets.push_back(executables_killed);
     widgets.push_back(open_explorer);
     widgets.push_back(display_information);
@@ -383,6 +397,9 @@ Application::Application() {
     for (HWND widget : widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
     }
+
+    Application::GREEN = CreateSolidBrush(RGB(0, 255, 0));
+    Application::RED = CreateSolidBrush(RGB(255, 0, 0));
 
     LVCOLUMN lv_title = {0};
 
@@ -635,6 +652,14 @@ LRESULT CALLBACK Application::WindowProc(
             app->manage_command(app, hwnd, uMsg, wParam, lParam);
             break;
 
+        case WM_CTLCOLORSTATIC:
+            COLORREF color = dieknow::is_monitoring() ?
+                Application::RED : Application::GREEN;
+            HDC hdc_static = (HDC)wParam;
+            SetTextColor(hdc_static, color);
+            SetBkMode(hdc_static, TRANSPARENT);
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
         case WM_CHAR: {
             if (GetFocus() == app->widgets[Widgets::INTERVAL]) {
                 if (wParam == VK_RETURN) {
@@ -653,6 +678,9 @@ LRESULT CALLBACK Application::WindowProc(
             return 0;
 
         case WM_DESTROY:
+            DeleteObject(Application::GREEN);
+            DeleteObject(Application::RED);
+
             KillTimer(hwnd, 1);
             PostQuitMessage(0);
             return 0;
@@ -745,6 +773,9 @@ inline void Application::update(
     * Update interval text based on settings configuration
     * Update label displaying executables terminated
     */
+
+    std::string state_message = "DyKnow state: " +
+        dieknow::is_monitoring() ? "True" : "False";
 
     EnableWindow(this->restore_snapshot, !this->snapshot.empty());
 

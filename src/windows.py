@@ -84,3 +84,4 @@ def get_window_info(title):
     win32gui.EnumChildWindows(hwnd, enum_child_windows_callback, None)
 
 get_window_info("Do you understand?")
+get_window_info("Health check")

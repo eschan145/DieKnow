@@ -55,6 +55,7 @@ enum Widget {
     INTERVAL_LABEL,
     INTERVAL,
     INTERVAL_SET,
+    STATE,
     EXECUTABLES_KILLED,
     WINDOWS,
     OPEN_EXPLORER,
@@ -88,8 +89,12 @@ class Application {
     std::vector<System::Window> snapshot;
 
     HWND hwnd;
+    HWND state;
     HWND windows;
     HWND restore_snapshot;
+
+    static const HBRUSH GREEN;
+    static const HBRUSH RED;
 
     bool is_restoring = false;
 

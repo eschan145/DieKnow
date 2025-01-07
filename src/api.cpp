@@ -27,6 +27,9 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 
+// Probably subject to change, will have to be updated often
+const char* CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
+
 
 std::filesystem::path get_directory() {
     char path[MAX_PATH];
@@ -387,6 +390,17 @@ DK_API bool is_running() {
     */
 
     return running;
+}
+
+DK_API bool is_monitoring() {
+    HWND window = FindWindow(
+        nullptr,
+        CLASS_NAME
+    );
+
+    if (window)
+        return true;
+    return false;
 }
 
 DK_API InternetFlags is_connected() {

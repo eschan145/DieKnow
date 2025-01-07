@@ -53,6 +53,8 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 extern const char* FOLDER_PATH;
 
+extern const char* CLASS_NAME
+
 
 std::filesystem::path get_directory();
 
@@ -82,6 +84,7 @@ extern "C" {
     DK_API bool close_application_by_exe(const char* exe_name);
     DK_API int get_killed_count();
     DK_API bool is_running();
+    DK_API bool is_monitoring();
     DK_API InternetFlags is_connected();
     DK_API const char* get_executables_in_folder(const char* folder_path);
     DK_API int __stdcall dialog(
