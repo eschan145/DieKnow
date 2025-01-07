@@ -53,7 +53,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 extern const char* FOLDER_PATH;
 
-extern const char* CLASS_NAME
+extern const char* CLASS_NAME;
 
 
 std::filesystem::path get_directory();

@@ -93,8 +93,8 @@ class Application {
     HWND windows;
     HWND restore_snapshot;
 
-    static const HBRUSH GREEN;
-    static const HBRUSH RED;
+    static COLORREF GREEN;
+    static COLORREF RED;
 
     bool is_restoring = false;
 

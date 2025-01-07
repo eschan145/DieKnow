@@ -398,8 +398,8 @@ Application::Application() {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
     }
 
-    Application::GREEN = CreateSolidBrush(RGB(0, 255, 0));
-    Application::RED = CreateSolidBrush(RGB(255, 0, 0));
+    Application::GREEN = RGB(0, 255, 0);
+    Application::RED = RGB(255, 0, 0);
 
     LVCOLUMN lv_title = {0};
 
@@ -652,13 +652,15 @@ LRESULT CALLBACK Application::WindowProc(
             app->manage_command(app, hwnd, uMsg, wParam, lParam);
             break;
 
-        case WM_CTLCOLORSTATIC:
+        case WM_CTLCOLORSTATIC: {
+            HDC hdc_static = (HDC)wParam;
             COLORREF color = dieknow::is_monitoring() ?
                 Application::RED : Application::GREEN;
-            HDC hdc_static = (HDC)wParam;
+
             SetTextColor(hdc_static, color);
             SetBkMode(hdc_static, TRANSPARENT);
             return (LRESULT)GetStockObject(NULL_BRUSH);
+        }
 
         case WM_CHAR: {
             if (GetFocus() == app->widgets[Widgets::INTERVAL]) {
@@ -678,9 +680,6 @@ LRESULT CALLBACK Application::WindowProc(
             return 0;
 
         case WM_DESTROY:
-            DeleteObject(Application::GREEN);
-            DeleteObject(Application::RED);
-
             KillTimer(hwnd, 1);
             PostQuitMessage(0);
             return 0;
