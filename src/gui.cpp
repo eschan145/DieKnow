@@ -398,8 +398,8 @@ Application::Application() {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
     }
 
-    Application::GREEN = RGB(0, 255, 0);
-    Application::RED = RGB(255, 0, 0);
+    COLORREF Application::GREEN = RGB(0, 255, 0);
+    COLORREF Application::RED = RGB(255, 0, 0);
 
     LVCOLUMN lv_title = {0};
 
