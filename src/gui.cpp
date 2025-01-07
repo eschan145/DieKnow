@@ -653,13 +653,19 @@ LRESULT CALLBACK Application::WindowProc(
             break;
 
         case WM_CTLCOLORSTATIC: {
-            if ((HWND)lParam == app->state) {
+            auto label = (HWND)lParam;
+            if (label == app->state) {
                 HDC hdc_static = (HDC)wParam;
                 COLORREF color = dieknow::is_monitoring() ?
                     Application::RED : Application::GREEN;
 
                 SetTextColor(hdc_static, color);
                 SetBkMode(hdc_static, TRANSPARENT);
+
+                // Force redraw of the label to prevent overlapping
+                InvalidateRect(label, nullptr, TRUE);
+                UpdateWindow(label);
+
                 return (LRESULT)GetStockObject(NULL_BRUSH);
             }
             break;
