@@ -40,6 +40,7 @@ try:
     lib.get_folder_path.restype = ctypes.c_char_p
     lib.start_monitoring.argtypes = [ctypes.c_char_p]
     lib.start_monitoring.restype = None
+    lib.stop_monitoring.restype = None
     lib.close_application_by_exe.restype = ctypes.c_bool
     lib.get_killed_count.restype = ctypes.c_int
     lib.get_executables_in_folder.argtypes = [ctypes.c_char_p]
