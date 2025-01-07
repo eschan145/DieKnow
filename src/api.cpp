@@ -394,8 +394,8 @@ DK_API bool is_running() {
 
 DK_API bool is_monitoring() {
     HWND window = FindWindow(
-        nullptr,
-        CLASS_NAME
+        CLASS_NAME,
+        nullptr
     );
 
     if (window)
