@@ -20,7 +20,7 @@ def doc(file_path, lib=None, markdown=False):
         name = function[1]
         body = function[2]
 
-        if (markdown):
+        if markdown:
             print("Parsing function", name)
 
         docstring_match = re.search(r"/\*(.*?)\*/", body, re.DOTALL)
