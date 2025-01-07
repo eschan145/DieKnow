@@ -45,6 +45,7 @@ try:
     lib.get_executables_in_folder.argtypes = [ctypes.c_char_p]
     lib.get_executables_in_folder.restype = ctypes.c_char_p
     lib.is_running.restype = ctypes.c_bool
+    lib.is_monitoring.restype = ctypes.c_bool
     lib.bsod.restype = ctypes.c_int
     lib.dialog.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.UINT]
     lib.dialog.restype = ctypes.c_int
@@ -62,6 +63,7 @@ get_killed_count = lib.get_killed_count
 close_application_by_exe = lib.close_application_by_exe
 get_executables_in_folder = lib.get_executables_in_folder
 is_running = lib.is_running
+is_monitoring = lib.is_monitoring
 bsod = lib.bsod
 dialog = lib.dialog
 
@@ -80,6 +82,7 @@ directory = get_executables_in_folder
 start = start_monitoring
 stop = stop_monitoring
 status = is_running
+dstatus = is_monitoring
 
 del (
     ctypes,
@@ -87,6 +90,7 @@ del (
     gui_dll_path,
     guilib,
     is_running,
+    is_monitoring,
     lib,
     lib_dll_path,
     md,
