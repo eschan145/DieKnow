@@ -34,7 +34,7 @@ class Settings {
     bool load(const std::string& file_name);
 
     template <typename T>
-    T get(const std::string& key, const T default_value = T()) const;
+    T get(const std::string& key, const T& default_value = T()) const;
 
     bool set(const std::string& key, const std::string& value);
     void print() const;
@@ -46,7 +46,7 @@ extern Settings settings;
 template <>
 bool Settings::get<bool>(
     const std::string& key,
-    const bool default_value
+    const bool& default_value
 ) const;
 
 #endif  // SETTINGS_H

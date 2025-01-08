@@ -24,4 +24,4 @@ jobs:
 
     - name: Run cppcheck
       run: |
-        cppcheck src --enable=all --inline-suppr --suppressions-list=CPPCHECK.cfg
+        cppcheck src --enable=all --inline-suppr --suppressions-list=CPPCHECK.cfg --error-exitcode=1
