@@ -110,7 +110,9 @@ T Settings::get(const std::string& key, const T& default_value) const {
 }
 
 template <>
-bool Settings::get<bool>(const std::string& key, bool default_value) const {
+bool Settings::get<bool>(
+    const std::string& key,
+    const bool& default_value) const {
     auto it = settings.find(key);
     if (it == settings.end()) return default_value;
 
@@ -146,15 +148,15 @@ void Settings::update() {
 
 template int Settings::get<int>(
     const std::string& key,
-    int default_value
+    const int& default_value
 ) const;
 template double Settings::get<double>(
     const std::string& key,
-    double default_value
+    const double& default_value
 ) const;
 template std::string Settings::get<std::string>(
     const std::string& key,
-    std::string default_value
+    const std::string& default_value
 ) const;
 
 Settings settings;
