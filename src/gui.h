@@ -127,7 +127,7 @@ class Application {
         LPARAM lParam
     );
 
-    void update_windows(std::vector<System::Window>& current_windows);
+    void update_windows(const std::vector<System::Window>& current_windows);
 };
 
 #endif  // GUI_H
