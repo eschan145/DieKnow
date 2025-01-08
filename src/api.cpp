@@ -451,7 +451,7 @@ DK_API const char* get_executables_in_folder(const char* folder_path) {
     bool found_dir = false;
     bool found_subfile = false;
 
-    auto directory_ir = std::filesystem::directory_iterator(folder_path);
+    auto directory_it = std::filesystem::directory_iterator(folder_path);
 
     auto dir_entry = std::find_if(
         directory_it.begin()
