@@ -622,8 +622,8 @@ LRESULT CALLBACK Application::WindowProc(
                 SetBkMode(hdc_static, TRANSPARENT);
 
                 // Force redraw of the label to prevent overlapping
-                InvalidateRect(label, nullptr, TRUE);
-                UpdateWindow(label);
+                // InvalidateRect(label, nullptr, TRUE);
+                // UpdateWindow(label);
 
                 return (LRESULT)GetStockObject(NULL_BRUSH);
             }
