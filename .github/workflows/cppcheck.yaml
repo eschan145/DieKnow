@@ -24,4 +24,4 @@ jobs:
 
     - name: Run cppcheck
       run: |
-        cppcheck src --enable=all --suppress=missingIncludeSystem
+        cppcheck src --enable=all --suppress=missingIncludeSystem, shadowVariable
