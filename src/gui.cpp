@@ -881,7 +881,8 @@ inline void Application::update(
     InvalidateRect(this->hwnd, nullptr, TRUE);
 }
 
-void Application::update_windows(const std::vector<System::Window>& current_windows) {
+void Application::update_windows(
+    const std::vector<System::Window>& current_windows) {
     /*
     Toggle visibility of windows based on the listbox.
     */
