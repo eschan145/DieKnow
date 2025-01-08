@@ -60,7 +60,7 @@ class Asteroids {
 
     void create_menu();
 
-    void create(bool& flag);
+    void create(const bool& flag);
 
     void kill();
 };

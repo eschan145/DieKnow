@@ -906,7 +906,7 @@ inline void Application::update(
         int length = GetWindowTextLength(widgets[Widgets::INTERVAL]);
 
         // Clamp index to the current text length
-        if (index < 0) index = 0;
+        if (index < 0) index = 0;  // cppcheck-suppress knownConditionTrueFalse
         if (index > length) index = length;
 
         SendMessage(widgets[Widgets::INTERVAL], EM_SETSEL, index, index);

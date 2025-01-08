@@ -24,7 +24,7 @@ VERSION: 2.0.1
 
 NOTIFYICONDATA nid;
 
-void Asteroids::create(bool& flag) {
+void Asteroids::create(const bool& flag) {
     this->rect = {1020, 533, 336, 177};
 
     const char CLASS_NAME[] = "DyKnow";
