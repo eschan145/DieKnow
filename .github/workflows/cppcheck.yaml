@@ -24,4 +24,4 @@ jobs:
 
     - name: Run cppcheck
       run: |
-        cppcheck src --enable=all --suppress-list=CPPCHECK.cfg
+        cppcheck src --enable=all --suppressions-list=CPPCHECK.cfg
