@@ -451,36 +451,28 @@ DK_API const char* get_executables_in_folder(const char* folder_path) {
     bool found_dir = false;
     bool found_subfile = false;
 
-    auto directory_it = std::filesystem::directory_iterator(folder_path);
+    for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
+        if (entry.is_directory()) {
+            // If it's a directory, iterate over its subfiles
+            auto subfiles_it = std::filesystem::directory_iterator(entry.path());
 
-    auto dir_entry = std::find_if(
-        directory_it.begin()
-        directory_it.end(),
-        [](const auto& entry) {
-            return entry.is_directory();
-        }
-    );
-
-    if (dir_entry != directory_it.end()) {
-        auto subfiles_it = std::filesystem::directory_iterator(
-            dir_entry->path()
-        );
-        auto exe_file = std::find_if(
-            subfiles_it.begin(),
-            subfiles_it.end(),
-            [](const auto& sub_entry) {
-                return sub_entry.is_regular_file() &&
-                       sub_entry.path().extension() == ".exe";
+            for (const auto& sub_entry : subfiles_it) {
+                if (sub_entry.is_regular_file() &&
+                    sub_entry.path().extension() == ".exe") {
+                    result += sub_entry.path().filename().string() + "\n";
+                    found_subfile = true;
+                }
             }
-        );
 
-        if (exe_file != subfiles_it.end()) {
-            result += exe_file->path().filename().string() + "\n";
-            found_dir = true;
+            if (found_subfile)
+                found_dir = true;
+
+            break;
         }
     }
 
-    if (!found_dir) validate();
+    if (!found_dir)
+        validate();
 
     return result.c_str();
 }
