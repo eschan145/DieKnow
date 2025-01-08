@@ -33,7 +33,7 @@ VERSION: 1.0.1
 bool Settings::load(const std::string& file_name) {
     /*
     Load settings from a file name.
-    
+
     The filename is retained to allow `update()` to refresh it.
     */
 

@@ -32,14 +32,14 @@ const char* CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
 
 
 std::filesystem::path get_directory() {
-    char path[MAX_PATH];
     HMODULE hModule = nullptr;
 
     if (GetModuleHandleExA(
             GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
             (LPCSTR)&get_directory,
-            &hModule
-        )) {
+            &hModule)) {
+        char path[MAX_PATH];
+
         if (GetModuleFileNameA(hModule, path, MAX_PATH) > 0) {
             return std::filesystem::path(path).parent_path();
         } else {
