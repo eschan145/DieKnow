@@ -78,7 +78,7 @@ void Settings::print() const {
 }
 
 template <typename T>
-T Settings::get(const std::string& key, T default_value) const {
+T Settings::get(const std::string& key, const T default_value) const {
     /*
     Retrieve a value from the settings.
 
