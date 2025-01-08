@@ -49,29 +49,6 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
     SendMessage(tooltip, TTM_ADDTOOL, 0, (LPARAM)&tool_info);
 }
 
-void write(const std::string& filename, int value) {
-    /*
-    Write an integer to a file.
-    */
-
-    std::ofstream file(filename);
-
-    if (file.is_open()) {
-        file << value;
-        file.close();
-    } else {
-        std::ostringstream message;
-        message << "Unable to open the file "
-                << filename << ".\n\n"
-                << "Ensure it:" << "\n"
-                << "* Exists," << "\n"
-                << "* Is not in use by another application, and" << "\n"
-                << "* Is available and downloaded to OneDrive." << "\n";
-
-        MessageBox(nullptr, message.str().c_str(), "Error", MB_ICONERROR);
-    }
-}
-
 int read(const std::string& filename) {
     /*
     Read an integer from a file.
