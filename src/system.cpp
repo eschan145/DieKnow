@@ -260,7 +260,7 @@ LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* ExceptionInfo) {
     std::cerr << "Exception Address: " << address << std::endl;
 
     // Registers
-    CONTEXT* context = ExceptionInfo->ContextRecord;
+    const CONTEXT* context = ExceptionInfo->ContextRecord;
     std::cerr << "RAX: " << context->Rax << std::endl;
     std::cerr << "RBX: " << context->Rbx << std::endl;
     std::cerr << "RCX: " << context->Rcx << std::endl;
@@ -274,6 +274,7 @@ original_buffer(original) {}
 
 ErrorBuffer::~ErrorBuffer() {}
 
+// cppcheck-suppress unusedFunction
 int ErrorBuffer::overflow(int c) {
     if (c != EOF) {
         if (first) {
