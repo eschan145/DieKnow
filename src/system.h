@@ -24,6 +24,8 @@ VERSION: 1.0.1
 #define SYSTEM_H
 
 #include <windows.h>
+
+#include <algorithm>
 #include <string>
 #include <vector>
 #include <iostream>
