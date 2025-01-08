@@ -1,0 +1,27 @@
+name: C++ Static Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Run cppcheck
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+
+    - name: Install cppcheck
+      run: sudo apt-get install cppcheck -y
+
+    - name: Run cppcheck
+      run: |
+        cppcheck --enable=all --error-exitcode=1 --recursive .
