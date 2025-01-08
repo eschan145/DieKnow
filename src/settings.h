@@ -44,6 +44,9 @@ class Settings {
 extern Settings settings;
 
 template <>
-bool Settings::get<bool>(const std::string& key, const bool default_value) const;
+bool Settings::get<bool>(
+    const std::string& key,
+    const bool default_value
+) const;
 
 #endif  // SETTINGS_H
