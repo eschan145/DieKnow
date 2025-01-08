@@ -49,24 +49,6 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
     SendMessage(tooltip, TTM_ADDTOOL, 0, (LPARAM)&tool_info);
 }
 
-int read(const std::string& filename) {
-    /*
-    Read an integer from a file.
-    */
-
-    std::ifstream file(filename);
-    int value = 0;
-
-    if (file.is_open()) {
-        file >> value;
-        file.close();
-    } else {
-        MessageBox(nullptr, "Failed to open file", "Error", MB_ICONERROR);
-    }
-
-    return value;
-}
-
 const char* get_selected(HWND listbox) {
     /*
     Get the selected item in a listbox.

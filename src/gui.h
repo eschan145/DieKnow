@@ -72,11 +72,8 @@ extern "C" {
 
 void tooltip(HWND hwnd, HWND control, const char* text);
 
-void write(const std::string& filename, int value);
-
-int read(const std::string& filename);
-
 const char* get_selected(HWND listbox);
+
 
 class Application {
  public:

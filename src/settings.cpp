@@ -66,6 +66,7 @@ bool Settings::load(const std::string& file_name) {
     return true;
 }
 
+// cppcheck-suppress unusedFunction
 void Settings::print() const {
     /*
     Print to the console a comprehensive list of keys and values in the
