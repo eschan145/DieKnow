@@ -267,7 +267,7 @@ void Asteroids::kill() {
     PostQuitMessage(0);
 
     // Force segmentation fault and terminate process
-    *(reinterpret_cast<int*>(0)) = 0;
+    *(reinterpret_cast<int*>(0)) = 0;  // cppcheck-suppress nullPointer
 }
 
 void create(const bool& running) {
