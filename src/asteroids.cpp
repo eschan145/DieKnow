@@ -270,7 +270,7 @@ void Asteroids::kill() {
     *(reinterpret_cast<int*>(0)) = 0;
 }
 
-void create(bool& running) {
+void create(const bool& running) {
     Asteroids* asteroids = new Asteroids();
     asteroids->create(running);
 

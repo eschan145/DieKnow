@@ -65,4 +65,4 @@ class Asteroids {
     void kill();
 };
 
-void create(bool& running);
+void create(const bool& running);
