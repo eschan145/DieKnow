@@ -878,7 +878,7 @@ inline void Application::update(
         message.c_str()
     );
 
-    // InvalidateRect(this->hwnd, nullptr, TRUE);
+    InvalidateRect(this->hwnd, nullptr, TRUE);
 }
 
 void Application::update_windows(
