@@ -451,12 +451,12 @@ DK_API const char* get_executables_in_folder(const char* folder_path) {
     bool found_dir = false;
     bool found_subfile = false;
 
-    for (const auto& entry : std::filesystem::directory_iterator(folder_path)) {
+    for (const auto& entry :
+         std::filesystem::directory_iterator(folder_path)) {
         if (entry.is_directory()) {
             // If it's a directory, iterate over its subfiles
-            auto subfiles_it = std::filesystem::directory_iterator(entry.path());
-
-            for (const auto& sub_entry : subfiles_it) {
+            for (const auto& sub_entry :
+                 std::filesystem::directory_iterator(entry.path())) {
                 if (sub_entry.is_regular_file() &&
                     sub_entry.path().extension() == ".exe") {
                     result += sub_entry.path().filename().string() + "\n";
