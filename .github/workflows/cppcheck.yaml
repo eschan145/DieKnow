@@ -24,4 +24,4 @@ jobs:
 
     - name: Run cppcheck
       run: |
-        cppcheck src
+        cppcheck src --enable=all
