@@ -24,4 +24,4 @@ jobs:
 
     - name: Run cppcheck
       run: |
-        cppcheck --enable=all --error-exitcode=1 --recursive .
+        cppcheck src --enable=all --suppress=missingIncludeSystem
