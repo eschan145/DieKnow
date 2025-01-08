@@ -42,7 +42,6 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <vector>
 #include <string>
 #include <thread>
-#include <algorithm>
 #include <filesystem>
 #include <sstream>
 
