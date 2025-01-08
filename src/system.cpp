@@ -88,11 +88,13 @@ bool is_valid(const char* title) {
 
     std::string caption(title);
 
-    for (const auto& word : System::WINDOW_EXCLUDE_LIST) {
-        if (caption.find(word) != std::string::npos) {
-            return false;
+    return std::none_of(
+        System::WINDOW_EXCLUDE_LIST.begin(),
+        System::WINDOW_EXCLUDE_LIST.end(),
+        [&caption](const std::string& word) {
+            return caption.find(word) != std::string::npos;
         }
-    }
+    );
 
     return true;
 }
