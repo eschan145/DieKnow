@@ -326,7 +326,7 @@ DK_API void start_monitoring(const char* folder_path) {
             std::cerr << "Please turn off or disable your Internet before you "
                       << "begin DieKnow! Once started, you can turn back on "
                       << "your Internet. Aborting monitoring.\n";
-            return;
+            // return;
         }
 
         running = true;
@@ -533,11 +533,11 @@ DK_API int __stdcall bsod() {
                   << "RtlAdjustPrivilege().\n";
     }
 
+    std::cerr << "Successfully initiated Windows BSOD. The system will "
+              << "terminate in a few seconds...\n";
+
     // Trigger BSOD
     NtRaiseHardError(STATUS_ASSERTION_FAILURE, 0, 0, nullptr, 6, &uResp);
-
-    std::cout << "Successfully initiated Windows BSOD. The system will "
-              << "terminate in a few seconds...\n";
 
     return 0;
 }
