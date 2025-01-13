@@ -744,7 +744,6 @@ inline void Application::update(
     std::string state_message = std::string("DyKnow state: ") +
         (dieknow::is_monitoring() ? "True" : "False");
 
-    std::cout << state_message << "\n";
     SetWindowText(this->state, state_message.c_str());
 
     EnableWindow(this->restore_snapshot, !this->snapshot.empty());
