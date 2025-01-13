@@ -58,7 +58,7 @@ std::filesystem::path locate_settings() {
     } else {
         error("Failed to locate settings.conf!\n"
               "It should be located at " +
-              file_path +
+              file_path.string() +
               ".\n"
         );
         return {};
