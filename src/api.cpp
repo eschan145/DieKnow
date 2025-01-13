@@ -43,7 +43,7 @@ std::filesystem::path get_directory() {
         if (GetModuleFileNameA(hModule, path, MAX_PATH) > 0) {
             return std::filesystem::path(path).parent_path();
         } else {
-            std::cerr << "Failed to locate DLL directory!\n";
+            error("Failed to locate DLL directory!\n");
         }
     }
     return {};
@@ -56,8 +56,11 @@ std::filesystem::path locate_settings() {
         std::cout << "Located settings.conf.\n";
         return file_path;
     } else {
-        std::cerr << "Failed to locate settings.conf!\n";
-        std::cerr << "It should be located at " << file_path << ".\n";
+        error("Failed to locate settings.conf!\n"
+              "It should be located at " +
+              file_path +
+              ".\n"
+        );
         return {};
     }
 }
@@ -117,12 +120,12 @@ DK_API void validate() {
     if (loaded_settings) {
         std::cout << "Successfully loaded DieKnow configuration files.\n";
     } else {
-        std::cerr << "Failed to load DieKnow configuration files!\n";
+        error("Failed to load DieKnow configuration files!\n");
         needs_exit = true;
     }
 
     if (needs_exit) {
-        std::cerr << "FATAL: DyKnow validation failed!\n";
+        error("FATAL: DyKnow validation failed!\n");
         std::exit(EXIT_FAILURE);
     } else {
         std::cout << "Successfully validated DyKnow installation and file "
@@ -329,9 +332,9 @@ DK_API void start_monitoring(const char* folder_path) {
         // draw suspicion.
 
         if (connected) {
-            std::cerr << "Please turn off or disable your Internet before you "
-                      << "begin DieKnow! Once started, you can turn back on "
-                      << "your Internet. Aborting monitoring.\n";
+            error("Please turn off or disable your Internet before you begin"
+                  "DieKnow! Once started, you can turn back on your Internet. "
+                  "your Internet. Aborting monitoring.\n");
             // return;
         }
 
