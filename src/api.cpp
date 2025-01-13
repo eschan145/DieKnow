@@ -62,6 +62,10 @@ std::filesystem::path locate_settings() {
     }
 }
 
+void error(std::string message) {
+    std::cerr << "\033[4m" << "ERROR: " << message << "\033[24m";
+}
+
 namespace dieknow {
 
 extern "C" {
@@ -334,7 +338,7 @@ DK_API void start_monitoring(const char* folder_path) {
         std::thread thread(dieknow::monitor_executables, folder_path);
         HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
 
-        std::cout << "Created monitoring std::thread and retrieved HANDLE.\n";
+        error("Created monitoring std::thread and retrieved HANDLE.\n");
 
         // Reduces CPU usage by prioritizing other applications.
         // Other options:

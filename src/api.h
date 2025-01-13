@@ -60,6 +60,7 @@ std::filesystem::path get_directory();
 
 std::filesystem::path locate_settings();
 
+void error(std::string message);
 
 enum class InternetFlags {
     CONNECT_LAN,  // Almost always true unless proxy is used
