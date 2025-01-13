@@ -63,7 +63,9 @@ std::filesystem::path locate_settings() {
 }
 
 void error(const std::string message) {
-    std::cerr << "\033[4m" << "ERROR: " << message << "\033[24m";
+    std::cerr << "\033[31m" << "\033[4m"
+              << "ERROR" << "\033[24m"
+              << ": " << message << "\033[0m";
 }
 
 namespace dieknow {
