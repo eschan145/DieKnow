@@ -332,9 +332,9 @@ DK_API void start_monitoring(const char* folder_path) {
         // draw suspicion.
 
         if (connected) {
-            error("Please turn off or disable your Internet before you begin"
-                  "DieKnow! Once started, you can turn back on your Internet. "
-                  "Aborting monitoring.\n");
+            error("Please turn off or disable your Internet before you begin "
+                  "DieKnow! Once started, you can turn back on your \n
+                  "Internet. Aborting monitoring.\n");
             // return;
         }
 
