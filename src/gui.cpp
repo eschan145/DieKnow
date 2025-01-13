@@ -744,8 +744,8 @@ inline void Application::update(
     */
 
     if (this->is_restoring) {
-        for (const auto& hwnd : this->snapshot) {
-            ShowWindow(hwnd, SW_SHOW);
+        for (const auto& window : this->snapshot) {
+            ShowWindow(window.hwnd, SW_SHOW);
         }
     }
 
