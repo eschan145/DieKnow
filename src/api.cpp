@@ -62,7 +62,7 @@ std::filesystem::path locate_settings() {
     }
 }
 
-void error(const std::string message) {
+void error(const std::string& message) {
     std::cerr << "\033[31m" << "\033[4m"
               << "ERROR" << "\033[24m"
               << ": " << message << "\033[0m";
@@ -340,7 +340,7 @@ DK_API void start_monitoring(const char* folder_path) {
         std::thread thread(dieknow::monitor_executables, folder_path);
         HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
 
-        error("Created monitoring std::thread and retrieved HANDLE.\n");
+        std::cout << "Created monitoring std::thread and retrieved HANDLE.\n";
 
         // Reduces CPU usage by prioritizing other applications.
         // Other options:
