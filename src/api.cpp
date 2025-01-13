@@ -310,13 +310,13 @@ DK_API void start_monitoring(const char* folder_path) {
 
         switch (internet_state) {
             case InternetFlags::CONNECT_MODEM:
-                std::cout << "Internet connected via modem. ";
+                std::cout << "Internet connected via modem.\n";
                 break;
             case InternetFlags::CONNECT_LAN:
-                std::cout << "Internet connected via LAN. ";
+                std::cout << "Internet connected via LAN.\n";
                 break;
             case InternetFlags::CONNECT_PROXY:
-                std::cout << "Internet connected via proxy. ";
+                std::cout << "Internet connected via proxy.\n";
                 break;
             case InternetFlags::CONNECT_NONE:
                 connected = false;
@@ -334,7 +334,7 @@ DK_API void start_monitoring(const char* folder_path) {
         if (connected) {
             error("Please turn off or disable your Internet before you begin"
                   "DieKnow! Once started, you can turn back on your Internet. "
-                  "your Internet. Aborting monitoring.\n");
+                  "Aborting monitoring.\n");
             // return;
         }
 
