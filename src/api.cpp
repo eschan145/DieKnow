@@ -62,7 +62,7 @@ std::filesystem::path locate_settings() {
     }
 }
 
-void error(std::string message) {
+void error(const std::string message) {
     std::cerr << "\033[4m" << "ERROR: " << message << "\033[24m";
 }
 
