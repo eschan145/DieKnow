@@ -664,25 +664,27 @@ void Application::restore_snapshots() {
     instead.
     */
 
-    for (const auto& window : this->snapshot) {
-        HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
+    this->is_restoring = true;
 
-        if (hwnd) {
-            WNDPROC original = (WNDPROC)SetWindowLongPtr(
-                hwnd,
-                GWLP_WNDPROC,
-                (LONG_PTR)System::ShieldWndProc
-            );
+    // for (const auto& window : this->snapshot) {
+    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
 
-            if (original) {
-                System::original_procedures[hwnd] = original;
-                std::cout << "Hooked: " << window.class_name << std::endl;
-            } else {
-                std::cerr << "Failed to hook: " << window.class_name
-                          << " (" << GetLastError() << ")" << std::endl;
-            }
-        }
-    }
+    //     if (hwnd) {
+    //         WNDPROC original = (WNDPROC)SetWindowLongPtr(
+    //             hwnd,
+    //             GWLP_WNDPROC,
+    //             (LONG_PTR)System::ShieldWndProc
+    //         );
+
+    //         if (original) {
+    //             System::original_procedures[hwnd] = original;
+    //             std::cout << "Hooked: " << window.class_name << std::endl;
+    //         } else {
+    //             std::cerr << "Failed to hook: " << window.class_name
+    //                       << " (" << GetLastError() << ")" << std::endl;
+    //         }
+    //     }
+    // }
     // int success = 0;
     // int missing = 0;
     // int fail = 0;
@@ -715,15 +717,16 @@ void Application::restore_snapshots() {
 }
 
 void Application::hide_snapshots() {
-    for (const auto& [hwnd, original] : System::original_procedures) {
-        SetWindowLongPtr(
-            hwnd,
-            GWLP_WNDPROC,
-            (LONG_PTR)System::original_procedures[hwnd]
-        );
-    }
-    System::original_procedures.clear();
-    std::cout << "All hooks removed." << std::endl;
+    this->snapshot.clear();
+    // for (const auto& [hwnd, original] : System::original_procedures) {
+    //     SetWindowLongPtr(
+    //         hwnd,
+    //         GWLP_WNDPROC,
+    //         (LONG_PTR)System::original_procedures[hwnd]
+    //     );
+    // }
+    // System::original_procedures.clear();
+    // std::cout << "All hooks removed." << std::endl;
 }
 
 inline void Application::update(
@@ -739,6 +742,12 @@ inline void Application::update(
     * Update interval text based on settings configuration
     * Update label displaying executables terminated
     */
+
+    if (this->is_restoring) {
+        for (const auto& hwnd : this->snapshot) {
+            ShowWindow(hwnd, SW_SHOW);
+        }
+    }
 
     std::string state_message = std::string("DyKnow state: ") +
         (dieknow::is_monitoring() ? "True" : "False");
