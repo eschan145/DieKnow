@@ -619,7 +619,6 @@ LRESULT CALLBACK Application::WindowProc(
                     Application::RED : Application::GREEN;
 
                 SetTextColor(hdc_static, color);
-                SetBkMode(hdc_static, TRANSPARENT);
 
                 // Force redraw of the label to prevent overlapping
                 // InvalidateRect(label, nullptr, TRUE);
