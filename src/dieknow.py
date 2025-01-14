@@ -93,19 +93,33 @@ stop = stop_monitoring
 status = is_running
 dstatus = is_monitoring
 
-del (
-    ctypes,
-    doc,
-    gui_dll_path,
-    guilib,
-    is_running,
-    is_monitoring,
-    lib,
-    lib_dll_path,
-    md,
-    RED,
-    RESET,
-    os,
-    sys,
-    wintypes
-)
+class Shell:
+
+    def __init__(self):
+        exclude = {
+            "close_application_by_exe",
+            "ctypes",
+            "doc",
+            "gui_dll_path",
+            "guilib",
+            "is_running",
+            "is_monitoring",
+            "lib",
+            "lib_dll_path",
+            "md",
+            "RED",
+            "RESET",
+            "os",
+            "start_monitoring",
+            "stop_monitoring",
+            "sys",
+            "wintypes",
+            "Shell"
+        }
+        for var_name, value in globals().items():
+            if var_name not in exclude and not var_name.startswith("__"):
+                setattr(self, var_name, value)
+
+        self.dir = get_executables_in_folder
+
+shell = Shell()

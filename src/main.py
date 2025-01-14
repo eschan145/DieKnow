@@ -40,7 +40,8 @@ def main():
                       "and then a function name below to get started!\n\n"
                       "Ex. for help on the function \"validate\", type \"help "
                       "validate\".")
-                attrs = [attr for attr in dir(dieknow) if not attr.startswith("__")]
+                attrs = [attr for attr in dir(dieknow.shell) \
+                    if not attr.startswith("__")]
                 column_width = (len(attrs) + 1) // 2
                 left_column = attrs[:column_width]
                 right_column = attrs[column_width:]
@@ -75,7 +76,7 @@ def main():
 
             case _:
                 if not "help" in user_input:
-                    func = getattr(dieknow, user_input, None)
+                    func = getattr(dieknow.shell, user_input, None)
 
                     if func:
                         try:
