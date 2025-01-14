@@ -36,7 +36,7 @@ except OSError as exc:
         "machine (as well as its dependencies) and is not missing "
         "dependencies if dynamically linked!\n\nRefer to "
         "https://learn.microsoft.com/en-us/windows/win32/debug/"
-        "system-error-codes--0-499- for more information"
+        "system-error-codes for more information"
     )
     sys.stderr.write(f"{RED}{error_message}{RESET}\n")
     raise OSError from exc
