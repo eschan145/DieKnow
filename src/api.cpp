@@ -412,7 +412,7 @@ DK_API bool is_monitoring() {
     Check if DyKnow is currently running or not using `FindWindow()` with the
     class name.
     */
-    // TODO: make it see if it is monitoring rather than running
+    // TODO(eschan145): make it see if it is monitoring rather than running.
     HWND window = FindWindow(
         DYK_CLASS_NAME,
         nullptr

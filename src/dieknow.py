@@ -94,6 +94,7 @@ status = is_running
 dstatus = is_monitoring
 
 class Shell:
+    """DieKnow Shell commands."""
 
     def __init__(self):
         exclude = {
@@ -121,5 +122,6 @@ class Shell:
                 setattr(self, var_name, value)
 
         self.dir = get_executables_in_folder
+
 
 shell = Shell()
