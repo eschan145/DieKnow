@@ -384,7 +384,7 @@ DK_API void stop_monitoring() {
         running = false;
         std::cout << "Successfully stopped DieKnow process.\n";
     } else {
-        std::cout << "The DieKnow process has already been stopped!\n";
+        error("The DieKnow process has already been stopped!\n");
     }
 }
 
