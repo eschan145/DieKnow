@@ -305,8 +305,8 @@ int ErrorBuffer::overflow(int c) {
     return c;
 }
 
-static ErrorBuffer buffer(std::cerr.rdbuf());
-static std::streambuf *const original_buffer = std::cerr.rdbuf(&buffer);
+// static ErrorBuffer buffer(std::cerr.rdbuf());
+// static std::streambuf *const original_buffer = std::cerr.rdbuf(&buffer);
 
 // cppcheck-suppress unusedFunction
 LRESULT ShieldWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
