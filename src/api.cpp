@@ -307,16 +307,12 @@ bool taskkill(DWORD identifier) {
     return false;
 }
 
-void CALLBACK sweep(
-    HWND hwnd,
-    UINT uMsg,
-    UINT_PTR idEvent,
-    DWORD dwTime) {
+void CALLBACK sweep(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
     if (snapshot == INVALID_HANDLE_VALUE) {
         error("Failed to produce a snapshot with CreateToolHelp32! Error " +
-              "code: " + GetLastError() + "\n");
+              "code: " + std::to_string(GetLastError()) + "\n");
         return;
     }
 
@@ -332,7 +328,9 @@ void CALLBACK sweep(
                          std::filesystem::directory_iterator(entry.path())) {
                         if ((sub_entry.is_regular_file()) &&
                             (sub_entry.path().extension() == ".exe")) {
-                            std::string name = sub_entry.path().filename().string();
+                            std::string name = sub_entry.path()
+                                              .filename()
+                                              .string();
                             if (_stricmp(pe32.szExeFile, name.c_str()) == 0) {
                                 dieknow::taskkill(pe32.th32ProcessID);
                             }
@@ -343,7 +341,7 @@ void CALLBACK sweep(
         } while (Process32Next(snapshot, &pe32);
     } else {
         error("Failed to enumerate processes! Error code: " +
-              GetLastError() + "\n");
+              std::to_string(GetLastError()) + "\n");
     }
 }
 
@@ -405,7 +403,7 @@ DK_API void start_monitoring(const char* folder_path) {
         //     old_interval = interval;
         // }
 
-        SetTimer(NULL, SWEEP_TIMER_ID, interval * 1000, sweep);
+        SetTimer(nullptr, SWEEP_TIMER_ID, interval * 1000, sweep);
 
         // Reduces CPU usage by prioritizing other applications.
         // Other options:
@@ -431,7 +429,7 @@ DK_API void stop_monitoring() {
     Stop monitoring executables.
     */
 
-    KillTimer(SWEEP_TIMER_ID);
+    KillTimer(nullptr, SWEEP_TIMER_ID);
 
     // Although just a variable is set to false, because the DieKnow process is
     // in a separate thread it will finish immediately.
