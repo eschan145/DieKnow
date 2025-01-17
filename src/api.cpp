@@ -286,6 +286,7 @@ bool taskkill(DWORD identifier) {
 }
 
 void sweep() {
+    std::cout << "Sweeping\n";
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
     if (snapshot == INVALID_HANDLE_VALUE) {
