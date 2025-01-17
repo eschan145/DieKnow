@@ -251,6 +251,7 @@ DK_API int monitor_executables(const char* folder_path) {
     */
 
     int count = 0;
+    int old_interval = settings.get<int>("interval", 0);
 
     while (running) {
         // Search recursively through folder_path and terminate all "*.exe"s
@@ -277,6 +278,10 @@ DK_API int monitor_executables(const char* folder_path) {
         }
 
         int interval = settings.get<int>("interval", 0);
+        if (!old_interval != interval) {
+            std::cout << "Monitoring interval updated to " << interval << " seconds.\n";
+            old_interval = interval;
+        }
 
         // Minimize CPU usage
         std::this_thread::sleep_for(std::chrono::seconds(interval));
