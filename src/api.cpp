@@ -296,6 +296,10 @@ DK_API const char* get_folder_path() {
     return FOLDER_PATH;
 }
 
+std::string last_error() {
+    return std::to_string(GetLastError());
+}
+
 bool taskkill(DWORD identifier) {
     HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, identifier);
 
@@ -312,7 +316,7 @@ void CALLBACK sweep(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
 
     if (snapshot == INVALID_HANDLE_VALUE) {
         error("Failed to produce a snapshot with CreateToolHelp32! Error " +
-              "code: " + std::to_string(GetLastError()) + "\n");
+              "code: " + last_error() + "\n");
         return;
     }
 
@@ -340,8 +344,8 @@ void CALLBACK sweep(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
             }
         } while (Process32Next(snapshot, &pe32));
     } else {
-        error("Failed to enumerate processes! Error code: " +
-              std::to_string(GetLastError()) + "\n");
+        error("Failed to enumerate through processes! Error code: " +
+              last_error() + "\n");
     }
 }
 
