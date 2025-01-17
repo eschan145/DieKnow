@@ -281,7 +281,7 @@ DK_API int monitor_executables(const char* folder_path) {
 
 
         // Minimize CPU usage
-        std::this_thread::sleep_for(std::chrono::seconds(interval));
+        // std::this_thread::sleep_for(std::chrono::seconds(interval));
     }
     return count;
 }
@@ -296,7 +296,11 @@ DK_API const char* get_folder_path() {
     return FOLDER_PATH;
 }
 
-void CALLBACK prune_processes(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
+void CALLBACK prune_processes(
+    HWND hwnd,
+    UINT uMsg,
+    UINT_PTR idEvent,
+    DWORD dwTime) {
     for (const auto& entry :
          std::filesystem::directory_iterator(folder_path)) {
         if (entry.is_directory()) {
@@ -366,11 +370,11 @@ DK_API void start_monitoring(const char* folder_path) {
         std::cout << "Created monitoring std::thread and retrieved HANDLE.\n";
 
         int interval = settings.get<int>("interval", 0);
-        if (old_interval != interval) {
-            std::cout << "Monitoring interval updated to " << interval
-                      << " seconds.\n";
-            old_interval = interval;
-        }
+        // if (old_interval != interval) {
+        //     std::cout << "Monitoring interval updated to " << interval
+        //               << " seconds.\n";
+        //     old_interval = interval;
+        // }
 
         SetTimer(NULL, 12, interval * 1000, monitor_executables());
 
