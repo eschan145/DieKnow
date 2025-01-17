@@ -29,6 +29,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #define DK_API __declspec(dllexport)
 
 #define TIMEOUT 5000
+#define SWEEP_TIMER_ID 2048
 
 #include <windows.h>
 #include <wininet.h>
@@ -70,6 +71,8 @@ enum class InternetFlags {
 };
 
 namespace dieknow {
+
+bool taskkill(DWORD identifier);
 
 void CALLBACK sweep(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime);
 
