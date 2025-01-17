@@ -255,6 +255,7 @@ DK_API int monitor_executables(const char* folder_path) {
 
     while (running) {
         // Search recursively through folder_path and terminate all "*.exe"s
+
         for (const auto& entry :
              std::filesystem::directory_iterator(folder_path)) {
             // If it's a directory, go through its subfiles
@@ -277,11 +278,7 @@ DK_API int monitor_executables(const char* folder_path) {
             }
         }
 
-        int interval = settings.get<int>("interval", 0);
-        if (old_interval != interval) {
-            std::cout << "Monitoring interval updated to " << interval << " seconds.\n";
-            old_interval = interval;
-        }
+
 
         // Minimize CPU usage
         std::this_thread::sleep_for(std::chrono::seconds(interval));
@@ -297,6 +294,24 @@ DK_API const char* get_folder_path() {
     */
 
     return FOLDER_PATH;
+}
+
+void CALLBACK prune_processes(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
+    for (const auto& entry :
+         std::filesystem::directory_iterator(folder_path)) {
+        if (entry.is_directory()) {
+            for (const auto& sub_entry :
+                 std::filesystem::directory_iterator(entry.path())) {
+                if ((sub_entry.is_regular_file()) &&
+                    (sub_entry.path().extension() == ".exe")) {
+                    bool result = dieknow::close_application_by_exe(
+                        sub_entry.path().filename().string().c_str()
+                    );
+                }
+            }
+            break;
+         }
+    }
 }
 
 DK_API void start_monitoring(const char* folder_path) {
@@ -345,10 +360,19 @@ DK_API void start_monitoring(const char* folder_path) {
 
         running = true;
 
-        std::thread thread(dieknow::monitor_executables, folder_path);
-        HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
+        // std::thread thread(dieknow::monitor_executables, folder_path);
+        // HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
 
         std::cout << "Created monitoring std::thread and retrieved HANDLE.\n";
+
+        int interval = settings.get<int>("interval", 0);
+        if (old_interval != interval) {
+            std::cout << "Monitoring interval updated to " << interval
+                      << " seconds.\n";
+            old_interval = interval;
+        }
+
+        SetTimer(NULL, 12, interval * 1000, monitor_executables());
 
         // Reduces CPU usage by prioritizing other applications.
         // Other options:
@@ -360,18 +384,10 @@ DK_API void start_monitoring(const char* folder_path) {
         // * HIGHEST
         // * TIME_CRITICAL
 
-        SetThreadPriority(handle, THREAD_PRIORITY_BELOW_NORMAL);
-
-        std::cout << "SetThreadPriority() success: "
-                  << "THREAD_PRIORITY_BELOW_NORMAL.\n";
-
-        // Detach thread from main and start it
-        thread.detach();
-        std::cout << "Detatched monitoring thread.\n";
         std::cout << "Monitoring started.\n";
 
-        std::thread asteroids_thread(create, std::ref(running));
-        asteroids_thread.detach();
+        // std::thread asteroids_thread(create, std::ref(running));
+        // asteroids_thread.detach();
     } else {
         error("The DieKnow process has already been started!\n");
     }
