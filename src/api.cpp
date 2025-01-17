@@ -296,13 +296,13 @@ DK_API const char* get_folder_path() {
     return FOLDER_PATH;
 }
 
-void CALLBACK prune_processes(
+void CALLBACK sweep(
     HWND hwnd,
     UINT uMsg,
     UINT_PTR idEvent,
     DWORD dwTime) {
     for (const auto& entry :
-         std::filesystem::directory_iterator(folder_path)) {
+         std::filesystem::directory_iterator(FOLDER_PATH)) {
         if (entry.is_directory()) {
             for (const auto& sub_entry :
                  std::filesystem::directory_iterator(entry.path())) {
@@ -376,7 +376,7 @@ DK_API void start_monitoring(const char* folder_path) {
         //     old_interval = interval;
         // }
 
-        SetTimer(NULL, 12, interval * 1000, monitor_executables());
+        SetTimer(NULL, 12, interval * 1000, sweep);
 
         // Reduces CPU usage by prioritizing other applications.
         // Other options:

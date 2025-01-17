@@ -71,12 +71,7 @@ enum class InternetFlags {
 
 namespace dieknow {
 
-void CALLBACK prune_processes(
-    HWND hwnd,
-    UINT uMsg,
-    UINT_PTR idEvent,
-    DWORD dwTime
-)
+void CALLBACK sweep(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime);
 
 extern "C" {
     extern bool running;
