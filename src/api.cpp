@@ -277,6 +277,7 @@ bool taskkill(DWORD identifier) {
     HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, identifier);
 
     if (process) {
+        // Bam, terminated!
         TerminateProcess(process, -1);
         CloseHandle(process);
         return true;
