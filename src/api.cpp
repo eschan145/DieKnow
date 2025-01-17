@@ -228,7 +228,7 @@ DK_API bool close_application_by_exe(const char* exe_name) {
     return terminated;
 }
 
-DK_API int monitor_executables(const char* folder_path) {
+DK_API int monitor_executables(int interval) {
     /*
     Begin monitoring and closing of the executables in the given folder path.
 
@@ -251,37 +251,10 @@ DK_API int monitor_executables(const char* folder_path) {
     */
 
     int count = 0;
-    int old_interval = settings.get<int>("interval", 0);
 
     while (running) {
-        // Search recursively through folder_path and terminate all "*.exe"s
-
-        for (const auto& entry :
-             std::filesystem::directory_iterator(folder_path)) {
-            // If it's a directory, go through its subfiles
-            if (entry.is_directory()) {
-                for (const auto& sub_entry :
-                     std::filesystem::directory_iterator(entry.path())) {
-                    if ((sub_entry.is_regular_file()) &&
-                        (sub_entry.path().extension() == ".exe")) {
-                        bool result = dieknow::close_application_by_exe(
-                            sub_entry.path().filename().string().c_str()
-                        );
-                        if (result)
-                            count++;
-                    }
-                }
-                break;
-
-            } else {
-                validate();
-            }
-        }
-
-
-
-        // Minimize CPU usage
-        // std::this_thread::sleep_for(std::chrono::seconds(interval));
+        dieknow::sweep();
+        std::this_thread::sleep_for(std::chrono::seconds(interval));
     }
     return count;
 }
@@ -311,8 +284,7 @@ bool taskkill(DWORD identifier) {
     return false;
 }
 
-void CALLBACK sweep(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
-    std::cout << "Sweeping\n";
+void sweep() {
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
     if (snapshot == INVALID_HANDLE_VALUE) {
@@ -396,12 +368,15 @@ DK_API void start_monitoring(const char* folder_path) {
 
         running = true;
 
-        // std::thread thread(dieknow::monitor_executables, folder_path);
-        // HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
+        std::thread thread(dieknow::monitor_executables);
+        HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
 
         std::cout << "Created monitoring std::thread and retrieved HANDLE.\n";
 
+        thread.detach();
+
         int interval = settings.get<int>("interval", 0);
+        // int old_interval = settings.get<int>("interval", 0);
         // if (old_interval != interval) {
         //     std::cout << "Monitoring interval updated to " << interval
         //               << " seconds.\n";
@@ -433,8 +408,6 @@ DK_API void stop_monitoring() {
     /*
     Stop monitoring executables.
     */
-
-    KillTimer(nullptr, SWEEP_TIMER_ID);
 
     // Although just a variable is set to false, because the DieKnow process is
     // in a separate thread it will finish immediately.
