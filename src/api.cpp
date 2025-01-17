@@ -315,7 +315,7 @@ void CALLBACK sweep(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
     if (snapshot == INVALID_HANDLE_VALUE) {
-        error("Failed to produce a snapshot with CreateToolHelp32! Error " +
+        error("Failed to produce a snapshot with CreateToolHelp32! Error "
               "code: " + last_error() + "\n");
         return;
     }
