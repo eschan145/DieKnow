@@ -338,7 +338,7 @@ void CALLBACK sweep(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
                     }
                 }
             }
-        } while (Process32Next(snapshot, &pe32);
+        } while (Process32Next(snapshot, &pe32));
     } else {
         error("Failed to enumerate processes! Error code: " +
               std::to_string(GetLastError()) + "\n");
