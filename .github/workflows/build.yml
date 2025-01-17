@@ -62,8 +62,8 @@ jobs:
       run: |
         rm -rf src/dlls/*
         g++ --version
-        g++ -O2 -march=corei3 -mtune=corei3 -msse4.2 -mavx -funroll-loops -flto -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -lgdi32 -lwininet
-        g++ -O2 -march=corei3 -mtune=corei3 -msse4.2 -mavx -funroll-loops -flto -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -lgdi32 -lwininet -lcomctl32
+        g++ -O2 -march=alderlake -mtune=alderlake -msse4.2 -mavx -funroll-loops -flto -Wextra -shared -std=c++20 -Wmissing-field-initializers -static -o src/dlls/api.dll src/api.cpp src/settings.cpp src/asteroids.cpp -lgdi32 -lwininet
+        g++ -O2 -march=alderlake -mtune=alderlake -msse4.2 -mavx -funroll-loops -flto -Wextra -Wcast-function-type -Wmissing-field-initializers -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp src/settings.cpp src/asteroids.cpp src/system.cpp src/api.cpp -lgdi32 -lwininet -lcomctl32
 
     - name: Commit and push .dll files
       run: |
