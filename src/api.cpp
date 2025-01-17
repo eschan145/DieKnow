@@ -278,7 +278,7 @@ DK_API int monitor_executables(const char* folder_path) {
         }
 
         int interval = settings.get<int>("interval", 0);
-        if (!old_interval != interval) {
+        if (old_interval != interval) {
             std::cout << "Monitoring interval updated to " << interval << " seconds.\n";
             old_interval = interval;
         }
