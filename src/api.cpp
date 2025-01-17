@@ -368,14 +368,15 @@ DK_API void start_monitoring(const char* folder_path) {
 
         running = true;
 
-        std::thread thread(dieknow::monitor_executables);
+        int interval = settings.get<int>("interval", 0);
+
+        std::thread thread(dieknow::monitor_executables, interval);
         HANDLE handle = reinterpret_cast<HANDLE>(thread.native_handle());
 
         std::cout << "Created monitoring std::thread and retrieved HANDLE.\n";
 
         thread.detach();
 
-        int interval = settings.get<int>("interval", 0);
         // int old_interval = settings.get<int>("interval", 0);
         // if (old_interval != interval) {
         //     std::cout << "Monitoring interval updated to " << interval
@@ -383,7 +384,7 @@ DK_API void start_monitoring(const char* folder_path) {
         //     old_interval = interval;
         // }
 
-        SetTimer(nullptr, SWEEP_TIMER_ID, interval * 1000, sweep);
+        // SetTimer(nullptr, SWEEP_TIMER_ID, interval * 1000, sweep);
 
         // Reduces CPU usage by prioritizing other applications.
         // Other options:
