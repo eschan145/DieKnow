@@ -147,11 +147,11 @@ Associated `*.h` files in the `src` directory are the includes for the implement
 
 #### Why is C++ and Python used and not only Python?
 
-The Intel Core i3 CPU is quite slow and at the lower end of Intel's CPU lineup. Therefore it is important for highest efficiency to use C++, as Python is built on C and very inefficient. DieKnow does not only use C++ because most executables are blocked by organizations' AppLocker policy. This can be mitigated by using ctypes and building a shared object or dynamic link library from C++ files.
+The Intel Core i3 CPU is quite slow and at the lower end of Intel's CPU lineup. Therefore it is important for highest efficiency to use C++, as Python is built on C and very inefficient with several layers of abstraction. DieKnow does not only use C++ because most executables are blocked by organizations' AppLocker policy. This can be mitigated by using ctypes and building a shared object or dynamic link library from C++ files.
 
 #### How can I compile this myself?
 
-First, ensure you have everything set up to run DieKnow. Take a look at the GitHub Actions [`build.yml`](.github/workflows/build.yml) workflow and follow along with it. You'll need a C++ compiler, preferably `g++` or MSVC, compile it as a shared object (with the `-shared` flag), and link the required libraries (`-lgdi32` and `-lcomctl32`). The commands DieKnow uses to build itself are:
+First, ensure you have everything set up to run DieKnow. Take a look at the GitHub Actions [`build.yml`](.github/workflows/build.yml) workflow and follow along with it. You'll need a C++ compiler, preferably `g++` or MSVC, to compile it as a shared object (with the `-shared` flag), and link the required libraries (`-lgdi32` and `-lcomctl32`). The commands DieKnow uses to build itself are:
 
 ```bash
 g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/api.dll src/api.cpp -lgdi32
@@ -160,6 +160,6 @@ g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgd
 
 #### I'm getting high CPU usage for DieKnow. What can I do?
 
-With the newest update for DieKnow (2.1), this should no longer be a problem. However, if it continues to have above 2% CPU, you can build DieKnow yourself and specify the flag `march=native` in the `g++` command. This allows the compiler to enable optimizations targeted _specifically_ towards your CPU. Releases built on GitHub Actions target the Alder Lake CPU architecture, which matches Intel CPUs using P-cores and E-cores. This includes the 12th Generation Intel Core i3 (12300, i3-12100, i3-12100F), as well as the 12th Generation of i5, i7, and i9 CPUs.
+With the newest update for DieKnow (2.1), this should no longer be a problem. However, if it continues to have above 2% CPU, you can build DieKnow yourself and specify the flag `march=native` in the `g++` command. This allows the compiler to enable optimizations targeted _specifically_ towards your CPU. Releases built on GitHub Actions target the Alder Lake CPU architecture, which matches Intel CPUs using P-cores and E-cores. This includes the 12th Generation Intel Core i3 (12300, i3-12100, i3-12100F), as well as the 12th Generation of i5, i7, and i9 CPUs. The vast majority of the intended end users will likely have one of these processors.
 
-DieKnow uses around 6 megabytes of RAM at most.
+DieKnow uses around 6 megabytes of RAM at most, and most of the time is at 580 KBs.
