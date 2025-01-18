@@ -2,7 +2,7 @@
 
 A bypass of DyKnow, powered primarily by the Windows win32 API.
 
-DieKnow will significantly improve the performance of your laptop by a large amount on your CPU. It will use up to 3% CPU, higher than optimal but still much lower than DyKnow's 15%.
+DieKnow will significantly improve the performance of your laptop by a large amount on your CPU. On my organization HP computer with a 12th Generation Intel Core i3, this runs at less than 1% CPU. This is much less than DyKnow's 15%.
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), built entirely by the Windows API without an external library such as Qt or GTK.
 
@@ -28,7 +28,7 @@ About this:
 * **DOES NOT** need a C++ compiler.
 * **DOES NOT** need to run an executable or a batch file, which is usually blocked by the school via Windows AppLocker.
 * **DOES NOT** have any external dependencies, besides the C++ standard library and the Windows API, which are preinstalled.
-* Written in robust C++ code for maximum performance.
+* Written in robust, highly-optimized C++ code for maximum performance, faster than many other alternatives you can find open-source.
 
 What can DyKnow do:
 
@@ -46,7 +46,7 @@ When it is running, you'll see the DyKnow icon disappear from your taskbar. 💀
 ## Installation
 
 > [!IMPORTANT]
-> This application only works on a 64-bit Windows, as it uses the Windows API and has been compiled with 64-bit gcc.
+> This application only works on a 64-bit Windows, as it uses the Windows API and has been compiled with 64-bit gcc. (Architecture: `win32-x86_64`)
 
 ### For Python
 
@@ -76,7 +76,7 @@ That's it! It may take around two minutes for it to start up.
 
 ### `start`
 
-Start the DieKnow process. DyKnow executables will be terminated forcefully every five seconds, or whatever is set in [`interval.txt`](interval.txt), which is sufficient to keep DyKnow consistently closed down. If the delay was too low (or none at all), CPU usage would be very high, possibly as high or higher than DyKnow.
+Start the DieKnow process. DyKnow executables will be terminated forcefully every second, or whatever is set as the `interval` option in [`settings.conf`](settings.conf), which is sufficient to keep DyKnow consistently closed down. If the delay was too low (or none at all), CPU usage increase.
 
 ### `stop`
 
@@ -160,6 +160,6 @@ g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgd
 
 #### I'm getting high CPU usage for DieKnow. What can I do?
 
-I'm working to optimize the DieKnow process, and it uses higher CPU than it should. However, it still significantly less than what DyKnow uses.
+With the newest update for DieKnow (2.1), this should no longer be a problem. However, if it continues to have above 2% CPU, you can build DieKnow yourself and specify the flag `march=native` in the `g++` command. This allows the compiler to enable optimizations targeted _specifically_ towards your CPU. Releases built on GitHub Actions target the Alder Lake CPU architecture, which matches Intel CPUs using P-cores and E-cores. This includes the 12th Generation Intel Core i3 (12300, i3-12100, i3-12100F), as well as the 12th Generation of i5, i7, and i9 CPUs.
 
-You can build DieKnow yourself and specify the flag `march=native` in the `g++` command. This asks the compiler to enable optimizations targeted specifically towards your CPU.
+DieKnow uses around 6 megabytes of RAM at most.
