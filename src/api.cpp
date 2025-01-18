@@ -269,6 +269,7 @@ DK_API const char* get_folder_path() {
     return FOLDER_PATH;
 }
 
+// cppcheck-suppress unusedFunction
 std::string last_error() {
     return std::to_string(GetLastError());
 }
@@ -286,9 +287,6 @@ bool taskkill(DWORD identifier) {
 }
 
 void sweep() {
-    int count = 0;
-    int total_count = 0;
-
     HWND hwnd = FindWindow(
         nullptr,
         DYK_CLASS_NAME
