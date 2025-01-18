@@ -288,8 +288,8 @@ bool taskkill(DWORD identifier) {
 
 void sweep() {
     HWND hwnd = FindWindow(
-        nullptr,
-        DYK_CLASS_NAME
+        DYK_CLASS_NAME,
+        nullptr
     );
 
     if (!hwnd) {

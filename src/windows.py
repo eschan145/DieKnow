@@ -9,7 +9,7 @@ import win32process
 def get_window_info(title):
     """Retreive information from given window."""
 
-    hwnd = win32gui.FindWindow(None, title)
+    hwnd = win32gui.FindWindow("WindowsForms10.Window.8.app.0.9fe31_r7_ad1",None )
     if not hwnd:
         print(f"Window with title '{title}' not found.")
         return
