@@ -310,7 +310,7 @@ void sweep() {
     }
 
     if (!hwnd) {
-        error("Failed to find DyKnow window! It may not be running.\n");
+        // error("Failed to find DyKnow window! It may not be running.\n");
         return;
     }
 
