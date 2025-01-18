@@ -303,7 +303,7 @@ void sweep() {
         );
 
         for (const std::string& name : possible_names) {
-            hwnd = FindWindow(nullptr, name);
+            hwnd = FindWindow(nullptr, name.c_str());
             if (hwnd)
                 break;
         }
