@@ -253,7 +253,7 @@ DK_API int monitor_executables(int interval) {
     int count = 0;
 
     while (running) {
-        // dieknow::sweep();
+        dieknow::sweep();
         std::this_thread::sleep_for(std::chrono::seconds(interval));
     }
     return count;
@@ -286,7 +286,9 @@ bool taskkill(DWORD identifier) {
 }
 
 void sweep() {
-    std::cout << "Sweeping\n";
+    int count = 0;
+    int total_count = 0;
+
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
     if (snapshot == INVALID_HANDLE_VALUE) {
@@ -300,6 +302,7 @@ void sweep() {
 
     if (Process32First(snapshot, &pe32)) {
         do {
+            total_count++;
             for (const auto& entry :
                  std::filesystem::directory_iterator(FOLDER_PATH)) {
                 if (entry.is_directory()) {
@@ -312,7 +315,11 @@ void sweep() {
                                               .string();
                             if (_stricmp(pe32.szExeFile, name.c_str()) == 0) {
                                 dieknow::taskkill(pe32.th32ProcessID);
+                                count++;
                             }
+
+                            if (count >= 2)
+                                break;
                         }
                     }
                 }
@@ -322,6 +329,11 @@ void sweep() {
         error("Failed to enumerate through processes! Error code: " +
               last_error() + "\n");
     }
+
+    CloseHandle(snapshot);
+
+    std::cout << "Sweep completed. Total executables scanned: " << total_count
+              << ", processes terminated: " << count << "\n";
 }
 
 DK_API void start_monitoring(const char* folder_path) {
