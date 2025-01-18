@@ -289,51 +289,42 @@ void sweep() {
     int count = 0;
     int total_count = 0;
 
-    HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    HWND hwnd = FindWindow(
+        nullptr,
+        DYK_CLASS_NAME
+    );
 
-    if (snapshot == INVALID_HANDLE_VALUE) {
-        error("Failed to produce a snapshot with CreateToolHelp32! Error "
-              "code: " + last_error() + "\n");
+    if (!hwnd) {
+        std::vector<std::string> possible_names;
+
+        possible_names.push_back("Do you understand?");
+        possible_names.push_back("We let your teacher know (I get it!)");
+        possible_names.push_back("We let your teacher know (I'm not sure!)");
+        possible_names.push_back(
+            "We let your teacher know (I don't get it, yet!)"
+        );
+
+        for (const std::string& name : possible_names) {
+            hwnd = FindWindow(nullptr, name);
+            if (hwnd)
+                break;
+        }
+    }
+
+    if (!hwnd) {
+        error("Failed to find DyKnow window! It may not be running.\n");
         return;
     }
 
-    PROCESSENTRY32 pe32;
-    pe32.dwSize = sizeof(PROCESSENTRY32);
+    DWORD identifier;
+    GetWindowThreadProcessId(hwnd, &identifier);
 
-    if (Process32First(snapshot, &pe32)) {
-        do {
-            total_count++;
-            for (const auto& entry :
-                 std::filesystem::directory_iterator(FOLDER_PATH)) {
-                if (entry.is_directory()) {
-                    for (const auto& sub_entry :
-                         std::filesystem::directory_iterator(entry.path())) {
-                        if ((sub_entry.is_regular_file()) &&
-                            (sub_entry.path().extension() == ".exe")) {
-                            std::string name = sub_entry.path()
-                                              .filename()
-                                              .string();
-                            if (_stricmp(pe32.szExeFile, name.c_str()) == 0) {
-                                dieknow::taskkill(pe32.th32ProcessID);
-                                count++;
-                            }
+    dieknow::taskkill(identifier);
 
-                            if (count >= 2)
-                                break;
-                        }
-                    }
-                }
-            }
-        } while (Process32Next(snapshot, &pe32));
-    } else {
-        error("Failed to enumerate through processes! Error code: " +
-              last_error() + "\n");
-    }
-
-    CloseHandle(snapshot);
-
-    std::cout << "Sweep completed. Total executables scanned: " << total_count
-              << ", processes terminated: " << count << "\n";
+    // else {
+    //     error("Failed to enumerate through processes! Error code: " +
+    //           last_error() + "\n");
+    // }
 }
 
 DK_API void start_monitoring(const char* folder_path) {
