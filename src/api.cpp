@@ -282,7 +282,8 @@ int get_kill_method() {
 }
 
 void set_kill_method(int value) {
-    assert((0 < value) && (value < 2));
+    assert((0 <= value) && (value <= 2) &&
+           "Invalid value for static_cast<KillMethod>!");
 
     default_kill_method = static_cast<KillMethod>(value);
 }
