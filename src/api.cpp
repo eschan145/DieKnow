@@ -254,7 +254,7 @@ DK_API int monitor_executables(int interval) {
 
     while (running) {
         dieknow::sweep();
-        std::this_thread::sleep_for(std::chrono::seconds(interval));
+        std::this_thread::sleep_for(std::chrono::milliseconds(interval));
     }
     return count;
 }

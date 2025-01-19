@@ -344,7 +344,7 @@ Application::Application() {
     tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow.");
     tooltip(hwnd, interval_set,
         "Set the interval between ticks for closing DyKnow. Beware - an "
-        "interval of 0 can saturate a CPU core."
+        "interval of 0 can saturate a CPU core. In seconds."
     );
     tooltip(hwnd, executables_killed,
         "Number of DyKnow executables terminated by DieKnow."
