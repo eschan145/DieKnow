@@ -54,6 +54,30 @@ This is made into a function for use with ctypes.
 
 **Signature**: `const char*`
 
+### *function* `taskkill()`
+
+Terminate an executable given a PID passed in `identifier`.
+
+An optional termination method may be specified as the scoped enumerate
+`KillMethod`.
+
+* `KillMethod::WIN32_API`: recommended kill method using
+`TerminateProcess()`. This is the most reliable and the most performant.
+
+* `KillMethod::SYSTEM`: using OS system's `taskkill` command. Usually will
+fail due to lack of permissions.
+
+* `KillMethod::WMIC`: using Windows Management Instrumentation command line.
+Usually works but less performant and reliable compared to `WIN32_API`.
+
+**Signature**: `bool`
+
+### *function* `sweep()`
+
+Destroy all DyKnow executables in a sweep.
+
+**Signature**: `void`
+
 ### *function* `start_monitoring()`
 
 Begin monitoring executables.
