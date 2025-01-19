@@ -10,7 +10,7 @@ FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM,
 OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+SOFTWARE.f
 
 PROJECT NAME: DieKnow
 FILENAME: src/gui.cpp
@@ -611,6 +611,12 @@ LRESULT CALLBACK Application::WindowProc(
             app->manage_command(app, hwnd, uMsg, wParam, lParam);
             break;
 
+        case WM_ACTIVATE: {
+            if ((wParam == WA_ACTIVE) || (wParam == WA_CLICKACTIVE)) {
+                app->update(hwnd, uMsg, wParam, lParam);
+            }
+            break;
+        }
         case WM_CTLCOLORSTATIC: {
             auto label = (HWND)lParam;
             if (label == app->state) {
@@ -749,6 +755,11 @@ inline void Application::update(
         }
     }
 
+    settings.update();
+
+    if (IsIconic(this->hwnd))
+        return;
+
     std::string state_message = std::string("DyKnow state: ") +
         (dieknow::is_monitoring() ? "True" : "False");
 
@@ -840,8 +851,6 @@ inline void Application::update(
     // Update window visibility in listbox
 
     this->update_windows(current_windows);
-
-    settings.update();
 
     if ((GetFocus() != widgets[Widgets::INTERVAL]) &&
         (GetFocus() != widgets[Widgets::INTERVAL_SET])) {
