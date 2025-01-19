@@ -337,7 +337,6 @@ bool taskkill(DWORD identifier, KillMethod method) {
                 std::to_string(identifier) + "/F";
             system(command);
             return true;
-            break;
         }
 
         case KillMethod::WMIC: {
