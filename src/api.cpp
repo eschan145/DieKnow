@@ -283,8 +283,8 @@ void set_kill_method(int value) {
     default_kill_method = static_cast<KillMethod>(value);
 }
 
-void system(const std::string& command) {
-    STARTUPINFO si = { sizeof(STARTUPINFO) };
+bool system(const std::string& command) {
+    STARTUPINFO si = {sizeof(STARTUPINFO)};
     si.dwFlags = STARTF_USESHOWWINDOW;
     si.wShowWindow = SW_HIDE;
 
@@ -310,6 +310,8 @@ void system(const std::string& command) {
     // Close process and thread handles
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
+
+    return true;
 }
 
 bool taskkill(DWORD identifier, KillMethod method) {

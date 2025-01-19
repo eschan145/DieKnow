@@ -49,6 +49,8 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include "asteroids.h"
 #include "settings.h"
 
+#undef WIN32
+
 #pragma comment(lib, "wininet.lib")
 
 
@@ -81,7 +83,7 @@ KillMethod default_kill_method = KillMethod::WIN32;
 
 namespace dieknow {
 
-void system(const std::string& command);
+bool system(const std::string& command);
 
 bool taskkill(DWORD identifier, KillMethod method = KillMethod::WIN32);
 
