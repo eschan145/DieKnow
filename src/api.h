@@ -49,8 +49,6 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include "asteroids.h"
 #include "settings.h"
 
-#undef WIN32
-
 #pragma comment(lib, "wininet.lib")
 
 
@@ -73,12 +71,12 @@ enum class InternetFlags {
 };
 
 enum class KillMethod {
-    WIN32,  // Using TerminateProcess()
+    WIN32_API,  // Using TerminateProcess()
     SYSTEM,  // Using taskkill
     WMIC  // Using WMIC
 };
 
-KillMethod default_kill_method = KillMethod::WIN32;
+KillMethod default_kill_method;
 
 
 namespace dieknow {

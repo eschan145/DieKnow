@@ -70,7 +70,7 @@ def main():
 
             case "method":
                 value = input("Enter the new termination method (0-2): ")
-                if (value >= 0) and (value <= 2):
+                if 0 <= value <= 2:
                     dieknow.set_kill_method(value);
                 elif not value:
                     print(dieknow.get_kill_method())

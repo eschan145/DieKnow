@@ -30,6 +30,8 @@ const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 // Probably subject to change, will have to be updated often
 const char* DYK_CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
 
+KillMethod default_kill_method = KillMethod::WIN32_API;
+
 
 std::filesystem::path get_directory() {
     HMODULE hModule = nullptr;
@@ -316,7 +318,7 @@ bool system(const std::string& command) {
 
 bool taskkill(DWORD identifier, KillMethod method) {
     switch (method) {
-        case KillMethod::WIN32: {
+        case KillMethod::WIN32_API: {
             HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, identifier);
 
             if (process) {
