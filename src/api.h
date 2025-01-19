@@ -82,17 +82,17 @@ extern KillMethod default_kill_method;
 
 namespace dieknow {
 
-bool system(const std::string& command);
-
-bool taskkill(DWORD identifier, KillMethod method = KillMethod::WIN32_API);
-
-void sweep();
-
 extern "C" {
     extern bool running;
     extern int killed;
 
     // __declspec allows it to be exported and used in ctypes
+
+    DK_API bool system(const std::string& command);
+    
+    DK_API bool taskkill(DWORD identifier, KillMethod method = KillMethod::WIN32_API);
+    
+    DK_API void sweep();
 
     DK_API int get_kill_method();
     DK_API void set_kill_method(int value);
