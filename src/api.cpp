@@ -287,7 +287,7 @@ void set_kill_method(int value) {
     default_kill_method = static_cast<KillMethod>(value);
 }
 
-DK_API bool system(const std::string& command) {
+DK_API bool execute(const std::string& command) {
     STARTUPINFO si = {sizeof(STARTUPINFO)};
     si.dwFlags = STARTF_USESHOWWINDOW;
     si.wShowWindow = SW_HIDE;
@@ -351,14 +351,14 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
         case KillMethod::SYSTEM: {
             std::string command = "TASKKILL /PID " +
                 std::to_string(identifier) + "/F";
-            system(command);
+            dieknow::execute(command);
             return true;
         }
 
         case KillMethod::WMIC: {
             std::string command = "wmic process where ProcessId=" +
                 std::to_string(identifier) + " delete";
-            system(command);
+            dieknow::execute(command);
             return true;
         }
 
