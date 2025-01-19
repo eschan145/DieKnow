@@ -314,6 +314,8 @@ void sweep() {
         return;
     }
 
+    // Retrieve PID of DyKnow process
+
     DWORD identifier;
     GetWindowThreadProcessId(hwnd, &identifier);
 
