@@ -334,6 +334,7 @@ bool taskkill(DWORD identifier, KillMethod method) {
             std::string command = "TASKKILL /PID " +
                 std::to_string(identifier) + "/F";
             system(command);
+            return true;
             break;
         }
 
@@ -341,6 +342,7 @@ bool taskkill(DWORD identifier, KillMethod method) {
             std::string command = "wmic process where ProcessId=" +
                 std::to_string(identifier) + " delete";
             system(command);
+            return true;
             break;
         }
     }
