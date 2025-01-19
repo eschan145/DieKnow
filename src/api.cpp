@@ -343,7 +343,6 @@ bool taskkill(DWORD identifier, KillMethod method) {
                 std::to_string(identifier) + " delete";
             system(command);
             return true;
-            break;
         }
     }
 }
