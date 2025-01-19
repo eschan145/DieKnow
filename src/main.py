@@ -27,6 +27,8 @@ def main():
                 re.IGNORECASE)
             if match and match.group(1):
                 attr = getattr(dieknow, match.group(1), None)
+                if match.group(1) == "method":
+                    attr = getattr(dieknow, "get_kill_method", None)
                 if attr:
                     title = "Documentation for the function %s at %s:" % \
                             (match.group(1), attr)
@@ -41,7 +43,7 @@ def main():
                       "Ex. for help on the function \"validate\", type \"help "
                       "validate\".")
                 attrs = [attr for attr in dir(dieknow.shell) \
-                    if not attr.startswith("__")]
+                    if not attr.startswith("__"), "method"]
                 column_width = (len(attrs) + 1) // 2
                 left_column = attrs[:column_width]
                 right_column = attrs[column_width:]
@@ -69,13 +71,19 @@ def main():
                 print(f"Executables killed: {killed}")
 
             case "method":
-                value = input("Enter the new termination method (0-2): ")
-                if 0 <= value <= 2:
-                    dieknow.set_kill_method(value);
-                elif not value:
-                    print(dieknow.get_kill_method())
-                else:
-                    print("Invalid input!")
+                value = input("Enter the new termination method (0-2), or "
+                              "press enter to retrieve method: ")
+
+                try:
+                    value = int(value)
+                    if 0 <= value <= 2:
+                        dieknow.set_kill_method(value);
+
+                except ValueError:
+                    if not value:
+                        print(dieknow.get_kill_method())
+                    else:
+                        print("Invalid input!")
 
             case "exit":
                 if dieknow.status():

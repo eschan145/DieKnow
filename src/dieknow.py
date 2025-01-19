@@ -45,7 +45,7 @@ try:
     lib.get_kill_method.argtypes = None
     lib.get_kill_method.restype = ctypes.c_int
 
-    lib.set_kill_method.argtypes = ctypes.c_int
+    lib.set_kill_method.argtypes = [ctypes.c_int]
     lib.set_kill_method.restype = None
 
     lib.validate.argtypes = None
