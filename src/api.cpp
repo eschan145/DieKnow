@@ -361,6 +361,10 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
             system(command);
             return true;
         }
+
+        default: {
+            return false;
+        }
     }
 }
 
