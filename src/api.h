@@ -76,7 +76,7 @@ enum class KillMethod {
     WMIC  // Using WMIC
 };
 
-KillMethod default_kill_method;
+extern KillMethod default_kill_method;
 
 
 namespace dieknow {
