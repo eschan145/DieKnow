@@ -88,7 +88,7 @@ extern "C" {
 
     // __declspec allows it to be exported and used in ctypes
 
-    DK_API bool system(const std::string& command);
+    DK_API bool execute(const std::string& command);
 
     DK_API bool taskkill(
         DWORD identifier,
