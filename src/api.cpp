@@ -337,7 +337,7 @@ bool taskkill(DWORD identifier, KillMethod method) {
 
         case KillMethod::WMIC: {
             std::string command = "wmic process where ProcessId=" +
-                std::to_string(pid) + " delete";
+                std::to_string(identifier) + " delete";
             system(command);
             break;
         }
