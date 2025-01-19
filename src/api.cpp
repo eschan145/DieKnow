@@ -328,7 +328,7 @@ bool taskkill(DWORD identifier, KillMethod method) {
             return false;
         }
 
-        case KillMethod::TASKKILL: {
+        case KillMethod::SYSTEM: {
             std::string command = "TASKKILL /PID " +
                 std::to_string(identifier) + "/F";
             system(command);
