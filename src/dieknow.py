@@ -69,6 +69,9 @@ except AttributeError as exc:
     function_name = parts[1] if len(parts) > 1 else "unknown"
     raise OSError(f"Function '{function_name}' name or ordinal missing!") from exc
 
+get_kill_method = lib.get_kill_method
+set_kill_method = lib.set_kill_method
+
 validate = lib.validate
 folder_path = lib.get_folder_path()
 start_monitoring = lib.start_monitoring
