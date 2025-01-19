@@ -287,7 +287,7 @@ void set_kill_method(int value) {
     default_kill_method = static_cast<KillMethod>(value);
 }
 
-bool system(const std::string& command) {
+DK_API bool system(const std::string& command) {
     STARTUPINFO si = {sizeof(STARTUPINFO)};
     si.dwFlags = STARTF_USESHOWWINDOW;
     si.wShowWindow = SW_HIDE;
@@ -318,7 +318,23 @@ bool system(const std::string& command) {
     return true;
 }
 
-bool taskkill(DWORD identifier, KillMethod method) {
+DK_API bool taskkill(DWORD identifier, KillMethod method) {
+    /*
+    Terminate an executable given a PID passed in `identifier`.
+
+    An optional termination method may be specified as the scoped enumerate
+    `KillMethod`.
+
+    * `KillMethod::WIN32_API`: recommended kill method using
+       `TerminateProcess()`. This is the most reliable and the most performant.
+
+    * `KillMethod::SYSTEM`: using OS system's `taskkill` command. Usually will
+       fail due to lack of permissions.
+
+    * `KillMethod::WMIC`: using Windows Management Instrumentation command line.
+       Usually works but less performant and reliable compared to `WIN32_API`.
+    */
+
     switch (method) {
         case KillMethod::WIN32_API: {
             HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, identifier);
@@ -348,7 +364,11 @@ bool taskkill(DWORD identifier, KillMethod method) {
     }
 }
 
-void sweep() {
+DK_API void sweep() {
+    /*
+    Destroy all DyKnow executables in a sweep.
+    */
+
     HWND hwnd = FindWindow(
         DYK_CLASS_NAME,
         nullptr
