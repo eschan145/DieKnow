@@ -68,6 +68,15 @@ def main():
                 killed = dieknow.get_killed_count()
                 print(f"Executables killed: {killed}")
 
+            case "method":
+                value = input("Enter the new termination method (0-2): ")
+                if (value >= 0) and (value <= 2):
+                    dieknow.set_kill_method(value);
+                elif not value:
+                    print(dieknow.get_kill_method())
+                else:
+                    print("Invalid input!")
+
             case "exit":
                 if dieknow.status():
                     dieknow.stop_monitoring()

@@ -70,9 +70,20 @@ enum class InternetFlags {
     CONNECT_NONE
 };
 
+enum class KillMethod {
+    WIN32,  // Using TerminateProcess()
+    SYSTEM,  // Using taskkill
+    WMIC  // Using WMIC
+};
+
+KillMethod default_kill_method = KillMethod::WIN32;
+
+
 namespace dieknow {
 
-bool taskkill(DWORD identifier);
+void system(const std::string& command);
+
+bool taskkill(DWORD identifier, KillMethod method = KillMethod::WIN32);
 
 void sweep();
 
@@ -81,6 +92,9 @@ extern "C" {
     extern int killed;
 
     // __declspec allows it to be exported and used in ctypes
+
+    DK_API int get_kill_method();
+    DK_API void set_kill_method(int value);
 
     DK_API void validate();
     DK_API const char* get_folder_path();

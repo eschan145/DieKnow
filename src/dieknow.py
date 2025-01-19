@@ -36,12 +36,18 @@ except OSError as exc:
         "machine (as well as its dependencies) and is not missing "
         "dependencies if dynamically linked!\n\nRefer to "
         "https://learn.microsoft.com/en-us/windows/win32/debug/"
-        "system-error-codes for more information"
+        "system-error-codes for more information."
     )
     sys.stderr.write(f"{RED}{error_message}{RESET}\n")
     raise OSError from exc
 
 try:
+    lib.get_kill_method.argtypes = None
+    lib.get_kill_method.restype = ctypes.c_int
+
+    lib.set_kill_method.argtypes = ctypes.c_int
+    lib.set_kill_method.restype = None
+
     lib.validate.argtypes = None
     lib.validate.restype = None
     lib.get_folder_path.argtypes = None
@@ -115,7 +121,9 @@ class Shell:
             "stop_monitoring",
             "sys",
             "wintypes",
-            "Shell"
+            "Shell",
+            "get_kill_method",
+            "set_kill_method"
         }
         for var_name, value in globals().items():
             if var_name not in exclude and not var_name.startswith("__"):

@@ -274,16 +274,72 @@ std::string last_error() {
     return std::to_string(GetLastError());
 }
 
-bool taskkill(DWORD identifier) {
-    HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, identifier);
+int get_kill_method() {
+    // Scoped enums are not interchangeable with ints!
+    return static_cast<int>(default_kill_method);
+}
 
-    if (process) {
-        // Bam, terminated!
-        TerminateProcess(process, -1);
-        CloseHandle(process);
-        return true;
+void set_kill_method(int value) {
+    default_kill_method = static_cast<KillMethod>(value);
+}
+
+void system(const std::string& command) {
+    STARTUPINFO si = { sizeof(STARTUPINFO) };
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
+
+    PROCESS_INFORMATION pi = {};
+
+    if (!CreateProcessA(
+        nullptr,
+        const_cast<char*>(command.c_str()),
+        nullptr,
+        nullptr,
+        FALSE,
+        CREATE_NO_WINDOW,
+        nullptr,
+        nullptr,
+        &si,
+        &pi
+    )) {
+        return false;
     }
-    return false;
+
+    WaitForSingleObject(pi.hProcess, INFINITE);
+
+    // Close process and thread handles
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+}
+
+bool taskkill(DWORD identifier, KillMethod method) {
+    switch (method) {
+        case KillMethod::WIN32: {
+            HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, identifier);
+
+            if (process) {
+                // Bam, terminated!
+                TerminateProcess(process, -1);
+                CloseHandle(process);
+                return true;
+            }
+            return false;
+        }
+
+        case KillMethod::TASKKILL: {
+            std::string command = "TASKKILL /PID " +
+                std::to_string(identifier) + "/F";
+            system(command);
+            break;
+        }
+
+        case KillMethod::WMIC: {
+            std::string command = "wmic process where ProcessId=" +
+                std::to_string(pid) + " delete";
+            system(command);
+            break;
+        }
+    }
 }
 
 void sweep() {
@@ -319,7 +375,7 @@ void sweep() {
     DWORD identifier;
     GetWindowThreadProcessId(hwnd, &identifier);
 
-    dieknow::taskkill(identifier);
+    dieknow::taskkill(identifier, default_kill_method);
 
     // else {
     //     error("Failed to enumerate through processes! Error code: " +
