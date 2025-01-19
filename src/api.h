@@ -36,6 +36,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <winternl.h>
 #include <tlhelp32.h>
 
+#include <cassert>
 #include <cstdlib>
 #include <fstream>
 
