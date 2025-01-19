@@ -83,7 +83,7 @@ namespace dieknow {
 
 bool system(const std::string& command);
 
-bool taskkill(DWORD identifier, KillMethod method = KillMethod::WIN32);
+bool taskkill(DWORD identifier, KillMethod method = KillMethod::WIN32_API);
 
 void sweep();
 
