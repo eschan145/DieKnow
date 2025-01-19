@@ -76,7 +76,7 @@ That's it! It may take around two minutes for it to start up.
 
 ### `start`
 
-Start the DieKnow process. DyKnow executables will be terminated forcefully every 50 milliseconds, or whatever is set as the `interval` option in [`settings.conf`](settings.conf), which is sufficient to keep DyKnow consistently closed down. If the delay was too low (or none at all), CPU usage increase. On an Intel Core i3 CPU, an interval of 50 milliseconds can be handled at less than 1% CPU.
+Start the DieKnow process. DyKnow executables will be terminated forcefully every 50 milliseconds, or whatever is set as the `interval` option in [`settings.conf`](settings.conf), which is sufficient to keep DyKnow consistently closed down. If the delay was too low (or none at all), CPU usage would increase. On an Intel Core i3 CPU, an interval of 50 milliseconds can be handled at less than 1% CPU.
 
 ### `stop`
 
