@@ -629,7 +629,7 @@ LRESULT CALLBACK Application::WindowProc(
                 SendMessage(
                     widget,
                     WM_PRINT,
-                    (WPARAM)hdcBuffer,
+                    (WPARAM)buffer,
                     PRF_CLIENT |
                     PRF_CHILDREN |
                     PRF_NONCLIENT
