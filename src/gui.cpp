@@ -646,6 +646,9 @@ LRESULT CALLBACK Application::WindowProc(
             break;
         }
 
+        case WM_ERASEBKGND:
+            return 1;
+
         case WM_CTLCOLORSTATIC: {
             auto label = (HWND)lParam;
             if (label == app->state) {
