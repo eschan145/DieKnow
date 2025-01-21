@@ -618,38 +618,38 @@ LRESULT CALLBACK Application::WindowProc(
             break;
         }
 
-        case WM_PAINT: {
-            RECT rect;
-            GetClientRect(app->hwnd, &rect);
-            int width = rect.right - rect.left;
-            int height = rect.bottom - rect.top;
+        // case WM_PAINT: {
+        //     RECT rect;
+        //     GetClientRect(app->hwnd, &rect);
+        //     int width = rect.right - rect.left;
+        //     int height = rect.bottom - rect.top;
 
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(app->hwnd, &ps);
-            HDC buffer = CreateCompatibleDC(hdc);
-            HBITMAP bitmap = CreateCompatibleBitmap(hdc, width, height);
-            HBITMAP old_bitmap = (HBITMAP)SelectObject(buffer, bitmap);
+        //     PAINTSTRUCT ps;
+        //     HDC hdc = BeginPaint(app->hwnd, &ps);
+        //     HDC buffer = CreateCompatibleDC(hdc);
+        //     HBITMAP bitmap = CreateCompatibleBitmap(hdc, width, height);
+        //     HBITMAP old_bitmap = (HBITMAP)SelectObject(buffer, bitmap);
 
-            for (const auto& widget : app->widgets) {
-                SendMessage(
-                    widget,
-                    WM_PRINT,
-                    (WPARAM)buffer,
-                    PRF_CLIENT |
-                    PRF_CHILDREN |
-                    PRF_NONCLIENT
-                );
-            }
+        //     for (const auto& widget : app->widgets) {
+        //         SendMessage(
+        //             widget,
+        //             WM_PRINT,
+        //             (WPARAM)buffer,
+        //             PRF_CLIENT |
+        //             PRF_CHILDREN |
+        //             PRF_NONCLIENT
+        //         );
+        //     }
 
-            BitBlt(hdc, 0, 0, width, height, buffer, 0, 0, SRCCOPY);
+        //     BitBlt(hdc, 0, 0, width, height, buffer, 0, 0, SRCCOPY);
 
-            SelectObject(buffer, old_bitmap);
-            DeleteObject(bitmap);
-            DeleteDC(buffer);
-            EndPaint(app->hwnd, &ps);
+        //     SelectObject(buffer, old_bitmap);
+        //     DeleteObject(bitmap);
+        //     DeleteDC(buffer);
+        //     EndPaint(app->hwnd, &ps);
 
-            break;
-        }
+        //     break;
+        // }
 
         // case WM_ERASEBKGND:
         //     return 1;
