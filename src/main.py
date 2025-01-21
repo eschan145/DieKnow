@@ -77,8 +77,7 @@ def main():
 
                 try:
                     value = int(value)
-                    if 0 <= value <= 2:
-                        dieknow.set_kill_method(value);
+                    dieknow.set_kill_method(value);
 
                 except ValueError:
                     if not value:

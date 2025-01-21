@@ -617,6 +617,35 @@ LRESULT CALLBACK Application::WindowProc(
             }
             break;
         }
+
+        case WM_PAINT: {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(app->hwnd, &ps);
+            HDC buffer = CreateCompatibleDC(hdc);
+            HBITMAP bitmap = CreateCompatibleBitmap(hdc, width, height);
+            HBITMAP old_bitmap = (HBITMAP)SelectObject(buffer, bitmap);
+
+            for (const auto& widget : app->widgets) {
+                SendMessage(
+                    widget,
+                    WM_PRINT,
+                    (WPARAM)hdcBuffer,
+                    PRF_CLIENT |
+                    PRF_CHILDREN |
+                    PRF_NONCLIENT
+                );
+            }
+
+            BitBlt(hdc, 0, 0, width, height, buffer, 0, 0, SRCCOPY);
+
+            SelectObject(buffer, old_bitmap);
+            DeleteObject(butmap);
+            DeleteDC(buffer);
+            EndPaint(app->hwnd, &ps);
+
+            break;
+        }
+
         case WM_CTLCOLORSTATIC: {
             auto label = (HWND)lParam;
             if (label == app->state) {
