@@ -636,10 +636,15 @@ LRESULT CALLBACK Application::WindowProc(
                 );
             }
 
+            RECT rect;
+            GetClientRect(app->hwnd, &rect);
+            int width = rect.right - rect.left;
+            int height = rect.bottom - rect.top;
+
             BitBlt(hdc, 0, 0, width, height, buffer, 0, 0, SRCCOPY);
 
             SelectObject(buffer, old_bitmap);
-            DeleteObject(butmap);
+            DeleteObject(bitmap);
             DeleteDC(buffer);
             EndPaint(app->hwnd, &ps);
 
