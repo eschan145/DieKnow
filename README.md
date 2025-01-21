@@ -163,3 +163,6 @@ g++ -Ofast -Wall -shared -std=c++20 -static -o src/dlls/gui.dll src/gui.cpp -lgd
 With the newest update for DieKnow (2.1), this should no longer be a problem. However, if it continues to have above 2% CPU, you can build DieKnow yourself and specify the flag `march=native` in the `g++` command. This allows the compiler to enable optimizations targeted _specifically_ towards your CPU. Releases built on GitHub Actions target the Alder Lake CPU architecture, which matches Intel CPUs using P-cores and E-cores. This includes the 12th Generation Intel Core i3 (12300, i3-12100, i3-12100F), as well as the 12th Generation of i5, i7, and i9 CPUs. The vast majority of the intended end users will likely have one of these processors.
 
 DieKnow uses around 6 megabytes of RAM at most, and most of the time is at 580 KBs.
+
+> [!WARNING]
+> A current bug with DyKnow sometimes may occur where DyKnow executables that are supposed to be deleted are not deleted, and over time while this app is running the DyKnow installation folder will increase in size by approximately 10 KB/s. In this case, just restart your device and wait for DyKnow to start back up before you kill it, and the excess executables will be cleared. This is very rare and has only been reported once.
