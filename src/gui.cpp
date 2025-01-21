@@ -619,6 +619,11 @@ LRESULT CALLBACK Application::WindowProc(
         }
 
         case WM_PAINT: {
+            RECT rect;
+            GetClientRect(app->hwnd, &rect);
+            int width = rect.right - rect.left;
+            int height = rect.bottom - rect.top;
+
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(app->hwnd, &ps);
             HDC buffer = CreateCompatibleDC(hdc);
@@ -635,11 +640,6 @@ LRESULT CALLBACK Application::WindowProc(
                     PRF_NONCLIENT
                 );
             }
-
-            RECT rect;
-            GetClientRect(app->hwnd, &rect);
-            int width = rect.right - rect.left;
-            int height = rect.bottom - rect.top;
 
             BitBlt(hdc, 0, 0, width, height, buffer, 0, 0, SRCCOPY);
 
