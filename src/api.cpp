@@ -87,7 +87,7 @@ extern "C" {
     }
 }
 
-DK_API uint64_t _dyknow_size(const std::string& directory) {
+DK_API uint64_t dyknow_size(const std::string& directory) {
     uint64_t total = 0;
     WIN32_FIND_DATAA data;
     HANDLE find = FindFirstFile((directory + "\\*").c_str(), &data);
@@ -105,7 +105,7 @@ DK_API uint64_t _dyknow_size(const std::string& directory) {
             continue;
         }
 
-        std::string full_path = FOLDER_PATH + "\\" + filename;
+        std::string full_path = directory + "\\" + filename;
 
         if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
             // If it's a directory, recursively calculate its size
