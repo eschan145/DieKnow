@@ -49,6 +49,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 #include "asteroids.h"
 #include "settings.h"
+#include "util.h"
 
 #pragma comment(lib, "wininet.lib")
 

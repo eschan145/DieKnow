@@ -99,7 +99,6 @@ DK_API uint64_t dyknow_size(const std::string& directory) {
     }
 
     do {
-
         if (data.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT) {
             continue;
         }
@@ -177,7 +176,9 @@ DK_API void validate() {
     }
 
     uint64_t size = dyknow_size();
-    std::cout << "DyKnow folder size: " << size << "\n";
+    std::cout << "DyKnow folder size: " << comma_separated(size)
+              << " bytes (" << comma_separated(size / (1024 * 1024)
+              << ") " << "MBs.\n";
 }
 
 bool exists(const char* path) {
