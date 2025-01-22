@@ -93,8 +93,8 @@ DK_API uint64_t dyknow_size(const std::string& directory) {
     HANDLE find = FindFirstFile((directory + "\\*").c_str(), &data);
 
     if (find == INVALID_HANDLE_VALUE) {
-        error("Failed to access DyKnow folder! Validating...\n");
-        validate();
+        error("Failed to access DyKnow folder! \n");
+        // validate();
         return 0;
     }
 
