@@ -87,6 +87,41 @@ extern "C" {
     }
 }
 
+DK_API uint64_t get_dyknow_size(const std::string& directory) {
+    uint64_t total = 0;
+    WIN32_FIND_DATAA data;
+    HANDLE find = FindFirstFile((directory + "\\*").c_str(), &data);
+
+    if (find = INVALID_HANDLE_VALUE) {
+        error("Failed to access DyKnow folder! Validating...\n");
+        validate();
+        return 0;
+    }
+
+    do {
+        std::string filename = data.cFileName;
+
+        if ((filename == ".") || (filename == "..")) {
+            continue;
+        }
+
+        std::string full_path = FOLDER_PATH + "\\" + filename;
+
+        if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+            // If it's a directory, recursively calculate its size
+            total += get_dyknow_size(directory);
+        } else {
+            LARGE_INTEGER file_size;
+
+            file_size.LowPart = data.nFileSizeLow;
+            file_size.HighPart = data.nFileSizeHigh;
+            total += file_size.QuadPart;
+        }
+    } while (FindNextFileA(find, &data) != 0);
+
+    FindClose(find);
+}
+
 DK_API void validate() {
     /*
     Check for the validity of the DyKnow installation. If the DyKnow
@@ -133,6 +168,9 @@ DK_API void validate() {
         std::cout << "Successfully validated DyKnow installation and file "
                   << "integrity.\n";
     }
+
+    uint64_t size = get_dyknow_size();
+    std::cout << "DyKnow folder size: " << size << "\n";
 }
 
 bool exists(const char* path) {
