@@ -176,9 +176,21 @@ DK_API void validate() {
     }
 
     uint64_t size = dyknow_size();
-    std::cout << "DyKnow folder size: " << comma_separated(size)
-              << " bytes (" << comma_separated(size / (1024 * 1024))
-              << ") " << "MBs.\n";
+    uint64_t size_in_mb = size / (1024 * 1024);
+
+    std::string color;
+    if (size_in_mb < 30) {
+        color = "\033[32m";  // Green
+    } else if (size_in_mb >= 30 && size_in_mb <= 50) {
+        color = "\033[0m";   // Normal (default)
+    } else {
+        color = "\033[31m";  // Red
+    }
+
+    std::cout << "DyKnow folder size: " << color
+              << comma_separated(size) << "\033[0m"  // Reset
+              << " bytes (" << comma_separated(size_in_mb)
+              << " MBs)\n";
 }
 
 bool exists(const char* path) {
