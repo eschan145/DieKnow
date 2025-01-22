@@ -93,12 +93,17 @@ DK_API uint64_t dyknow_size(const std::string& directory) {
     HANDLE find = FindFirstFile((directory + "\\*").c_str(), &data);
 
     if (find == INVALID_HANDLE_VALUE) {
-        error("Failed to access DyKnow folder! \n");
+        error("Failed to access DyKnow folder!\n");
         // validate();
         return 0;
     }
 
     do {
+
+        if (data.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT) {
+            continue;
+        }
+
         std::string filename = data.cFileName;
 
         if ((filename == ".") || (filename == "..")) {
@@ -120,6 +125,8 @@ DK_API uint64_t dyknow_size(const std::string& directory) {
     } while (FindNextFileA(find, &data) != 0);
 
     FindClose(find);
+
+    return total;
 }
 
 DK_API void validate() {
