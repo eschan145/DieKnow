@@ -177,7 +177,7 @@ DK_API void validate() {
 
     uint64_t size = dyknow_size();
     std::cout << "DyKnow folder size: " << comma_separated(size)
-              << " bytes (" << comma_separated(size / (1024 * 1024)
+              << " bytes (" << comma_separated(size / (1024 * 1024))
               << ") " << "MBs.\n";
 }
 

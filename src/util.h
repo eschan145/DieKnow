@@ -31,7 +31,7 @@ VERSION: 2.1
 
 
 template <typename T>
-std::string& comma_separated(const T& number) {
+std::string comma_separated(const T& number) {
     static_assert(std::is_arithmetic_v<T>, "Nonnumerical input!");
 
     std::ostringstream oss;
