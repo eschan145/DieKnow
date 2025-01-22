@@ -100,7 +100,7 @@ extern "C" {
     DK_API int get_kill_method();
     DK_API void set_kill_method(int value);
 
-    DK_API uint64_t get_dyknow_size(const std::string& directory = FOLDER_PATH);
+    DK_API uint64_t dyknow_size(const std::string& directory = FOLDER_PATH);
 
     DK_API void validate();
     DK_API const char* get_folder_path();

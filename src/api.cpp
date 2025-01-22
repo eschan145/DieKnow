@@ -87,12 +87,12 @@ extern "C" {
     }
 }
 
-DK_API uint64_t get_dyknow_size(const std::string& directory) {
+DK_API uint64_t _dyknow_size(const std::string& directory) {
     uint64_t total = 0;
     WIN32_FIND_DATAA data;
     HANDLE find = FindFirstFile((directory + "\\*").c_str(), &data);
 
-    if (find = INVALID_HANDLE_VALUE) {
+    if (find == INVALID_HANDLE_VALUE) {
         error("Failed to access DyKnow folder! Validating...\n");
         validate();
         return 0;
@@ -109,7 +109,7 @@ DK_API uint64_t get_dyknow_size(const std::string& directory) {
 
         if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
             // If it's a directory, recursively calculate its size
-            total += get_dyknow_size(directory);
+            total += get_dyknow_size(full_path);
         } else {
             LARGE_INTEGER file_size;
 
@@ -169,7 +169,7 @@ DK_API void validate() {
                   << "integrity.\n";
     }
 
-    uint64_t size = get_dyknow_size();
+    uint64_t size = dyknow_size();
     std::cout << "DyKnow folder size: " << size << "\n";
 }
 
