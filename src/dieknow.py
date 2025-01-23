@@ -1,6 +1,9 @@
 """DieKnow API.
 """
 
+__all__ = []
+
+
 import ctypes
 try:
     from ctypes import wintypes
@@ -73,23 +76,9 @@ except AttributeError as exc:
 for func_name in dir(lib):
     if not func_name.startswith("_"):
         globals()[func_name] = getattr(lib, func_name)
+        __all__.append(func_name)
 
 folder_path = lib.get_folder_path()
-#get_kill_method = lib.get_kill_method
-#set_kill_method = lib.set_kill_method
-
-#validate = lib.validate
-#
-#start_monitoring = lib.start_monitoring
-#stop_monitoring = lib.stop_monitoring
-#monitor_executables = lib.monitor_executables
-#get_killed_count = lib.get_killed_count
-#close_application_by_exe = lib.close_application_by_exe
-#get_executables_in_folder = lib.get_executables_in_folder
-#is_running = lib.is_running
-#is_monitoring = lib.is_monitoring
-#bsod = lib.bsod
-#dialog = lib.dialog
 
 del func_name
 
