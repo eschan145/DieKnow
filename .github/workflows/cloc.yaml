@@ -19,7 +19,7 @@ jobs:
         options: --exclude-lang=md,yaml --md --report-file=cloc.md
 
     - name: Upload cloc report as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: cloc-report
         path: cloc.md
