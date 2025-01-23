@@ -183,7 +183,7 @@ DK_API void validate() {
     std::string color;
     if (size_in_mb < 30) {
         color = "\033[32m";  // Green
-    } else if (size_in_mb >= 30 && size_in_mb <= MAX_DYKNOW_SIZE) {
+    } else if (size_in_mb <= MAX_DYKNOW_SIZE) {
         color = "\033[0m";   // Normal (default)
     } else {
         color = "\033[31m";  // Red
