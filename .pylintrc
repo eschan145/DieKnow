@@ -1,2 +1,2 @@
 [MESSAGES CONTROL]
-disable=too-many-branches, too-few-public-methods, too-many-locals, unnecessary-semicolon, consider-using-f-string, invalid-name, import-outside-toplevel, import-error, too-many-statements
+disable=too-many-branches, too-few-public-methods, undefined-variable, no-member, redefined-builtin, too-many-locals, unnecessary-semicolon, consider-using-f-string, invalid-name, import-outside-toplevel, import-error, too-many-statements

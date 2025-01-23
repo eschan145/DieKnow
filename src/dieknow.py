@@ -1,8 +1,6 @@
 """DieKnow API.
 """
 
-__all__ = []
-
 
 import ctypes
 try:
@@ -76,7 +74,6 @@ except AttributeError as exc:
 for func_name in dir(lib):
     if not func_name.startswith("_"):
         globals()[func_name] = getattr(lib, func_name)
-        __all__.append(func_name)
 
 folder_path = lib.get_folder_path()
 
