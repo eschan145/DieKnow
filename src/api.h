@@ -58,6 +58,8 @@ extern const char* FOLDER_PATH;
 
 extern const char* DYK_CLASS_NAME;
 
+extern const int MAX_DYKNOW_SIZE;
+
 
 std::filesystem::path get_directory();
 

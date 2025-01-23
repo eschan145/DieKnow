@@ -69,21 +69,29 @@ except AttributeError as exc:
     function_name = parts[1] if len(parts) > 1 else "unknown"
     raise OSError(f"Function '{function_name}' name or ordinal missing!") from exc
 
-get_kill_method = lib.get_kill_method
-set_kill_method = lib.set_kill_method
 
-validate = lib.validate
+for func_name in dir(lib):
+    if not func_name.startswith("_"):
+        globals()[func_name] = getattr(lib, func_name)
+
 folder_path = lib.get_folder_path()
-start_monitoring = lib.start_monitoring
-stop_monitoring = lib.stop_monitoring
-monitor_executables = lib.monitor_executables
-get_killed_count = lib.get_killed_count
-close_application_by_exe = lib.close_application_by_exe
-get_executables_in_folder = lib.get_executables_in_folder
-is_running = lib.is_running
-is_monitoring = lib.is_monitoring
-bsod = lib.bsod
-dialog = lib.dialog
+#get_kill_method = lib.get_kill_method
+#set_kill_method = lib.set_kill_method
+
+#validate = lib.validate
+#
+#start_monitoring = lib.start_monitoring
+#stop_monitoring = lib.stop_monitoring
+#monitor_executables = lib.monitor_executables
+#get_killed_count = lib.get_killed_count
+#close_application_by_exe = lib.close_application_by_exe
+#get_executables_in_folder = lib.get_executables_in_folder
+#is_running = lib.is_running
+#is_monitoring = lib.is_monitoring
+#bsod = lib.bsod
+#dialog = lib.dialog
+
+del func_name
 
 doc.doc(os.path.join(os.path.dirname(__file__), "api.cpp"), lib, markdown=md)
 
@@ -96,7 +104,7 @@ except AttributeError as exc:
 
 # Aliases
 gui = create_window
-directory = get_executables_in_folder
+dir = get_executables_in_folder
 start = start_monitoring
 stop = stop_monitoring
 status = is_running
@@ -110,6 +118,11 @@ class Shell:
             "close_application_by_exe",
             "ctypes",
             "doc",
+            "get_executables_in_folder",
+            "get_folder_path",
+            "get_killed_count",
+            "create_window",
+            "folder_path",
             "gui_dll_path",
             "guilib",
             "is_running",
@@ -132,7 +145,7 @@ class Shell:
             if var_name not in exclude and not var_name.startswith("__"):
                 setattr(self, var_name, value)
 
-        self.dir = get_executables_in_folder
+        self.folder = folder_path
 
 
 shell = Shell()

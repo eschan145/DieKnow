@@ -30,6 +30,8 @@ const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 // Probably subject to change, will have to be updated often
 const char* DYK_CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
 
+const int MAX_DYKNOW_SIZE = 50;
+
 KillMethod default_kill_method = KillMethod::WIN32_API;
 
 
@@ -181,7 +183,7 @@ DK_API void validate() {
     std::string color;
     if (size_in_mb < 30) {
         color = "\033[32m";  // Green
-    } else if (size_in_mb >= 30 && size_in_mb <= 50) {
+    } else if (size_in_mb >= 30 && size_in_mb <= MAX_DYKNOW_SIZE) {
         color = "\033[0m";   // Normal (default)
     } else {
         color = "\033[31m";  // Red

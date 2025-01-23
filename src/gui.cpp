@@ -376,6 +376,16 @@ Application::Application() {
         LVS_EX_FULLROWSELECT
     );
 
+    uint64_t size = dyknow_size();
+    uint64_t size_in_mb = size / (1024 * 1024);
+
+    if (size_in_mb > MAX_DYKNOW_SIZE) {
+        std::string message = "Your DyKnow folder size was detected as "
+            + comma_separated(size_in_mb) + "! If this continues, restart your "
+            + "computer.";
+        MessageBox(hwnd, message.c_str(), "Warning", MB_ICONWARNING);
+    }
+
     // In ms -- set update rate to 10 ticks per second
     SetTimer(hwnd, 1, settings.get<int>("update", 100), nullptr);
 
