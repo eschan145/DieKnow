@@ -77,7 +77,7 @@ for func_name in dir(lib):
 
 folder_path = lib.get_folder_path()
 
-del func_name
+del func_name  # pylint: disable=W0631
 
 doc.doc(os.path.join(os.path.dirname(__file__), "api.cpp"), lib, markdown=md)
 
