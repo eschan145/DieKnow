@@ -54,14 +54,14 @@ const char* get_selected(HWND listbox) {
     Get the selected item in a listbox.
     */
 
-    int index = SendMessage(listbox, LB_GETCURSEL, 0, 0);
+    int index = static_cast<UINT>(SendMessage(listbox, LB_GETCURSEL, 0, 0));
     if (index == LB_ERR) {
         // Unable to get listbox contents for some reason (no selection?)
         return "";
     }
 
     // Needed to specify memory allocation
-    int length = SendMessage(listbox, LB_GETTEXTLEN, index, 0);
+    int length = static_cast<UINT>(SendMessage(listbox, LB_GETTEXTLEN, index, 0));
 
     // Create a character buffer to output the selected item
     char* buffer = new char[length + 1];

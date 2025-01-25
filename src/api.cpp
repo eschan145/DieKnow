@@ -402,7 +402,9 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
 
             if (process) {
                 // Bam, terminated!
-                TerminateProcess(process, -1);
+                TerminateProcess(process, static_cast<UINT>(-1));
+                // -1 is the exit code for the process - in this case,
+                // indicating internal failure.
                 CloseHandle(process);
                 return true;
             }

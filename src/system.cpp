@@ -295,7 +295,7 @@ int ErrorBuffer::overflow(int c) {
         original_buffer->sputc('1');
         original_buffer->sputc('m');
 
-        original_buffer->sputc(c);
+        original_buffer->sputc(static_cast<_Elem>(c));
 
         original_buffer->sputc('\033');
         original_buffer->sputc('[');
