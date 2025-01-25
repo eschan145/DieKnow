@@ -440,16 +440,28 @@ void Application::manage_command(
 
             // If it does, terminate its process
             if (selected && strlen(selected) > 0) {
-                dieknow::close_application_by_exe(selected);
+                bool result = dieknow::close_application_by_exe(selected);
 
-                std::string message = "Successfully closed " +
-                                      std::string(selected);
-                MessageBox(
-                    hwnd,
-                    message.c_str(),
-                    "Success",
-                    MB_ICONINFORMATION
-                );
+                if (result) {
+                    std::string message = "Successfully closed " +
+                                          std::string(selected);
+                    MessageBox(
+                        hwnd,
+                        message.c_str(),
+                        "Success",
+                        MB_ICONINFORMATION
+                    );
+                } else {
+                    std::string message = "Failed to close " +
+                        std::string(selected) + "!. It may not be running.";
+
+                    MessageBox(
+                        hwnd,
+                        message.c_str(),
+                        "Failed",
+                        MB_ICONERROR
+                    );
+                }
             } else {
                 // Display an error if it doesn't
                 MessageBox(
