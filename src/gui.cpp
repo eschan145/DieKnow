@@ -129,7 +129,10 @@ Application::Application() {
         return;
     }
 
-    SetWindowLongPtr(this->hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+    SetWindowLongPtr(
+        this->hwnd, GWLP_USERDATA,
+        reinterpret_cast<LONG_PTR>(this)
+    );
 
     // Resize the window
     MoveWindow(this->hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
