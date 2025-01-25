@@ -497,7 +497,10 @@ void Application::manage_command(
                 std::string message = "Successfully set interval buffer to "
                                       + std::string(buffer);
 
-                MessageBox(app->hwnd, message.c_str(), "Info", MB_ICONINFORMATION);
+                MessageBox(
+                    app->hwnd, message.c_str(),
+                    "Info", MB_ICONINFORMATION
+                );
             }
             break;
         }
