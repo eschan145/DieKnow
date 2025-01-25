@@ -61,7 +61,9 @@ const char* get_selected(HWND listbox) {
     }
 
     // Needed to specify memory allocation
-    int length = static_cast<UINT>(SendMessage(listbox, LB_GETTEXTLEN, index, 0));
+    int length = static_cast<UINT>(
+        SendMessage(listbox, LB_GETTEXTLEN, index, 0)
+    );
 
     // Create a character buffer to output the selected item
     char* buffer = new char[length + 1];
