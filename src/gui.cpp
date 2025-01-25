@@ -111,7 +111,7 @@ Application::Application() {
         "Segoe UI"
     );
 
-    hwnd = CreateWindowEx(
+    this->hwnd = CreateWindowEx(
         0,
         CLASS_NAME,
         "DieKnow",
@@ -125,14 +125,14 @@ Application::Application() {
         NULL
     );
 
-    if (hwnd == NULL) {
+    if (this->hwnd == NULL) {
         return;
     }
 
-    SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+    SetWindowLongPtr(this->hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
     // Resize the window
-    MoveWindow(hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
+    MoveWindow(this->hwnd, 0, 0, (BUTTON_WIDTH * 2) + (10 * 5), 600, TRUE);
 
     std::string status = dieknow::is_running() ? "Stop" : "Start";
 
@@ -144,7 +144,7 @@ Application::Application() {
         PADDING,
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::RUNNING,
         wc.hInstance,
         NULL
@@ -158,7 +158,7 @@ Application::Application() {
         BUTTON_HEIGHT + (PADDING * 2),
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::TASKKILL,
         wc.hInstance,
         NULL
@@ -172,7 +172,7 @@ Application::Application() {
         (BUTTON_HEIGHT * 2) + (PADDING * 3),
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::EXIT,
         wc.hInstance,
         NULL
@@ -185,7 +185,7 @@ Application::Application() {
         PADDING,
         BUTTON_WIDTH,
         170,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::DIRECTORY,
         wc.hInstance,
         NULL
@@ -197,7 +197,7 @@ Application::Application() {
         PADDING,
         120 + (BUTTON_HEIGHT * 2) + PADDING,
         50, 18,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::INTERVAL_LABEL,
         wc.hInstance,
         NULL
@@ -209,7 +209,7 @@ Application::Application() {
         40 + (PADDING * 2),
         120 + (BUTTON_HEIGHT * 2) + PADDING,
         50, 22,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::INTERVAL,
         wc.hInstance,
         NULL
@@ -222,7 +222,7 @@ Application::Application() {
         150 + BUTTON_HEIGHT,
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::INTERVAL_SET,
         wc.hInstance,
         NULL
@@ -235,7 +235,7 @@ Application::Application() {
         (BUTTON_HEIGHT * 3) + (PADDING * 4),
         BUTTON_WIDTH,
         18,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::STATE,
         wc.hInstance,
         NULL
@@ -247,7 +247,7 @@ Application::Application() {
         PADDING,
         (BUTTON_HEIGHT * 3) + (PADDING * 6),
         BUTTON_WIDTH, 18,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::EXECUTABLES_KILLED,
         wc.hInstance,
         NULL
@@ -260,7 +260,7 @@ Application::Application() {
         150 + (BUTTON_HEIGHT * 2) + PADDING,
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::OPEN_EXPLORER,
         wc.hInstance,
         NULL
@@ -273,7 +273,7 @@ Application::Application() {
         150 + (BUTTON_HEIGHT * 3) + (PADDING * 2),
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::SYSTEM_INFORMATION,
         wc.hInstance,
         NULL
@@ -286,7 +286,7 @@ Application::Application() {
         130 + (BUTTON_HEIGHT * 2) + (PADDING * 3),
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::TAKE_SNAPSHOT,
         wc.hInstance,
         NULL
@@ -299,7 +299,7 @@ Application::Application() {
         150 + (BUTTON_HEIGHT * 3) + (PADDING * 2),
         BUTTON_WIDTH,
         BUTTON_HEIGHT,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::RESTORE_SNAPSHOT,
         wc.hInstance,
         NULL
@@ -312,51 +312,55 @@ Application::Application() {
         160 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
         PADDING + (BUTTON_WIDTH * 2),
         200,
-        hwnd,
+        this->hwnd,
         (HMENU)Widgets::WINDOWS,
         wc.hInstance,
         NULL
     );
 
-    widgets.push_back(running_button);
-    widgets.push_back(taskkill_button);
-    widgets.push_back(exit_button);
-    widgets.push_back(directory);
-    widgets.push_back(interval_label);
-    widgets.push_back(interval_edit);
-    widgets.push_back(interval_set);
-    widgets.push_back(this->state);
-    widgets.push_back(executables_killed);
-    widgets.push_back(open_explorer);
-    widgets.push_back(display_information);
-    widgets.push_back(take_snapshot);
-    widgets.push_back(this->restore_snapshot);
-    widgets.push_back(windows);
+    this->widgets.push_back(running_button);
+    this->widgets.push_back(taskkill_button);
+    this->widgets.push_back(exit_button);
+    this->widgets.push_back(directory);
+    this->widgets.push_back(interval_label);
+    this->widgets.push_back(interval_edit);
+    this->widgets.push_back(interval_set);
+    this->widgets.push_back(this->state);
+    this->widgets.push_back(executables_killed);
+    this->widgets.push_back(open_explorer);
+    this->widgets.push_back(display_information);
+    this->widgets.push_back(take_snapshot);
+    this->widgets.push_back(this->restore_snapshot);
+    this->widgets.push_back(windows);
 
-    tooltip(hwnd, running_button, "Toggle between DieKnow running or stopped.");
-    tooltip(hwnd, taskkill_button,
+    tooltip(this->hwnd, running_button,
+        "Toggle between DieKnow running or stopped."
+    );
+    tooltip(this->hwnd, taskkill_button,
         "Terminate the selected executable in the listbox."
     );
-    tooltip(hwnd, exit_button,
+    tooltip(this->hwnd, exit_button,
         "Exit the DieKnow application and terminate all processes."
     );
-    tooltip(hwnd, directory, "Directory of the DyKnow files.");
-    tooltip(hwnd, interval_edit, "Delay between ticks for closing DyKnow.");
-    tooltip(hwnd, interval_set,
+    tooltip(this->hwnd, directory, "Directory of the DyKnow files.");
+    tooltip(this->hwnd, interval_edit,
+        "Delay between ticks for closing DyKnow."
+    );
+    tooltip(this->hwnd, interval_set,
         "Set the interval between ticks for closing DyKnow. Beware - an "
         "interval of 0 can saturate a CPU core. In milliseconds."
     );
-    tooltip(hwnd, executables_killed,
+    tooltip(this->hwnd, executables_killed,
         "Number of DyKnow executables terminated by DieKnow."
     );
-    tooltip(hwnd, open_explorer,
+    tooltip(this->hwnd, open_explorer,
         "Open the DyKnow file directory in the Windows Explorer."
     );
-    tooltip(hwnd, display_information, "Show system information.");
-    tooltip(hwnd, take_snapshot,
+    tooltip(this->hwnd, display_information, "Show system information.");
+    tooltip(this->hwnd, take_snapshot,
         "Take a snapshot of the current windows to restore them later on.");
 
-    for (HWND widget : widgets) {
+    for (HWND widget : this->widgets) {
         SendMessage(widget, WM_SETFONT, (WPARAM)main_font, TRUE);
     }
 
@@ -383,14 +387,14 @@ Application::Application() {
         std::string message = "Your DyKnow folder size was detected as "
             + comma_separated(size_in_mb) + "! If this continues, restart your "
             + "computer.";
-        MessageBox(hwnd, message.c_str(), "Warning", MB_ICONWARNING);
+        MessageBox(this->hwnd, message.c_str(), "Warning", MB_ICONWARNING);
     }
 
     // In ms -- set update rate to 10 ticks per second
-    SetTimer(hwnd, 1, settings.get<int>("update", 100), nullptr);
+    SetTimer(this->hwnd, 1, settings.get<int>("update", 100), nullptr);
 
-    ShowWindow(hwnd, SW_SHOW);
-    UpdateWindow(hwnd);
+    ShowWindow(this->hwnd, SW_SHOW);
+    UpdateWindow(this->hwnd);
 
     MSG msg = {};
     // Needed to call WndProc system messages
@@ -446,7 +450,7 @@ void Application::manage_command(
                     std::string message = "Successfully closed " +
                                           std::string(selected);
                     MessageBox(
-                        hwnd,
+                        app->hwnd,
                         message.c_str(),
                         "Success",
                         MB_ICONINFORMATION
@@ -456,7 +460,7 @@ void Application::manage_command(
                         std::string(selected) + "!. It may not be running.";
 
                     MessageBox(
-                        hwnd,
+                        app->hwnd,
                         message.c_str(),
                         "Failed",
                         MB_ICONERROR
@@ -465,7 +469,7 @@ void Application::manage_command(
             } else {
                 // Display an error if it doesn't
                 MessageBox(
-                    hwnd,
+                    app->hwnd,
                     "Please select an item in the listbox.",
                     "Error",
                     MB_ICONERROR
@@ -490,7 +494,7 @@ void Application::manage_command(
                 std::string message = "Successfully set interval buffer to "
                                       + std::string(buffer);
 
-                MessageBox(hwnd, message.c_str(), "Info", MB_ICONINFORMATION);
+                MessageBox(app->hwnd, message.c_str(), "Info", MB_ICONINFORMATION);
             }
             break;
         }
@@ -515,7 +519,7 @@ void Application::manage_command(
                     << "Free RAM: " << available_ram;
 
             MessageBox(
-                hwnd,
+                app->hwnd,
                 message.str().c_str(),
                 "System Information",
                 MB_OK | MB_ICONINFORMATION
@@ -606,7 +610,7 @@ void Application::manage_command(
         }
 
         case Widgets::EXIT: {
-            DestroyWindow(hwnd);
+            DestroyWindow(app->hwnd);
             break;
         }
     }
