@@ -383,7 +383,7 @@ Application::Application() {
         LVS_EX_FULLROWSELECT
     );
 
-    uint64_t size = dyknow_size();
+    uint64_t size = dieknow::dyknow_size();
     uint64_t size_in_mb = size / (1024 * 1024);
 
     if (size_in_mb > MAX_DYKNOW_SIZE) {
