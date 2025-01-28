@@ -462,7 +462,7 @@ void Application::manage_command(
                     );
                 } else {
                     std::string message = "Failed to close " +
-                        std::string(selected) + "!. It may not be running.";
+                        std::string(selected) + "! It may not be running.";
 
                     MessageBox(
                         app->hwnd,
