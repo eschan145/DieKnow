@@ -235,7 +235,7 @@ DK_API bool close_application_by_exe(const char* exe_name) {
                 // Open a HANDLE to the process. This is a little ambiguous as
                 // it appears we are opening the process.
 
-                // Request PROCESS_TERMIANTE right, which allows use to use
+                // Request PROCESS_TERMINATE right, which allows use to use
                 // TerminateProcess. This may not work if the process is
                 // elevated. Once we can obtain a handle to the process, we
                 // can do anything we want with it under the permissions we
