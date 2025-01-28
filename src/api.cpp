@@ -107,7 +107,7 @@ DK_API uint64_t dyknow_size(const std::string& directory) {
 
         std::string filename = data.cFileName;
 
-        if ((filename == ".") || (filename == "..")) {
+        if ((filename == ".") || (filename == "..")) [[unlikely]] {
             continue;
         }
 
@@ -400,7 +400,7 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
         case KillMethod::WIN32_API: {
             HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, identifier);
 
-            if (process) {
+            if (process) [[likely]] {
                 // Bam, terminated!
                 TerminateProcess(process, static_cast<UINT>(-1));
                 // -1 is the exit code for the process - in this case,
