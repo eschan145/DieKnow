@@ -246,13 +246,13 @@ DK_API bool close_application_by_exe(const char* exe_name) {
                 if (hProcess) {
                     // Bam, terminated!
                     TerminateProcess(hProcess, 0);
+                    terminated = true;
 
                     auto wait = [&]() {
                         DWORD result = WaitForSingleObject(hProcess, TIMEOUT);
 
                         switch (result) {
                             case WAIT_OBJECT_0:
-                                terminated = true;
                                 std::cout << "Process " << exe_name
                                           << " terminated successfully.\n";
                                 break;
