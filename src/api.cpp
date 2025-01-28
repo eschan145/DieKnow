@@ -641,6 +641,8 @@ DK_API const char* get_executables_in_folder(const char* folder_path) {
     `validate()` if it doesn't.
     */
 
+    assert(std::filesystem::exists(folder_path));
+
     static std::string result;
     result.clear();
 
