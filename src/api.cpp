@@ -434,6 +434,11 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
 DK_API void sweep() {
     /*
     Destroy all DyKnow executables in a sweep.
+
+    This gets the DyKnow executable using two methods.
+
+    1. See if it can find it with the class name.
+    2. If it can't, look for it with the window title.
     */
 
     HWND hwnd = FindWindow(
@@ -549,6 +554,9 @@ DK_API void start_monitoring(const char* folder_path) {
         // * ABOVE_NORMAL
         // * HIGHEST
         // * TIME_CRITICAL
+
+        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
+        std::cout << "SetThreadPriority(): THREAD_PRIORITY_BELOW_NORMAL";
 
         std::cout << "Monitoring started.\n";
 
