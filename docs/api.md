@@ -76,6 +76,11 @@ Usually works but less performant and reliable compared to `WIN32_API`.
 
 Destroy all DyKnow executables in a sweep.
 
+This gets the DyKnow executable using two methods.
+
+1. See if it can find it with the class name.
+2. If it can't, look for it with the window title.
+
 **Signature**: `void`
 
 ### *function* `start_monitoring()`
