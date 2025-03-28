@@ -9,7 +9,7 @@ import win32process
 def get_window_info(title):
     """Retreive information from given window."""
 
-    hwnd = win32gui.FindWindow("WindowsForms10.Window.8.app.0.9fe31_r7_ad1",None )
+    hwnd = win32gui.FindWindow(None, "Task Manager")
     if not hwnd:
         print(f"Window with title '{title}' not found.")
         return
@@ -56,10 +56,12 @@ def get_window_info(title):
     print("Child windows")
     print("=============")
 
-    def enum_child_windows_callback(hwnd):
+    def enum_child_windows_callback(hwnd, target_name):
         """Enumerate through child windows and retreive information."""
         class_name = win32gui.GetClassName(hwnd)
         window_text = win32gui.GetWindowText(hwnd)
+
+        if not window_text: return
 
         rect = win32gui.GetWindowRect(hwnd)
 
