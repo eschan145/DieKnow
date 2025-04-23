@@ -113,7 +113,7 @@ DK_API uint64_t dyknow_size(const std::string& directory) {
 
         std::string full_path = directory + "\\" + filename;
 
-        if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+        if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) [[unlikely]] {
             // If it's a directory, recursively calculate its size
             total += dyknow_size(full_path);
         } else {
