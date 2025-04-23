@@ -463,8 +463,7 @@ DK_API void sweep() {
                 if (GetClassName(hwnd, class_name, sizeof(class_name))) {
                     std::cout << "Please contact support; the new DyKnow HWND "
                               << "class name is " << class_name << ".\n";
-                }
-                else {
+                } else {
                     std::cout << "Failed to extract class name! ("
                               << GetLastError() << ")\n";
                 }
