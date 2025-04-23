@@ -56,12 +56,13 @@ def get_window_info(title):
     print("Child windows")
     print("=============")
 
-    def enum_child_windows_callback(hwnd, target_name):
+    def enum_child_windows_callback(hwnd, _target_name):
         """Enumerate through child windows and retreive information."""
         class_name = win32gui.GetClassName(hwnd)
         window_text = win32gui.GetWindowText(hwnd)
 
-        if not window_text: return
+        if not window_text:
+            return
 
         rect = win32gui.GetWindowRect(hwnd)
 
