@@ -458,8 +458,18 @@ DK_API void sweep() {
 
         for (const std::string& name : possible_names) {
             hwnd = FindWindow(nullptr, name.c_str());
-            if (hwnd)
+            if (hwnd) {
+                char class_name[256];
+                if (GetClassName(hwnd, class_name, sizeof(class_name))) {
+                    std::cout << "Please contact support; the new DyKnow HWND "
+                              << "class name is " << class_name << ".\n";
+                }
+                else {
+                    std::cout << "Failed to extract class name! ("
+                              << GetLastError() << ")\n";
+                }
                 break;
+            }
         }
     }
 
