@@ -509,7 +509,7 @@ DK_API void sweep() {
     if (Process32First(hsnapshot, &pe32)) {
         do {
             HANDLE hprocess = OpenProcess(
-                PROCESS_QUERY_LIMITED_INFORMATION |
+                // PROCESS_QUERY_LIMITED_INFORMATION |
                 PROCESS_TERMINATE,
                 FALSE,
                 pe32.th32ProcessID
@@ -525,10 +525,10 @@ DK_API void sweep() {
                         .string();
                     if (dyknow_executables.count(exe_name)) {
                         TerminateProcess(hprocess, -1);
-                    } else {
-                        error("No executables found! This should not happen!");
-                        validate();
-                    }
+                    }  // else {
+                        // error("No executables found! This should not happen!");
+                        // validate();
+                    // }
                 } else {
                     error("Unable to query processes! (" + last_error() + ")");
                 }
