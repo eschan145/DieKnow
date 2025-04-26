@@ -134,12 +134,12 @@ DK_API std::unordered_set<std::string> get_dyknow_executables() {
     for (const auto& entry :
          std::filesystem::directory_iterator(FOLDER_PATH)) {
         if (entry.path().extension() == ".exe") {
-            exe_paths.insert(entry.path().string());
+            exe_paths.insert(entry.path().filename().string());
         } else if (entry.is_directory()) {
             for (const auto& sub_entry :
                  std::filesystem::directory_iterator(entry.path())) {
                  if (sub_entry.path().extension() == ".exe") {
-                    exe_paths.insert(sub_entry.path().string());
+                    exe_paths.insert(sub_entry.path().filename().string());
                 }
             }
         }
@@ -527,7 +527,6 @@ DK_API void sweep() {
             std::cout << "Killing process\n";
             dieknow::taskkill(pe32.th32ProcessID, default_kill_method);
         }
-        // std::cout << "Processing " << pe32.szExeFile<< "\n";
     } while (Process32Next(hsnapshot, &pe32));
 
     CloseHandle(hsnapshot);
