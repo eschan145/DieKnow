@@ -46,6 +46,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <thread>
 #include <filesystem>
 #include <sstream>
+#include <unordered_map>
 
 #include "asteroids.h"
 #include "settings.h"
@@ -128,5 +129,7 @@ extern "C" {
 }  // namespace dieknow
 
 bool exists(const char* path);
+
+DK_API std::unordered_map<std::string> get_dyknow_executables();
 
 #endif  // API_H

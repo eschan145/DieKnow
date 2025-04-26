@@ -27,9 +27,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 
-// Probably subject to change, will have to be updated often
 const char* DYK_CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
-
 const int MAX_DYKNOW_SIZE = 50;
 
 KillMethod default_kill_method = KillMethod::WIN32_API;
@@ -128,6 +126,25 @@ DK_API uint64_t dyknow_size(const std::string& directory) {
     FindClose(find);
 
     return total;
+}
+
+DK_API std::unordered_set<std::string> get_dyknow_executables() {
+    std::unordered_set<std::string> exe_names;
+
+    for (const auto& entry :
+         std::filesystem::directory_iterator(FOLDER_PATH)) {
+        if (entry.path().extension() == ".exe") {
+            exe_names.insert(entry.path().filename().string());
+        }
+        else if (entry.is_directory()) {
+            for (const auto& sub_entry :
+                 std::filesystem::directory_iterator(entry.path())) {
+                 exe_names.insert(entry.path().filename().string());
+            }
+        }
+    }
+
+    return exe_names;
 }
 
 DK_API void validate() {
@@ -441,48 +458,95 @@ DK_API void sweep() {
     2. If it can't, look for it with the window title.
     */
 
-    HWND hwnd = FindWindow(
-        DYK_CLASS_NAME,
-        nullptr
-    );
+    // HWND hwnd = FindWindow(
+    //     DYK_CLASS_NAME,
+    //     nullptr
+    // );
 
-    if (!hwnd) {
-        std::vector<std::string> possible_names;
+    // if (!hwnd) {
+    //     std::vector<std::string> possible_names;
 
-        possible_names.push_back("Do you understand?");
-        possible_names.push_back("We let your teacher know (I get it!)");
-        possible_names.push_back("We let your teacher know (I'm not sure!)");
-        possible_names.push_back(
-            "We let your teacher know (I don't get it, yet!)"
-        );
+    //     possible_names.push_back("Do you understand?");
+    //     possible_names.push_back("We let your teacher know (I get it!)");
+    //     possible_names.push_back("We let your teacher know (I'm not sure!)");
+    //     possible_names.push_back(
+    //         "We let your teacher know (I don't get it, yet!)"
+    //     );
 
-        for (const std::string& name : possible_names) {
-            hwnd = FindWindow(nullptr, name.c_str());
-            if (hwnd) {
-                char class_name[256];
-                if (GetClassName(hwnd, class_name, sizeof(class_name))) {
-                    std::cout << "Please contact support; the new DyKnow HWND "
-                              << "class name is " << class_name << ".\n";
-                } else {
-                    std::cout << "Failed to extract class name! ("
-                              << GetLastError() << ")\n";
-                }
-                break;
-            }
-        }
+    //     for (const std::string& name : possible_names) {
+    //         hwnd = FindWindow(nullptr, name.c_str());
+    //         if (hwnd) {
+    //             char class_name[256];
+    //             if (GetClassName(hwnd, class_name, sizeof(class_name))) {
+    //                 std::cout << "Please contact support; the new DyKnow HWND "
+    //                           << "class name is " << class_name << ".\n";
+    //             } else {
+    //                 std::cout << "Failed to extract class name! ("
+    //                           << GetLastError() << ")\n";
+    //             }
+    //             break;
+    //         }
+    //     }
+    // }
+
+    // if (!hwnd) {
+    //     error("Failed to find DyKnow window! It may not be running.\n");
+    //     return;
+    // }
+
+    std::unordered_map<std::string> dykow_executables =
+        get_dyknow_executables();
+
+    HANDLE hsnapshot = CreateToolHelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (hsnapshot == INVALID_HANDLE_VALUE) {
+        error("Failed to take window hsnapshot! (" + last_error() + ")");
+        std::exit(EXIT_FAILURE);
     }
+    
+    PROCESSENTRY32 pe32;
+    pe32.dwSize = sizeof(PROCESSENTRY32);
 
-    if (!hwnd) {
-        // error("Failed to find DyKnow window! It may not be running.\n");
-        return;
+    if (Process32First(hsnapshot, &pe32)) {
+        do {
+            HANDLE hprocess = OpenProcess(
+                PROCESS_QUERY_LIMITED_INFORMATION |
+                PROCESS_TERMINATE,
+                pe32.th32ProcessID,
+            );
+
+            if (hprocess) {
+                CHAR image_path[MAX_PATH];
+                DWORD size = MAX_PATH;
+
+                if (QueryFullProcessImageName(hprocess, 0, image_path, &size)) {
+                    std::string exe_name = std::filesystem::path(image_path)
+                        .filename()
+                        .string();
+                    if (dyknow_executables.count(exe_names)) {
+                        TerminateProcess(hprocess, -1);
+                    } else {
+                        error("No executables found! This should not happen!");
+                        validate();
+                    }
+                } else {
+                    error("Unable to query processes! (" + last_error() + ")");
+                }
+
+                // Prevent possible null pointer dereference by only closing
+                // when it exists.
+                CloseHandle(hprocess);
+            } else {
+                error("Unable to obtain handle! (" + last_error() + ")");
+            }
+        } while (Process32Next(hsnapshot, &pe32));
     }
 
     // Retrieve PID of DyKnow process
 
-    DWORD identifier;
-    GetWindowThreadProcessId(hwnd, &identifier);
+    // DWORD identifier;
+    // GetWindowThreadProcessId(hwnd, &identifier);
 
-    dieknow::taskkill(identifier, default_kill_method);
+    // dieknow::taskkill(identifier, default_kill_method);
 
     // else {
     //     error("Failed to enumerate through processes! Error code: " +
