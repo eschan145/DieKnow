@@ -511,7 +511,7 @@ DK_API void sweep() {
         std::exit(EXIT_FAILURE);
     }
 
-    std::unordered_map<std::string> dyknow_executables = get_dyknow_executables();
+    std::unordered_set<std::string> dyknow_executables = get_dyknow_executables();
     do {
         if (dyknow_executables.find(pe32.szExeFile) != dyknow_executables.end()) {
             dieknow::taskkill(pe32.th32ProcessID, default_kill_method);
