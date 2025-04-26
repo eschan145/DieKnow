@@ -524,9 +524,10 @@ DK_API void sweep() {
             dyknow_executables.find(pe32.szExeFile) !=
             dyknow_executables.end()
         ) {
+            std::cout << "Killing process\n";
             dieknow::taskkill(pe32.th32ProcessID, default_kill_method);
         }
-        std::cout << "Processing " << pe32.szExeFile<< "\n";
+        // std::cout << "Processing " << pe32.szExeFile<< "\n";
     } while (Process32Next(hsnapshot, &pe32));
 
     CloseHandle(hsnapshot);
