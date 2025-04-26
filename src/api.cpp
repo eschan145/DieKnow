@@ -514,6 +514,10 @@ DK_API void sweep() {
     std::unordered_set<std::string> dyknow_executables =
         get_dyknow_executables();
 
+    if (dyknow_executables.empty()) {
+        error("Failed to retrieve DyKnow executables! This should not happen!")
+    }
+
     do {
         if (dyknow_executables.find(pe32.szExeFile) != dyknow_executables.end()) {
             dieknow::taskkill(pe32.th32ProcessID, default_kill_method);
