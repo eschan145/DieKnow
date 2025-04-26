@@ -496,7 +496,7 @@ DK_API void sweep() {
     //     return;
     // }
 
-    HANDLE hsnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    HANDLE hsnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, 0);
     if (hsnapshot == INVALID_HANDLE_VALUE) {
         error("Failed to take window hsnapshot! (" + last_error() + ")");
         std::exit(EXIT_FAILURE);
@@ -505,6 +505,7 @@ DK_API void sweep() {
     MODULEENTRY32 me32;
     me32.dwSize = sizeof(MODULEENTRY32);
 
+    // If not initialized, me32.szExePath is H, probably garbage
     if (!Module32First(hsnapshot, &me32)) {
         error("Failed to enumerate modules! (" + last_error() + ")");
         std::exit(EXIT_FAILURE);
