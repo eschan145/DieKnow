@@ -494,7 +494,7 @@ DK_API void sweep() {
     //     return;
     // }
 
-    std::unordered_map<std::string> dyknow_executables =
+    std::unordered_set<std::string> dyknow_executables =
         get_dyknow_executables();
 
     HANDLE hsnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
