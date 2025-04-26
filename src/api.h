@@ -46,7 +46,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <thread>
 #include <filesystem>
 #include <sstream>
-#include <unordered_map>
+#include <unordered_set>
 
 #include "asteroids.h"
 #include "settings.h"

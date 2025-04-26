@@ -135,8 +135,7 @@ DK_API std::unordered_set<std::string> get_dyknow_executables() {
          std::filesystem::directory_iterator(FOLDER_PATH)) {
         if (entry.path().extension() == ".exe") {
             exe_names.insert(entry.path().filename().string());
-        }
-        else if (entry.is_directory()) {
+        } else if (entry.is_directory()) {
             for (const auto& sub_entry :
                  std::filesystem::directory_iterator(entry.path())) {
                  exe_names.insert(entry.path().filename().string());
@@ -479,7 +478,8 @@ DK_API void sweep() {
     //             char class_name[256];
     //             if (GetClassName(hwnd, class_name, sizeof(class_name))) {
     //                 std::cout << "Please contact support; the new DyKnow HWND "
-    //                           << "class name is " << class_name << ".\n";
+    //                           << "class name is "
+    //                           << class_name << ".\n";
     //             } else {
     //                 std::cout << "Failed to extract class name! ("
     //                           << GetLastError() << ")\n";
@@ -494,15 +494,15 @@ DK_API void sweep() {
     //     return;
     // }
 
-    std::unordered_map<std::string> dykow_executables =
+    std::unordered_map<std::string> dyknow_executables =
         get_dyknow_executables();
 
-    HANDLE hsnapshot = CreateToolHelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    HANDLE hsnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (hsnapshot == INVALID_HANDLE_VALUE) {
         error("Failed to take window hsnapshot! (" + last_error() + ")");
         std::exit(EXIT_FAILURE);
     }
-    
+
     PROCESSENTRY32 pe32;
     pe32.dwSize = sizeof(PROCESSENTRY32);
 
@@ -511,7 +511,7 @@ DK_API void sweep() {
             HANDLE hprocess = OpenProcess(
                 PROCESS_QUERY_LIMITED_INFORMATION |
                 PROCESS_TERMINATE,
-                pe32.th32ProcessID,
+                pe32.th32ProcessID
             );
 
             if (hprocess) {
@@ -522,7 +522,7 @@ DK_API void sweep() {
                     std::string exe_name = std::filesystem::path(image_path)
                         .filename()
                         .string();
-                    if (dyknow_executables.count(exe_names)) {
+                    if (dyknow_executables.count(exe_name)) {
                         TerminateProcess(hprocess, -1);
                     } else {
                         error("No executables found! This should not happen!");
