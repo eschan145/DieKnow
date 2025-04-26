@@ -505,18 +505,20 @@ DK_API void sweep() {
     PROCESSENTRY32 pe32;
     pe32.dwSize = sizeof(PROCESSENTRY32);
 
-    // If not initialized, pe32.szExePath is H, probably garbage
+    // If not initialized, pe32.szExeFile is H, probably garbage
     if (!Process32First(hsnapshot, &pe32)) {
         error("Failed to enumerate processes! (" + last_error() + ")");
         std::exit(EXIT_FAILURE);
     }
 
-    std::unordered_set<std::string> dyknow_executables = get_dyknow_executables();
+    std::unordered_set<std::string> dyknow_executables =
+        get_dyknow_executables();
+
     do {
         if (dyknow_executables.find(pe32.szExeFile) != dyknow_executables.end()) {
             dieknow::taskkill(pe32.th32ProcessID, default_kill_method);
         }
-        std::cout << "Processing " << pe32.szExePath << "\n";
+        std::cout << "Processing " << pe32.szExeFile<< "\n";
     } while (Process32Next(hsnapshot, &pe32));
 
     CloseHandle(hsnapshot);
