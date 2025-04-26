@@ -496,29 +496,28 @@ DK_API void sweep() {
     //     return;
     // }
 
-    HANDLE hsnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, 0);
+    HANDLE hsnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (hsnapshot == INVALID_HANDLE_VALUE) {
         error("Failed to take window hsnapshot! (" + last_error() + ")");
         std::exit(EXIT_FAILURE);
     }
 
-    MODULEENTRY32 me32;
-    me32.dwSize = sizeof(MODULEENTRY32);
+    PROCESSENTRY32 pe32;
+    pe32.dwSize = sizeof(PROCESSENTRY32);
 
-    // If not initialized, me32.szExePath is H, probably garbage
-    if (!Module32First(hsnapshot, &me32)) {
-        error("Failed to enumerate modules! (" + last_error() + ")");
+    // If not initialized, pe32.szExePath is H, probably garbage
+    if (!Process32First(hsnapshot, &pe32)) {
+        error("Failed to enumerate processes! (" + last_error() + ")");
         std::exit(EXIT_FAILURE);
     }
 
+    std::unordered_map<std::string> dyknow_executables = get_dyknow_executables();
     do {
-        std::string dstring("C:\\Program Files\\DyKnow");
-        std::cout << "Processing " << me32.szExePath << "\n";
-        if (std::string(me32.szExePath).find(dstring) != std::string::npos) {
-            dieknow::taskkill(me32.th32ProcessID, default_kill_method);
-            std::cout << "Terminating\n";
+        if (dyknow_executables.find(pe32.szExeFile) != dyknow_executables.end()) {
+            dieknow::taskkill(pe32.th32ProcessID, default_kill_method);
         }
-    } while (Module32Next(hsnapshot, &me32));
+        std::cout << "Processing " << pe32.szExePath << "\n";
+    } while (Process32Next(hsnapshot, &pe32));
 
     CloseHandle(hsnapshot);
 
