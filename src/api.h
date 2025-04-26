@@ -130,6 +130,6 @@ extern "C" {
 
 bool exists(const char* path);
 
-DK_API std::unordered_map<std::string> get_dyknow_executables();
+DK_API std::unordered_set<std::string> get_dyknow_executables();
 
 #endif  // API_H
