@@ -510,7 +510,7 @@ DK_API void sweep() {
 
     do {
         std::string dstring("C:\Program Files\DyKnow");
-        if (std::string(me32.szExeFile).find(dstring) != std::wstring::npos) {
+        if (std::string(me32.szExePath).find(dstring) != std::wstring::npos) {
             dieknow::taskkill(me32.th32ProcessID, default_kill_method);
         }
     } while (Module32Next(hsnapshot, &me32));
