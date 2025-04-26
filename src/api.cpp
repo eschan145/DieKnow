@@ -505,6 +505,11 @@ DK_API void sweep() {
     MODULEENTRY32 me32;
     me32.dwSize = sizeof(MODULEENTRY32);
 
+    if (!Module32First(hsnapshot, &me32)) {
+        error("Failed to enumerate modules! (" + last_error() + ")");
+        std::exit(EXIT_FAILURE);
+    }
+
     do {
         std::string dstring("C:\\Program Files\\DyKnow");
         std::cout << "Processing " << me32.szExePath << "\n";
