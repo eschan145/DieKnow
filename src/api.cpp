@@ -349,7 +349,6 @@ DK_API const char* get_folder_path() {
     return FOLDER_PATH;
 }
 
-// cppcheck-suppress unusedFunction
 std::string last_error() {
     return std::to_string(GetLastError());
 }
@@ -479,7 +478,8 @@ DK_API void sweep() {
     //         if (hwnd) {
     //             char class_name[256];
     //             if (GetClassName(hwnd, class_name, sizeof(class_name))) {
-    //                 std::cout << "Please contact support; the new DyKnow HWND "
+    //                 std::cout << "Please contact support; "
+    //                           << "the new DyKnow HWND "
     //                           << "class name is "
     //                           << class_name << ".\n";
     //             } else {
@@ -496,9 +496,6 @@ DK_API void sweep() {
     //     return;
     // }
 
-    std::unordered_set<std::string> dyknow_executables =
-        get_dyknow_executables();
-
     HANDLE hsnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (hsnapshot == INVALID_HANDLE_VALUE) {
         error("Failed to take window hsnapshot! (" + last_error() + ")");
@@ -509,7 +506,7 @@ DK_API void sweep() {
     me32.dwSize = sizeof(MODULEENTRY32);
 
     do {
-        std::string dstring("C:\Program Files\DyKnow");
+        std::string dstring("C:\\Program Files\\DyKnow");
         if (std::string(me32.szExePath).find(dstring) != std::wstring::npos) {
             dieknow::taskkill(me32.th32ProcessID, default_kill_method);
         }
