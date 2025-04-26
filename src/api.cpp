@@ -129,21 +129,23 @@ DK_API uint64_t dyknow_size(const std::string& directory) {
 }
 
 DK_API std::unordered_set<std::string> get_dyknow_executables() {
-    std::unordered_set<std::string> exe_names;
+    std::unordered_set<std::string> exe_paths;
 
     for (const auto& entry :
          std::filesystem::directory_iterator(FOLDER_PATH)) {
         if (entry.path().extension() == ".exe") {
-            exe_names.insert(entry.path().filename().string());
+            exe_paths.insert(entry.path().string());
         } else if (entry.is_directory()) {
             for (const auto& sub_entry :
                  std::filesystem::directory_iterator(entry.path())) {
-                 exe_names.insert(entry.path().filename().string());
+                 if (sub_entry.path().extension() == ".exe") {
+                    exe_paths.insert(sub_entry.path().string());
+                }
             }
         }
     }
 
-    return exe_names;
+    return exe_paths;
 }
 
 DK_API void validate() {
@@ -503,44 +505,17 @@ DK_API void sweep() {
         std::exit(EXIT_FAILURE);
     }
 
-    PROCESSENTRY32 pe32;
-    pe32.dwSize = sizeof(PROCESSENTRY32);
+    MODULEENTRY32 me32;
+    me32.dwSize = sizeof(MODULEENTRY32);
 
-    if (Process32First(hsnapshot, &pe32)) {
-        do {
-            HANDLE hprocess = OpenProcess(
-                // PROCESS_QUERY_LIMITED_INFORMATION |
-                PROCESS_TERMINATE,
-                FALSE,
-                pe32.th32ProcessID
-            );
+    do {
+        std::string dstring("C:\Program Files\DyKnow");
+        if (std::string(me32.szExeFile).find(dstring) != std::wstring::npos) {
+            dieknow::taskkill(me32.th32ProcessID, default_kill_method);
+        }
+    } while (Module32Next(hsnapshot, &me32));
 
-            if (hprocess) {
-                CHAR image_path[MAX_PATH];
-                DWORD size = MAX_PATH;
-
-                if (QueryFullProcessImageName(hprocess, 0, image_path, &size)) {
-                    std::string exe_name = std::filesystem::path(image_path)
-                        .filename()
-                        .string();
-                    if (dyknow_executables.count(exe_name)) {
-                        TerminateProcess(hprocess, -1);
-                    }  // else {
-                        // error("No executables found! This should not happen!");
-                        // validate();
-                    // }
-                } else {
-                    error("Unable to query processes! (" + last_error() + ")");
-                }
-
-                // Prevent possible null pointer dereference by only closing
-                // when it exists.
-                CloseHandle(hprocess);
-            } else {
-                error("Unable to obtain handle! (" + last_error() + ")");
-            }
-        } while (Process32Next(hsnapshot, &pe32));
-    }
+    CloseHandle(hsnapshot);
 
     // Retrieve PID of DyKnow process
 
