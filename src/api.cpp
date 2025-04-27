@@ -32,7 +32,8 @@ const int MAX_DYKNOW_SIZE = 50;
 
 // Possible DyKnow hwnd titles
 std::vector<std::string> possible_titles = {
-    "Win HCP",
+    "Win HCP",  // Likely Windows Health Check Program
+    "",
     "Do you understand?",
     "We let your teacher know (I get it!)",
     "We let your teacher know (I'm not sure!)",
@@ -483,6 +484,22 @@ bool attempt_dieknow(HWND hwnd) {
     return false;
 }
 
+BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
+    char class_name[256];
+    GetClassNameA(hwnd, class_name, sizeof(class_name));
+
+    if (!strstr(class_name, "WindowsForms10.Window.8.app")) [[likely]] {
+        return TRUE;
+    }
+
+    DWORD pid;
+    GetWindowThreadProcessId(hwnd, &pid);
+    
+    attempt_dieknow(hwnd);
+
+    return TRUE;
+}
+
 DK_API void sweep() {
     /*
     Destroy all DyKnow executables in a sweep.
@@ -493,12 +510,12 @@ DK_API void sweep() {
     2. If it can't, look for it with the window title.
     */
 
-    for (const auto& title : possible_titles) {
-        HWND hwnd = FindWindow(nullptr, title.c_str());
-        if (hwnd) {
-            attempt_dieknow(hwnd);
-        }
-    }
+    // for (const auto& title : possible_titles) {
+    //     HWND hwnd = FindWindow(nullptr, title.c_str());
+    //     if (hwnd) {
+    //         attempt_dieknow(hwnd);
+    //     }
+    // }
 
     // if (!hwnd) {
     //     std::vector<std::string> possible_names;
