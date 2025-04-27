@@ -510,6 +510,8 @@ DK_API void sweep() {
     2. If it can't, look for it with the window title.
     */
 
+    EnumWindows(enum_windows, 0);
+
     // for (const auto& title : possible_titles) {
     //     HWND hwnd = FindWindow(nullptr, title.c_str());
     //     if (hwnd) {
