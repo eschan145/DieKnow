@@ -450,7 +450,7 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
 
 BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     DWORD pid;
-    GetWindowThreadProcessId(&pid);
+    GetWindowThreadProcessId(hwnd, &pid);
 
     HANDLE hprocess = OpenProcess(
         PROCESS_QUERY_LIMITED_INFORMATION,
