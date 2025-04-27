@@ -484,8 +484,9 @@ bool attempt_dieknow(HWND hwnd, bool log = false) {
             std::chrono::duration_cast<std::chrono::milliseconds>
             (duration_since_epoch);
 
-        long long milliseconds_count = milliseconds_since_epoch.count();
+        auto milliseconds_count = milliseconds_since_epoch.count();
 
+        // Usually happens around every 14 seconds or so...
         std::cout << "Terminated " << path << " at "
                   << milliseconds_count << "\n";
     }
@@ -519,7 +520,7 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
 
     DWORD pid;
     GetWindowThreadProcessId(hwnd, &pid);
-    
+
     if (attempt_dieknow(hwnd)) {
         return FALSE;
     }
@@ -560,7 +561,7 @@ DK_API void sweep() {
     //         if (hwnd) {
     //             char class_name[256];
     //             if (GetClassName(hwnd, class_name, sizeof(class_name))) {
-    //                 std::cout << "Please contact support; the new DyKnow HWND "
+    //                 std::cout << "Please contact support; the new HWND "
     //                           << "class name is " << class_name << ".\n";
     //             } else {
     //                 std::cout << "Failed to extract class name! ("
