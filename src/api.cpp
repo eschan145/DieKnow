@@ -508,7 +508,7 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     if (std::find(
             possible_titles.begin(),
             possible_titles.end(),
-            window_name
+            std::string(window_name)
         ) == possible_titles.end()) {
         return TRUE;
     }
