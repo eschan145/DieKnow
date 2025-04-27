@@ -30,6 +30,14 @@ const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 const char* DYK_CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
 const int MAX_DYKNOW_SIZE = 50;
 
+std::vector<std::string> possible_titles = {
+    "",
+    "Do you understand?",
+    "We let your teacher know (I get it!)",
+    "We let your teacher know (I'm not sure!)",
+    "We let your teacher know (I don't get it, yet!)"
+};
+
 KillMethod default_kill_method = KillMethod::WIN32_API;
 
 
@@ -415,6 +423,8 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
 
     switch (method) {
         case KillMethod::WIN32_API: {
+            // TODO(eschan145): make this only happen once and reuse handle
+            // from enum_windows
             HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, identifier);
 
             if (process) [[likely]] {
@@ -448,7 +458,7 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
     }
 }
 
-BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
+bool attempt_dieknow(HWND hwnd) {
     DWORD pid;
     GetWindowThreadProcessId(hwnd, &pid);
 
@@ -465,9 +475,10 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
 
     if (strstr(path, "C:\\Program Files\\DyKnow\\")) {
         dieknow::taskkill(pid, default_kill_method);
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 DK_API void sweep() {
@@ -480,7 +491,12 @@ DK_API void sweep() {
     2. If it can't, look for it with the window title.
     */
 
-    EnumWindows(enum_windows, 0);
+    for (const auto& title : possible_titles) {
+        HWND hwnd = FindWindow(nullptr, title);
+        if (hwnd) {
+            attempt_dieknow(hwnd);
+        }
+    }
 
     // if (!hwnd) {
     //     std::vector<std::string> possible_names;
