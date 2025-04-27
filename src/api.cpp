@@ -474,6 +474,7 @@ bool attempt_dieknow(HWND hwnd) {
 
     QueryFullProcessImageName(hprocess, 0, path, &size);
 
+    std::cout << path << "\n";
     if (strstr(path, "C:\\Program Files\\DyKnow\\")) {
         dieknow::taskkill(pid, default_kill_method);
         return true;
