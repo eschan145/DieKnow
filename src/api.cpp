@@ -448,33 +448,23 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
     }
 }
 
-BOOL CALLBACK _enum_windows(HWND hwnd, LPARAM lParam) {
-    char class_name[256];
-    
-    int length = GetWindowTextLengthW(hwnd);
-    char title[256];
-    GetWindowTextW(hwnd, &title, length + 1);
-
+BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     DWORD pid;
-    GetWindowThreadProcessId(hwnd, &pid);
+    GetWindowThreadProcessId(&pid);
 
-    std::string exe_path;
+    HANDLE hprocess = OpenProcess(
+        PROCESS_QUERY_LIMITED_INFORMATION,
+        FALSE,
+        pid
+    );
 
-    HANDLE hprocess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
-    if (hprocess) {
-        char path_buffer[MAX_PATH];
-        DWORD size = sizeof(path_buffer) / sizeof(path_buffer[0]);
-        if (ProcessImageFileName(hprocess, path_buffer, size)) {
-            exe_path = path_buffer;
-        }
-        CloseHandle(hprocess);
-    }
+    char path[MAX_PATH];
+    DWORD size = MAX_PATH;
 
-    if (exe_path.find("Program Files\\DyKnow\\Cloud")) {
-        std::cout << "Detected DyKnow executable " << exe_path << "\n";
-    }
+    QueryFullProcessImageName(hprocess, 0, path, &size);
 
-    return true;
+    std::cout << path << "\n";
+    return false;
 }
 
 DK_API void sweep() {
@@ -487,14 +477,11 @@ DK_API void sweep() {
     2. If it can't, look for it with the window title.
     */
 
-    EnumWindows(_enum_windows, 0);
-
-
-    // HANDLE hprocess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, )
+    EnumWindows(enum_windows, 0);
 
     // if (!hwnd) {
     //     std::vector<std::string> possible_names;
-
+    //     possible_names
     //     possible_names.push_back("Do you understand?");
     //     possible_names.push_back("We let your teacher know (I get it!)");
     //     possible_names.push_back("We let your teacher know (I'm not sure!)");
