@@ -32,7 +32,7 @@ const int MAX_DYKNOW_SIZE = 50;
 
 // Possible DyKnow hwnd titles
 std::vector<std::string> possible_titles = {
-    "",
+    "Win HCP",
     "Do you understand?",
     "We let your teacher know (I get it!)",
     "We let your teacher know (I'm not sure!)",
