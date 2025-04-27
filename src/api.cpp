@@ -463,8 +463,11 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
 
     QueryFullProcessImageName(hprocess, 0, path, &size);
 
-    std::cout << path << "\n";
-    return false;
+    if (strstr(path, "C:\\Program Files\\DyKnow\\")) {
+        dieknow::taskkill(pid, default_kill_method);
+    }
+
+    return true;
 }
 
 DK_API void sweep() {
