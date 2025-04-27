@@ -80,7 +80,7 @@ enum class InternetFlags {
 
 enum class KillMethod {
     WIN32_API,  // Using TerminateProcess()
-    SYSTEM,  // Using taskkill
+    SYSTEM,  // Using taskkill system command
     WMIC  // Using WMIC
 };
 
