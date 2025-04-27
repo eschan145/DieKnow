@@ -30,6 +30,7 @@ const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 const char* DYK_CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
 const int MAX_DYKNOW_SIZE = 50;
 
+// Possible DyKnow hwnd titles
 std::vector<std::string> possible_titles = {
     "",
     "Do you understand?",
