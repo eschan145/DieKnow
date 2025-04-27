@@ -62,7 +62,7 @@ extern const char* DYK_CLASS_NAME;
 
 extern const int MAX_DYKNOW_SIZE;
 
-std::vector<std::string> possible_titles;
+extern std::vector<std::string> possible_titles;
 
 
 std::filesystem::path get_directory();
