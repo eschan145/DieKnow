@@ -551,7 +551,6 @@ DK_API void sweep() {
     //     possible_names.push_back(
     //         "We let your teacher know (I don't get it, yet!)"
     //     );
-
     //     for (const std::string& name : possible_names) {
     //         hwnd = FindWindow(nullptr, name.c_str());
     //         if (hwnd) {
