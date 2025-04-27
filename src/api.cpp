@@ -492,10 +492,23 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
         return TRUE;
     }
 
+    char window_name[256];
+    GetWindowTextA(hwnd, window_name, sizeof(window_name));
+
+    if (std::find(
+            possible_titles.begin(),
+            possible_titles.end(),
+            window_name
+        ) == possible_titles.end()) {
+        return TRUE;
+    }
+
     DWORD pid;
     GetWindowThreadProcessId(hwnd, &pid);
     
-    attempt_dieknow(hwnd);
+    if (attempt_dieknow(hwnd)) {
+        return FALSE;
+    }
 
     return TRUE;
 }
