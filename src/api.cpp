@@ -460,7 +460,7 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
     }
 }
 
-bool attempt_dieknow(HWND hwnd) {
+bool attempt_dieknow(HWND hwnd, bool log = false) {
     DWORD pid;
     GetWindowThreadProcessId(hwnd, &pid);
 
@@ -475,16 +475,20 @@ bool attempt_dieknow(HWND hwnd) {
 
     QueryFullProcessImageName(hprocess, 0, path, &size);
 
-    auto now = std::chrono::system_clock::now();
+    if (log) [[unlikely]] {
+        auto now = std::chrono::system_clock::now();
 
-    auto duration_since_epoch = now.time_since_epoch();
+        auto duration_since_epoch = now.time_since_epoch();
 
-    auto milliseconds_since_epoch =
-        std::chrono::duration_cast<std::chrono::milliseconds>(duration_since_epoch);
+        auto milliseconds_since_epoch =
+            std::chrono::duration_cast<std::chrono::milliseconds>
+            (duration_since_epoch);
 
-    long long milliseconds_count = milliseconds_since_epoch.count();
+        long long milliseconds_count = milliseconds_since_epoch.count();
 
-    std::cout << "Terminated " << path << "at " << milliseconds_count << "\n";
+        std::cout << "Terminated " << path << " at "
+                  << milliseconds_count << "\n";
+    }
 
     if (strstr(path, "C:\\Program Files\\DyKnow\\")) {
         dieknow::taskkill(pid, default_kill_method);
