@@ -453,7 +453,7 @@ BOOL CALLBACK _enum_windows(HWND hwnd, LPARAM lParam) {
     
     int length = GetWindowTextLengthW(hwnd);
     char title[256];
-    GetWindowText(hwnd, &title, length + 1);
+    GetWindowTextW(hwnd, &title, length + 1);
 
     DWORD pid;
     GetWindowThreadProcessId(hwnd, &pid);
@@ -464,7 +464,7 @@ BOOL CALLBACK _enum_windows(HWND hwnd, LPARAM lParam) {
     if (hprocess) {
         char path_buffer[MAX_PATH];
         DWORD size = sizeof(path_buffer) / sizeof(path_buffer[0]);
-        if (GetProcessImageFileName(hprocess, path_buffer, size)) {
+        if (ProcessImageFileName(hprocess, path_buffer, size)) {
             exe_path = path_buffer;
         }
         CloseHandle(hprocess);
