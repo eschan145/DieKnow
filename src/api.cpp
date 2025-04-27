@@ -448,6 +448,35 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
     }
 }
 
+BOOL CALLBACK _enum_windows(HWND hwnd, LPARAM lParam) {
+    char class_name[256];
+    
+    int length = GetWindowTextLengthW(hwnd);
+    char title[256];
+    GetWindowText(hwnd, &title, length + 1);
+
+    DWORD pid;
+    GetWindowThreadProcessId(hwnd, &pid);
+
+    std::string exe_path;
+
+    HANDLE hprocess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
+    if (hprocess) {
+        char path_buffer[MAX_PATH];
+        DWORD size = sizeof(path_buffer) / sizeof(path_buffer[0]);
+        if (GetProcessImageFileName(hprocess, path_buffer, size)) {
+            exe_path = path_buffer;
+        }
+        CloseHandle(hprocess);
+    }
+
+    if (exe_path.find("Program Files\\DyKnow\\Cloud")) {
+        std::cout << "Detected DyKnow executable " << exe_path << "\n";
+    }
+
+    return true;
+}
+
 DK_API void sweep() {
     /*
     Destroy all DyKnow executables in a sweep.
@@ -458,10 +487,10 @@ DK_API void sweep() {
     2. If it can't, look for it with the window title.
     */
 
-    // HWND hwnd = FindWindow(
-    //     DYK_CLASS_NAME,
-    //     nullptr
-    // );
+    EnumWindows(_enum_windows, 0);
+
+
+    // HANDLE hprocess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, )
 
     // if (!hwnd) {
     //     std::vector<std::string> possible_names;
@@ -478,10 +507,8 @@ DK_API void sweep() {
     //         if (hwnd) {
     //             char class_name[256];
     //             if (GetClassName(hwnd, class_name, sizeof(class_name))) {
-    //                 std::cout << "Please contact support; "
-    //                           << "the new DyKnow HWND "
-    //                           << "class name is "
-    //                           << class_name << ".\n";
+    //                 std::cout << "Please contact support; the new DyKnow HWND "
+    //                           << "class name is " << class_name << ".\n";
     //             } else {
     //                 std::cout << "Failed to extract class name! ("
     //                           << GetLastError() << ")\n";
@@ -496,63 +523,6 @@ DK_API void sweep() {
     //     return;
     // }
 
-    using namespace std::chrono;
-
-    auto start_total = high_resolution_clock::now();
-
-    auto start_snapshot = high_resolution_clock::now();
-    HANDLE hsnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-    auto end_snapshot = high_resolution_clock::now();
-    auto snapshot_duration = duration_cast<milliseconds>(end_snapshot - start_snapshot);
-
-    if (hsnapshot == INVALID_HANDLE_VALUE) {
-        error("Failed to take window snapshot! (" + last_error() + ")");
-        std::exit(EXIT_FAILURE);
-    }
-
-    auto start_process_first = high_resolution_clock::now();
-    PROCESSENTRY32 pe32;
-    pe32.dwSize = sizeof(PROCESSENTRY32);
-    if (!Process32First(hsnapshot, &pe32)) {
-        error("Failed to enumerate processes! (" + last_error() + ")");
-        std::exit(EXIT_FAILURE);
-    }
-    auto end_process_first = high_resolution_clock::now();
-    auto process_first_duration = duration_cast<milliseconds>(end_process_first - start_process_first);
-
-    auto start_dyknow = high_resolution_clock::now();
-    std::unordered_set<std::string> dyknow_executables = get_dyknow_executables();
-    auto end_dyknow = high_resolution_clock::now();
-    auto dyknow_duration = duration_cast<milliseconds>(end_dyknow - start_dyknow);
-
-    if (dyknow_executables.empty()) {
-        error("Failed to retrieve DyKnow executables! This should not happen!");
-        std::exit(EXIT_FAILURE);
-    }
-
-    auto start_process_next = high_resolution_clock::now();
-    do {
-        if (dyknow_executables.find(pe32.szExeFile) != dyknow_executables.end()) {
-            std::cout << "Terminating " << pe32.szExeFile << "\n";
-            dieknow::taskkill(pe32.th32ProcessID, default_kill_method);
-        }
-    } while (Process32Next(hsnapshot, &pe32));
-    auto end_process_next = high_resolution_clock::now();
-    auto process_next_duration = duration_cast<milliseconds>(end_process_next - start_process_next);
-
-    CloseHandle(hsnapshot);
-
-    auto end_total = high_resolution_clock::now();
-    auto total_duration = duration_cast<milliseconds>(end_total - start_total);
-
-    std::cout << "Benchmark Results:" << std::endl;
-    std::cout << "CreateToolhelp32Snapshot: " << snapshot_duration.count() << " ms" << std::endl;
-    std::cout << "Process32First: " << process_first_duration.count() << " ms" << std::endl;
-    std::cout << "get_dyknow_executables: " << dyknow_duration.count() << " ms" << std::endl;
-    std::cout << "Process32Next loop: " << process_next_duration.count() << " ms" << std::endl;
-    std::cout << "Total Execution Time: " << total_duration.count() << " ms" << std::endl;
-
-    std::exit(EXIT_FAILURE);
     // Retrieve PID of DyKnow process
 
     // DWORD identifier;
