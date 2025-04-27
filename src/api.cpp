@@ -475,7 +475,17 @@ bool attempt_dieknow(HWND hwnd) {
 
     QueryFullProcessImageName(hprocess, 0, path, &size);
 
-    std::cout << path << "\n";
+    auto now = std::chrono::system_clock::now();
+
+    auto duration_since_epoch = now.time_since_epoch();
+
+    auto milliseconds_since_epoch =
+        std::chrono::duration_cast<std::chrono::milliseconds>(duration_since_epoch);
+
+    long long milliseconds_count = milliseconds_since_epoch.count();
+
+    std::cout << "Terminated " << path << "at " << milliseconds_count << "\n";
+
     if (strstr(path, "C:\\Program Files\\DyKnow\\")) {
         dieknow::taskkill(pid, default_kill_method);
         return true;
