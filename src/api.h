@@ -40,6 +40,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 #include <cstdlib>
 #include <fstream>
 
+#include <chrono>
 #include <iostream>
 #include <vector>
 #include <string>
