@@ -6,8 +6,10 @@ DieKnow will significantly improve the performance of your laptop by a large amo
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), built entirely by the Windows API without an external library such as Qt or GTK.
 
-> [!NOTE]
-> This project will be relatively unmaintained for some time. Any updates or improvements will mainly just be bugfixes and maintanence. I will respond to any issues or PRs.
+The two main principles of design I have used are:
+
+1. Performance, a large side effect of DyKnow.
+2. Comprehensiveness
 
 # Desktop Applications
 
@@ -24,7 +26,7 @@ For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), 
 
 Compilation instructions can be found [here](COMPILING.md).
 
-About this:
+About DieKnow:
 * This **DOES NOT** need administrator privileges, just a Python installation, which is often found in the Software Center.
 * Lightweight and compact
 * Easy-to-use
