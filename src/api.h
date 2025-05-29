@@ -56,7 +56,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 #pragma comment(lib, "wininet.lib")
 
-
+extern const char* SHORT_FOLDER_PATH;
 extern const char* FOLDER_PATH;
 
 extern const char* DYK_CLASS_NAME;
