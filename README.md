@@ -2,7 +2,7 @@
 
 A bypass of DyKnow, powered primarily by the Windows win32 API.
 
-DieKnow will significantly improve the performance of your laptop by a large amount on your CPU. On my organization HP computer with a 12th Generation Intel Core i3, this runs at less than 1% CPU. This is much less than DyKnow's 15%.
+DieKnow will significantly improve the performance of your laptop by a large amount on your CPU. On my organization HP computer with a 12th Generation Intel Core i3 1210U, which has only two Performance P cores and twice as many Efficiency E cores, this runs at less than 1% CPU. This is much less than DyKnow's 15%.
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), built entirely by the Windows API without an external library such as Qt or GTK.
 
