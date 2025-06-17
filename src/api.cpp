@@ -664,8 +664,8 @@ DK_API void start_monitoring(const char* folder_path) {
         // * HIGHEST
         // * TIME_CRITICAL
 
-        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
-        std::cout << "SetThreadPriority(): THREAD_PRIORITY_BELOW_NORMAL\n";
+        // SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
+        // std::cout << "SetThreadPriority(): THREAD_PRIORITY_BELOW_NORMAL\n";
 
         std::cout << "Monitoring started.\n";
 
