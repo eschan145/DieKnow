@@ -24,7 +24,7 @@ Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 
 #include "api.h"
 
-const char* SHORT_FOLDER_PATH = "C:\Program Files\\DyKnow\\Cloud";
+const char* SHORT_FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 
 const char* DYK_CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
