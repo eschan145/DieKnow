@@ -56,7 +56,7 @@ When it is running, you'll see the DyKnow icon disappear from your taskbar. 💀
 ### For Python
 
 1. Install Python 3. On most school computers it should be installed by default.
-2. Click on **Releases**, found on the right side panel. If you're feeling brave, you can download the latest development ZIP. Note that this may not be as subject to as much testing as release branches, so downloading it is not recommended.
+2. Click on **Releases**, found on the right side panel. You can download the latest ZIP if you want, but it may not be tested and therefore may be unstable.
 
    ![releases](screenshots/releases.png)
 
