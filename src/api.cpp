@@ -18,8 +18,6 @@ DESCRIPTION: API functions for DieKnow
 AUTHOR: Ethan Chan
 DATE: 2024-11-13
 VERSION: 1.0.1
-
-Compile with g++ -shared -o api.dll api.cpp -Ofast -fPIC -shared
 */
 
 #include "api.h"
