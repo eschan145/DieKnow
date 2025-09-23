@@ -29,10 +29,10 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
     */
 
     HWND tooltip = CreateWindowEx(
-        0, TOOLTIPS_CLASS, NULL,
+        0, TOOLTIPS_CLASS, nullptr,
         WS_POPUP | TTS_ALWAYSTIP | TTS_NOPREFIX,
         CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-        hwnd, NULL, NULL, NULL
+        hwnd, nullptr, nullptr, nullptr
     );
 
     SetWindowText(tooltip, "Tooltip");
@@ -41,7 +41,7 @@ void tooltip(HWND hwnd, HWND control, const char* text) {
     tool_info.cbSize = sizeof(tool_info);
     tool_info.uFlags = TTF_SUBCLASS;
     tool_info.hwnd = control;
-    tool_info.hinst = NULL;
+    tool_info.hinst = nullptr;
     tool_info.lpszText = const_cast<LPSTR>(text);
 
     // Get dimensions of the control
@@ -90,7 +90,7 @@ Application::Application() {
 
     WNDCLASS wc = {};
     wc.lpfnWndProc = Application::WindowProc;
-    wc.hInstance = GetModuleHandle(NULL);
+    wc.hInstance = GetModuleHandle(nullptr);
     wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
     wc.lpszClassName = CLASS_NAME;
 
@@ -122,12 +122,12 @@ Application::Application() {
         CW_USEDEFAULT,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
-        NULL, NULL,
+        nullptr, nullptr,
         wc.hInstance,
-        NULL
+        nullptr
     );
 
-    if (this->hwnd == NULL) {
+    if (this->hwnd == nullptr) {
         return;
     }
 
@@ -152,7 +152,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::RUNNING,
         wc.hInstance,
-        NULL
+        nullptr
     );
 
     HWND taskkill_button = CreateWindow(
@@ -166,7 +166,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::TASKKILL,
         wc.hInstance,
-        NULL
+        nullptr
     );
 
     HWND exit_button = CreateWindow(
@@ -180,11 +180,11 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::EXIT,
         wc.hInstance,
-        NULL
+        nullptr
     );
     HWND directory = CreateWindow(
         "LISTBOX",
-        nullptr,
+        nullptrptr,
         WS_VISIBLE | WS_CHILD | LBS_STANDARD,
         BUTTON_WIDTH + (PADDING * 2),
         PADDING,
@@ -193,7 +193,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::DIRECTORY,
         wc.hInstance,
-        NULL
+        nullptr
     );
     HWND interval_label = CreateWindow(
         "STATIC",
@@ -205,7 +205,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::INTERVAL_LABEL,
         wc.hInstance,
-        NULL
+        nullptr
     );
     HWND interval_edit = CreateWindow(
         "EDIT",
@@ -217,7 +217,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::INTERVAL,
         wc.hInstance,
-        NULL
+        nullptr
     );
     HWND interval_set = CreateWindow(
         "BUTTON",
@@ -230,7 +230,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::INTERVAL_SET,
         wc.hInstance,
-        NULL
+        nullptr
     );
     this->state = CreateWindow(
         "STATIC",
@@ -243,7 +243,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::STATE,
         wc.hInstance,
-        NULL
+        nullptr
     );
     HWND executables_killed = CreateWindow(
         "STATIC",
@@ -255,7 +255,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::EXECUTABLES_KILLED,
         wc.hInstance,
-        NULL
+        nullptr
     );
     HWND open_explorer = CreateWindow(
         "BUTTON",
@@ -268,7 +268,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::OPEN_EXPLORER,
         wc.hInstance,
-        NULL
+        nullptr
     );
     HWND display_information = CreateWindow(
         "BUTTON",
@@ -281,7 +281,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::SYSTEM_INFORMATION,
         wc.hInstance,
-        NULL
+        nullptr
     );
     HWND take_snapshot = CreateWindow(
         "BUTTON",
@@ -294,7 +294,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::TAKE_SNAPSHOT,
         wc.hInstance,
-        NULL
+        nullptr
     );
     this->restore_snapshot = CreateWindow(
         "BUTTON",
@@ -307,11 +307,11 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::RESTORE_SNAPSHOT,
         wc.hInstance,
-        NULL
+        nullptr
     );
     windows = CreateWindow(
         WC_LISTVIEW,
-        nullptr,
+        nullptrptr,
         WS_VISIBLE | WS_CHILD | LVS_REPORT,
         PADDING,
         160 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
@@ -320,7 +320,7 @@ Application::Application() {
         this->hwnd,
         (HMENU)Widgets::WINDOWS,
         wc.hInstance,
-        NULL
+        nullptr
     );
 
     this->widgets.push_back(running_button);
@@ -396,14 +396,14 @@ Application::Application() {
     }
 
     // In ms -- set update rate to 10 ticks per second
-    SetTimer(this->hwnd, 1, settings.get<int>("update", 100), nullptr);
+    SetTimer(this->hwnd, 1, settings.get<int>("update", 100), nullptrptr);
 
     ShowWindow(this->hwnd, SW_SHOW);
     UpdateWindow(this->hwnd);
 
     MSG msg = {};
     // Needed to call WndProc system messages
-    while (GetMessage(&msg, NULL, 0, 0)) {
+    while (GetMessage(&msg, nullptr, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
@@ -430,7 +430,7 @@ void Application::manage_command(
                 dieknow::stop_monitoring();
                 System::toggle_internet();
             } else {
-                SetFocus(NULL);
+                SetFocus(nullptr);
                 System::toggle_internet();
                 dieknow::start_monitoring();
                 System::toggle_internet();
@@ -508,7 +508,7 @@ void Application::manage_command(
         }
 
         case Widgets::OPEN_EXPLORER: {
-            ShellExecute(NULL, "open", FOLDER_PATH, NULL, NULL, SW_SHOWDEFAULT);
+            ShellExecute(nullptr, "open", FOLDER_PATH, nullptr, nullptr, SW_SHOWDEFAULT);
             break;
         }
 
@@ -698,10 +698,10 @@ LRESULT CALLBACK Application::WindowProc(
                 SetTextColor(hdc_static, color);
 
                 // Force redraw of the label to prevent overlapping
-                // InvalidateRect(label, nullptr, TRUE);
+                // InvalidateRect(label, nullptrptr, TRUE);
                 // UpdateWindow(label);
 
-                return (LRESULT)GetStockObject(NULL_BRUSH);
+                return (LRESULT)GetStockObject(nullptr_BRUSH);
             }
             break;
         }
@@ -709,7 +709,7 @@ LRESULT CALLBACK Application::WindowProc(
         case WM_CHAR: {
             if (GetFocus() == app->widgets[Widgets::INTERVAL]) {
                 if (wParam == VK_RETURN) {
-                    SetFocus(NULL);
+                    SetFocus(nullptr);
                     return 0;
                 }
             }
@@ -744,7 +744,7 @@ void Application::restore_snapshots() {
     this->is_restoring = true;
 
     // for (const auto& window : this->snapshot) {
-    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
+    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptrptr);
 
     //     if (hwnd) {
     //         WNDPROC original = (WNDPROC)SetWindowLongPtr(
@@ -767,7 +767,7 @@ void Application::restore_snapshots() {
     // int fail = 0;
 
     // for (const auto& window : this->snapshot) {
-    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
+    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptrptr);
 
     //     if (hwnd) {
     //         ShowWindow(hwnd, SW_SHOW);
@@ -965,7 +965,7 @@ inline void Application::update(
         message.c_str()
     );
 
-    // InvalidateRect(this->hwnd, nullptr, TRUE);
+    // InvalidateRect(this->hwnd, nullptrptr, TRUE);
 }
 
 void Application::update_windows(
@@ -976,7 +976,7 @@ void Application::update_windows(
 
     for (size_t i = 0; i < current_windows.size(); ++i) {
         const auto& window = current_windows[i];
-        HWND target = FindWindow(NULL, window.title.c_str());
+        HWND target = FindWindow(nullptr, window.title.c_str());
 
         if (target) {
             int index = -1;
