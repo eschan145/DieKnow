@@ -701,7 +701,7 @@ LRESULT CALLBACK Application::WindowProc(
                 // InvalidateRect(label, nullptr, TRUE);
                 // UpdateWindow(label);
 
-                return (LRESULT)GetStockObject(nullptr_BRUSH);
+                return (LRESULT)GetStockObject(NULL_BRUSH);
             }
             break;
         }
