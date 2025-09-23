@@ -184,7 +184,7 @@ Application::Application() {
     );
     HWND directory = CreateWindow(
         "LISTBOX",
-        nullptrptr,
+        nullptr,
         WS_VISIBLE | WS_CHILD | LBS_STANDARD,
         BUTTON_WIDTH + (PADDING * 2),
         PADDING,
@@ -311,7 +311,7 @@ Application::Application() {
     );
     windows = CreateWindow(
         WC_LISTVIEW,
-        nullptrptr,
+        nullptr,
         WS_VISIBLE | WS_CHILD | LVS_REPORT,
         PADDING,
         160 + (BUTTON_HEIGHT * 4) + (PADDING * 3),
@@ -396,7 +396,7 @@ Application::Application() {
     }
 
     // In ms -- set update rate to 10 ticks per second
-    SetTimer(this->hwnd, 1, settings.get<int>("update", 100), nullptrptr);
+    SetTimer(this->hwnd, 1, settings.get<int>("update", 100), nullptr);
 
     ShowWindow(this->hwnd, SW_SHOW);
     UpdateWindow(this->hwnd);
@@ -698,7 +698,7 @@ LRESULT CALLBACK Application::WindowProc(
                 SetTextColor(hdc_static, color);
 
                 // Force redraw of the label to prevent overlapping
-                // InvalidateRect(label, nullptrptr, TRUE);
+                // InvalidateRect(label, nullptr, TRUE);
                 // UpdateWindow(label);
 
                 return (LRESULT)GetStockObject(nullptr_BRUSH);
@@ -744,7 +744,7 @@ void Application::restore_snapshots() {
     this->is_restoring = true;
 
     // for (const auto& window : this->snapshot) {
-    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptrptr);
+    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
 
     //     if (hwnd) {
     //         WNDPROC original = (WNDPROC)SetWindowLongPtr(
@@ -767,7 +767,7 @@ void Application::restore_snapshots() {
     // int fail = 0;
 
     // for (const auto& window : this->snapshot) {
-    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptrptr);
+    //     HWND hwnd = FindWindow(window.class_name.c_str(), nullptr);
 
     //     if (hwnd) {
     //         ShowWindow(hwnd, SW_SHOW);
@@ -965,7 +965,7 @@ inline void Application::update(
         message.c_str()
     );
 
-    // InvalidateRect(this->hwnd, nullptrptr, TRUE);
+    // InvalidateRect(this->hwnd, nullptr, TRUE);
 }
 
 void Application::update_windows(
