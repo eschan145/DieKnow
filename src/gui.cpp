@@ -171,7 +171,7 @@ Application::Application() {
 
     HWND exit_button = CreateWindow(
         "BUTTON",
-        "Quit and Exit",
+        "Quit",
         WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
         PADDING,
         (BUTTON_HEIGHT * 2) + (PADDING * 3),
