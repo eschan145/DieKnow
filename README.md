@@ -28,12 +28,10 @@ Compilation instructions can be found [here](COMPILING.md).
 
 About DieKnow:
 * This **DOES NOT** need administrator privileges, just a Python installation, which is often found in the Software Center.
-* Lightweight and compact
-* Easy-to-use
 * **DOES NOT** need a C++ compiler.
 * **DOES NOT** need to run an executable or a batch file, which is usually blocked by the school via Windows AppLocker.
 * **DOES NOT** have any external dependencies, besides the C++ standard library and the Windows API, which are preinstalled.
-* Written in robust, highly-optimized C++ code for maximum performance, faster than many other alternatives you can find open-source.
+* Written in high-performance C++ code for maximum performance, faster than many other alternatives you can find open-source.
 
 What can DyKnow do:
 
