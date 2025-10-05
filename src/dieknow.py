@@ -23,15 +23,8 @@ if "-docs" in sys.argv:
     print("Documentation generation enabled")
     md = True
 
-def resource_path(filename):
-    if getattr(sys, "frozen", False):
-        base_path = os.path.dirname(sys.executable)
-    else:
-        base_path = os.path.dirname(__file__)
-    return os.path.join(base_path, filename)
-
-lib_dll_path = resource_path("api.dll")
-gui_dll_path = resource_path("gui.dll")
+lib_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "api.dll")
+gui_dll_path = os.path.join(os.path.dirname(__file__), "dlls", "gui.dll")
 
 try:
     lib = ctypes.CDLL(lib_dll_path)
@@ -86,7 +79,7 @@ folder_path = lib.get_folder_path()
 
 del func_name  # pylint: disable=W0631
 
-doc.doc(resource_path("api.cpp"), lib, markdown=md)
+doc.doc(os.path.join(os.path.dirname(__file__), "api.cpp"), lib, markdown=md)
 
 try:
     create_window = guilib.create_window
