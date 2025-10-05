@@ -508,7 +508,14 @@ void Application::manage_command(
         }
 
         case Widgets::OPEN_EXPLORER: {
-            ShellExecute(nullptr, "open", FOLDER_PATH, nullptr, nullptr, SW_SHOWDEFAULT);
+            ShellExecute(
+                nullptr,
+                "open",
+                FOLDER_PATH,
+                nullptr,
+                nullptr,
+                SW_SHOWDEFAULT
+            );
             break;
         }
 
