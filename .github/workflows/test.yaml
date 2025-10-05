@@ -13,4 +13,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Test
-      run: py src/gui.pyw
+      run: py src/dieknow.py
