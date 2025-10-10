@@ -11,6 +11,13 @@ The two main principles of design I have used are:
 1. Performance, a large side effect of DyKnow.
 2. Comprehensiveness
 
+## System Requirements
+
+* 2 MB of free RAM
+* 7 MB of free storage
+* x86-64 processor -- the program will not run for ARM and I have no intention of making it do.
+* Windows 10 or 11 OS. No other operating systems will be supported.
+
 # Desktop Applications
 
 <table border="0">
