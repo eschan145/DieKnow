@@ -2,7 +2,7 @@
 
 A bypass of DyKnow, powered primarily by the Windows win32 API.
 
-DieKnow will significantly improve device performance by lowering CPU utilization that is being used by DyKnow. On my organization HP computer with a 12th Generation Intel Core i3 1210U, this runs at less than 1% CPU. Keep in mind that this system had Cinebench R23 benchmark run on it and achieved an abysmal score of 823 pts, which is around the score of an Intel Core i7 4650U processor all the way back from 2013.
+DieKnow will significantly improve device performance by lowering CPU utilization that is being used by DyKnow. On my organization HP computer with a 12th Generation Intel Core i3 1210U, this runs at less than 1% CPU. This CPU has a Cinebench R23 score of 823 pts.
 
 For ease of use, a beta GUI application is located in [`gui.pyw`](src/gui.pyw), built entirely by the Windows API without an external library such as Qt or GTK.
 
