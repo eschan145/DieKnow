@@ -11,6 +11,10 @@ The two main principles of design I have used are:
 1. Performance, a large side effect of DyKnow.
 2. Comprehensiveness
 
+## Video Tutorial
+
+https://github.com/user-attachments/assets/7d25b085-7123-498b-83d0-685994cf1afd
+
 ## System Requirements
 
 * 2 MB of free RAM
