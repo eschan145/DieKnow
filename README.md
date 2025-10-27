@@ -13,6 +13,8 @@ The two main principles of design I have used are:
 
 ## Video Tutorial
 
+[Troubleshooting Guide](TROUBLESHOOTING.md)
+
 https://github.com/user-attachments/assets/7d25b085-7123-498b-83d0-685994cf1afd
 
 ## System Requirements
