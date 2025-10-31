@@ -827,6 +827,11 @@ inline void Application::update(
     * Update label displaying executables terminated
     */
 
+    if (GetForegroundWindow() != this->hwnd) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        return;
+    }
+
     if (this->is_restoring) {
         for (const auto& window : this->snapshot) {
             ShowWindow(window.hwnd, SW_SHOW);
