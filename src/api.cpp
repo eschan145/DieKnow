@@ -339,9 +339,18 @@ DK_API int monitor_executables(int interval) {
     */
 
     int count = 0;
+    int terminations = 0;
 
     while (running) {
+        // We can guarantee it doesn't start back up for at least a second
+        // once the first three are killed on the first pass. So optimize away
+        // 10 passes.
+        if (terminations >= 3) {
+            std::this_thread::sleep_for(std::chrono::seconds(500));
+            terminations = 0;
+        }
         dieknow::sweep();
+        terminations++;
         std::this_thread::sleep_for(std::chrono::milliseconds(interval));
     }
     return count;
