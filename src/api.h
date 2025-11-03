@@ -63,6 +63,8 @@ extern const char* DYK_CLASS_NAME;
 
 extern const int MAX_DYKNOW_SIZE;
 
+extern bool killed_this_pass;
+
 extern const std::vector<std::string> possible_titles;
 
 

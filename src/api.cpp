@@ -28,6 +28,8 @@ const char* FOLDER_PATH = "C:\\Program Files\\DyKnow\\Cloud";
 const char* DYK_CLASS_NAME = "WindowsForms10.Window.8.app.0.9fe31_r7_ad1";
 const int MAX_DYKNOW_SIZE = 50;
 
+bool killed_this_pass = false;
+
 // Possible DyKnow hwnd titles
 const std::vector<std::string> possible_titles = {
     "Win HCP",  // Likely Windows Health Check Program
@@ -342,12 +344,11 @@ DK_API int monitor_executables(int interval) {
     int terminations = 0;
 
     while (running) {
-        // We can guarantee it doesn't start back up for at least a second
-        // once the first three are killed on the first pass. So optimize away
-        // 10 passes.
-        if (terminations >= 3) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        // If DyKnow was recently killed, pause for 5 ms
+        if (killed_this_pass && terminations >= 3) {
+            std::this_thread::sleep_for(std::chrono::seconds(5));
             terminations = 0;
+            killed_this_pass = false;
         }
         dieknow::sweep();
         terminations++;
@@ -438,11 +439,13 @@ DK_API bool taskkill(DWORD identifier, KillMethod method) {
 
             if (process) [[likely]] {
                 // Bam, terminated!
-                TerminateProcess(process, static_cast<UINT>(-1));
+                bool result = TerminateProcess(process, static_cast<UINT>(-1));
                 // -1 is the exit code for the process - in this case,
                 // indicating internal failure.
                 CloseHandle(process);
-                return true;
+                if (!result) error("Failed to terminate DyKnow executable!");
+                
+                return result;
             }
             return false;
         }
@@ -499,8 +502,7 @@ bool attempt_dieknow(HWND hwnd, bool log = false) {
     }
 
     if (strstr(path, SHORT_FOLDER_PATH)) {
-        dieknow::taskkill(pid, default_kill_method);
-        return true;
+        return dieknow::taskkill(pid, default_kill_method);
     }
 
     return false;
@@ -529,6 +531,7 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
     GetWindowThreadProcessId(hwnd, &pid);
 
     if (attempt_dieknow(hwnd)) {
+        killed_this_pass = true;
         return FALSE;
     }
 
