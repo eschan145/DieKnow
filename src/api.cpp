@@ -346,7 +346,7 @@ DK_API int monitor_executables(int interval) {
         // once the first three are killed on the first pass. So optimize away
         // 10 passes.
         if (terminations >= 3) {
-            std::this_thread::sleep_for(std::chrono::seconds(500));
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
             terminations = 0;
         }
         dieknow::sweep();
