@@ -344,7 +344,7 @@ DK_API int monitor_executables(int interval) {
     int terminations = 0;
 
     while (running) {
-        // If DyKnow was recently killed, pause for 5 ms
+        // If DyKnow was recently killed, pause for 5s
         if (killed_this_pass && terminations >= 3) {
             std::this_thread::sleep_for(std::chrono::seconds(5));
             terminations = 0;
@@ -539,15 +539,6 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
 }
 
 DK_API void sweep() {
-    /*
-    Destroy all DyKnow executables in a sweep.
-
-    This gets the DyKnow executable using two methods.
-
-    1. See if it can find it with the class name.
-    2. If it can't, look for it with the window title.
-    */
-
     EnumWindows(enum_windows, 0);
 
     // for (const auto& title : possible_titles) {
