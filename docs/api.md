@@ -72,6 +72,13 @@ Usually works but less performant and reliable compared to `WIN32_API`.
 
 **Signature**: `bool`
 
+### *function* `sweep()`
+
+Iterate through all DyKnow windows and terminate the processes in the
+process tree owning them.
+
+**Signature**: `void`
+
 ### *function* `start_monitoring()`
 
 Begin monitoring executables.
