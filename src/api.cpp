@@ -539,6 +539,11 @@ BOOL CALLBACK enum_windows(HWND hwnd, LPARAM lParam) {
 }
 
 DK_API void sweep() {
+    /*
+    Iterate through all DyKnow windows and terminate the processes in the
+    process tree owning them.
+    */
+
     EnumWindows(enum_windows, 0);
 
     // for (const auto& title : possible_titles) {
