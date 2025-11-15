@@ -12,7 +12,7 @@ The two main principles of design I have used are:
 2. Comprehensiveness
 
 > [!CAUTION]
-> Disclaimer: Do not use DieKnow to cheat. Cheating and directly immoral or dishonest usage is not condoned here in any way.
+> **Disclaimer**: Do not use DieKnow to cheat. Cheating and directly immoral or dishonest usage is not condoned here in any way.
 
 ## Video Tutorial
 
